@@ -1,0 +1,38 @@
+{
+  "name": "ensinoaprendizagem",
+  "version": "1.0.0",
+  "description": "api logica de negocio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --timeout 10000 --exit --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idetodospoca/pesti2019.git"
+  },
+  "author": "Joel Coelho  <1121292@isep.ipp.pt>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idetodospoca/pesti2019/issues"
+  },
+  "homepage": "https://github.com/idetodospoca/pesti2019#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.11",
+    "mongoose-id-validator": "^0.5.0",
+    "mongoose-unique-validator": "^2.0.2",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "mocha": "^5.2.0",
+    "mongoose-seeder": "^1.2.1"
+  }
+}
