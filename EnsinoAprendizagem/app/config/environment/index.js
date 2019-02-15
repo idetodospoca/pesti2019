@@ -8,18 +8,16 @@ let all = {
     env: env,
 
     // Server port
-    port: process.env.PORT || 9000,
+    port: process.env.PORT || 3000,
 
     // Mongoose connection
     mongoose: {
         uri: 'mongodb://pesti2019:pesti2019@ds331735.mlab.com:31735/pesti2019'
-    }
+    },
 
-    // jwt: {
-    //     secret   : "",
-    //     issuer   : "",
-    //     audience : "Everyone"
-    // }
+    jwt: {
+        secret   : "fSk35bzq6KutR0dQVKTL"
+    }
 
 };
 

@@ -26,7 +26,7 @@ function login(req, res){
 }
 
 function register(req, res){
-  let user          = new User();
+  let user      = new User();
   user.email    = req.body.email;
   user.name     = req.body.name;
   user.password = req.body.password;

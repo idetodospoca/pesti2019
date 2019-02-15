@@ -7,8 +7,6 @@ let signToken = (user) => {
   let token = jwt.sign({ id: user._id, email: user.email, name: user.name, role: user.role }, config.jwt.secret, {
     expiresIn : "7 days",
     notBefore : 0,                     //now
-    audience  : config.jwt.audience,
-    issuer    : config.jwt.issuer,
     jwtid     : guid.raw(),
     subject   : user.email
   });
@@ -20,10 +18,7 @@ let signToken = (user) => {
 };
 
 let verifyToken = (token, callback) => {
-  jwt.verify(token, config.jwt.secret, {
-    audience : config.jwt.audience,
-    issuer   : config.jwt.issuer
-  }, function(err, decoded) {
+  jwt.verify(token, config.jwt.secret, function(err, decoded) {
     callback(err, decoded);
   });
 };
