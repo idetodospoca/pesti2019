@@ -1,7 +1,7 @@
 const utils = require('../../components/utils');
 const User = require('../../models/User');
 
-function list(req, res){
+function index(req, res){
   let query = {};
 
   if(req.query.role){
@@ -13,5 +13,5 @@ function list(req, res){
 }
 
 module.exports = {
-  list : list
+  index : index
 };

@@ -9,12 +9,14 @@ var UserSchema   = new Schema({
     type     : String,
     required : [true, "O `nome` é obrigatório."]
   },
+
   email : {
     type     : String,
     required : [true, "O `e-mail` é obrigatório."],
     index: true,
     unique: true
   },
+
   password : {
     type     : String,
     required : [true, "A `password` é obrigatória."],
@@ -26,6 +28,7 @@ var UserSchema   = new Schema({
       message : 'A password deve ter pelo menos 8 carateres.'
     },
   },
+  
   role: {
     type     : String,
     required : true,
