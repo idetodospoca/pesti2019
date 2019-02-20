@@ -1,5 +1,7 @@
 const mongoose        = require('mongoose');
 const Schema          = mongoose.Schema;
+const idValidator     = require('mongoose-id-validator');
+
 
 let LearningSchema    = new Schema({
   knowledge_category : {
@@ -43,7 +45,8 @@ let AtividadeSchema   = new Schema({
     enum     : ['Class based', 'Group based', 'One to many', 'One to one']
   },
 
-  //Perception
+  // Perception
+  // interrelationship, motivation, participation, performance
 
   interrelationship : {
     type     : String,
@@ -58,6 +61,12 @@ let AtividadeSchema   = new Schema({
   },
 
   participation : {
+    type     : String,
+    required : true,
+    enum     : ['High', 'Medium', 'Low', 'None']
+  },
+
+  performance : {
     type     : String,
     required : true,
     enum     : ['High', 'Medium', 'Low', 'None']
@@ -87,7 +96,7 @@ let AtividadeSchema   = new Schema({
       validator: function(v){
         return v.length >= 1;
       },
-      message : 'Deve definir pelo menos 1 objetivo de aprendizagem.'
+      message : 'At least one learning objective should be defined.'
     }
   },
 
@@ -96,12 +105,18 @@ let AtividadeSchema   = new Schema({
     required : true
   },
 
-  conditions  : String,
-  degree      : String
+  conditions  : String, //Optional
+  degree      : String, //Optional
+
+  professor : {
+    type      : mongoose.Schema.Types.ObjectId,
+    ref       : 'User',
+    required  : true
+  }
 
 });
 
-
+AtividadeSchema.plugin(idValidator);
 
 
 module.exports = mongoose.model('Atividade', AtividadeSchema);

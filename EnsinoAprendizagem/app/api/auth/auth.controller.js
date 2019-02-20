@@ -11,11 +11,11 @@ function login(req, res){
   .exec()
   .then(user => {
     if(!user){
-      return res.status(401).json({error: 'invalid_user', message: 'O email e/ou password que introduziu não são válidos.'});
+      return res.status(401).json({error: 'invalid_user', message: 'The e-mail/password you entered is not valid.'});
     }
 
     if(!user.checkPassword(req.body.password)){
-      return res.status(401).json({error: 'invalid_user', message:"O email e/ou password que introduziu não são válidos."});
+      return res.status(401).json({error: 'invalid_user', message:"The e-mail/password you entered is not valid."});
     }
 
     let token = authService.signToken(user);

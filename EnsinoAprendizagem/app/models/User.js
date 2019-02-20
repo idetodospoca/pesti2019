@@ -7,28 +7,28 @@ const timestamps      = require('../components/timestamps');
 var UserSchema   = new Schema({
   name : {
     type     : String,
-    required : [true, "O `nome` é obrigatório."]
+    required : [true, "`Name` is required."]
   },
 
   email : {
     type     : String,
-    required : [true, "O `e-mail` é obrigatório."],
+    required : [true, "`E-mail` is required."],
     index: true,
     unique: true
   },
 
   password : {
     type     : String,
-    required : [true, "A `password` é obrigatória."],
+    required : [true, "`Password` is required."],
     select: false, //Hide from general queries
     validate : {
       validator: function(v) {
         return v.length >= 8;
       },
-      message : 'A password deve ter pelo menos 8 carateres.'
+      message : 'Password must be at least 8 characters long.'
     },
   },
-  
+
   role: {
     type     : String,
     required : true,

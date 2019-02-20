@@ -8,7 +8,7 @@ function isAuthenticated(){
     //Get the token from the request
     let token = getTokenFromRequest(req);
     if(!token){
-      return res.status(401).send({error:"token_not_provided", message:"Precisa de um token para poder usar esta api."});
+      return res.status(401).send({error:"token_not_provided", message:"You need a token to use this API."});
     }
 
     //Verify if the provided token is valid
@@ -23,7 +23,7 @@ function isAuthenticated(){
         if(!user){
           return res.status(401).json({
             error   : 'invalid_user',
-            message : "O seu token não é válido. Por favor, faça login outra vez e tente de novo."
+            message : "Your token is not valid, please login and try again."
           });
         }
         //Attach the user to the request object so that controllers can access the logged in user
@@ -33,7 +33,7 @@ function isAuthenticated(){
       .catch(error => {
         return res.status(401).json({
           error   : 'invalid_user',
-          message : "O seu token não é válido. Por favor, faça login outra vez e tente de novo."
+          message : "Your token is not valid, please login and try again."
         });
       });
     });
@@ -61,7 +61,7 @@ function hasRole(...args){
     if(requiredRoles.indexOf(user.role) === -1){
       return res.status(403).json({
         error: 'forbidden',
-        message: 'Não tem permissões para utilizar esta funcionalidade.'
+        message: 'You do not have permission to use this feature.'
       });
     }
 
