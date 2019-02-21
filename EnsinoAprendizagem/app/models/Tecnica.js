@@ -25,6 +25,16 @@ let LearningSchema    = new Schema({
 
 let TecnicaSchema     = new Schema({
 
+  name  : {
+    type     : String,
+    required : true
+  },
+
+  description  : {
+    type     : String,
+    required : true
+  },
+
   delivery_mode : {
     type     : [String],
     required : true,
@@ -96,4 +106,9 @@ let TecnicaSchema     = new Schema({
     ref       : 'User',
     required  : true
   }
-})
+});
+
+TecnicaSchema.plugin(idValidator);
+
+
+module.exports = mongoose.model('Tecnica', TecnicaSchema);
