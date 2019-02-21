@@ -4,7 +4,7 @@
   "description": "api logica de negocio",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node EnsinoAprendizagem/server.js",
     "test": "mocha --timeout 10000 --exit --recursive"
   },
   "repository": {
