@@ -1,0 +1,60 @@
+<div class="app flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card mx-4">
+					<div class="card-body p-4">
+						<h1>Sign up now</h1>
+						<p class="text-muted">Create your account</p>
+						<div class="input-group mb-3">
+							<span class="input-group-addon">
+								<i class="fa fa-envelope"></i>
+							</span>
+							<input type="text" class="form-control" placeholder="E-mail" name="email" [(ngModel)]="email">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-addon">
+								<i class="fa fa-user"></i>
+							</span>
+							<input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="name">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-addon">
+								<i class="fa fa-lock"></i>
+							</span>
+							<input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
+						</div>
+
+						<div class="input-group mb-4">
+							<span class="input-group-addon">
+								<i class="fa fa-lock"></i>
+							</span>
+							<input type="password" class="form-control" placeholder="Confirm" name="password2" [(ngModel)]="passwordConfirmation">
+						</div>
+
+						<button type="submit" class="btn btn-block btn-success mb-3" (click)="register()" [disabled]="loading">
+							<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+							<i class="" *ngIf="!loading"></i>
+							<span *ngIf="!loading"> Create your account</span>
+						</button>
+						<a class="btn btn-primary btn-block" routerLink="/auth/login">
+							<i class="fa fa-external-link" aria-hidden="true"></i>
+							Sign in instead
+						</a>
+
+						<div *ngIf="errors.length">
+							<h2>Error</h2>
+							<ul class="bg-danger">
+								<li *ngFor="let error of errors">
+									{{error}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

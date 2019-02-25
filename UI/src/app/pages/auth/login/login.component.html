@@ -1,0 +1,60 @@
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group mb-0">
+          <div class="card p-4">
+            <div class="card-body">
+              <form (ngSubmit)="login()">
+                <h1>Sign in</h1>
+                <p class="text-muted">Sign in to your account</p>
+                <div class="input-group mb-3">
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="email">
+                </div>
+                <div class="input-group mb-4">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="submit" class="btn btn-primary px-4" (click)="login()" [disabled]="loading">
+                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                      <span *ngIf="!loading">Sign in</span>
+                    </button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- This div is only visible when the device is medium or small -->
+        <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+          <div class="card-body text-center">
+            <div>
+              <h3>Don't have an account?
+              Sign up now.</h3>
+              <p>Fill out a simple form and start using the app and all it's features.</p>
+              <a class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- This row is only visible when device is large or superior -->
+  <div class="row justify-content-center d-lg-none">
+    <div class="col-md-8">
+      <div class="card text-white bg-primary py-5">
+        <div class="card-body text-center">
+          <div>
+            <h3>Don't have an account?
+            Sign up now.</h3>
+            <p>Fill out a simple form and start using the app and all it's features.</p>
+            <a class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
