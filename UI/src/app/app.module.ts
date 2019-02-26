@@ -15,7 +15,7 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 
 
 // Layouts
-//import { FullLayoutComponent } from './layouts/full-layout.component';
+import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 // Http interceptors
@@ -31,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
+    FullLayoutComponent,
     SimpleLayoutComponent,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,

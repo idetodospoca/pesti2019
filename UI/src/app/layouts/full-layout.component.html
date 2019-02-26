@@ -1,0 +1,51 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+  <a class="navbar-brand" routerLink=""></a>
+  <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown mr-4" dropdown (onToggle)="toggled($event)">
+      <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
+        <img src="assets/img/avatars/default.png" class="img-avatar" [alt]="user.email">
+        <span class="d-md-down-none">{{user.name}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div *ngIf="authService.isAuthenticated()">
+          <button type="button" class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i>Sign out</button>
+        </div>
+        <div *ngIf="!authService.isAuthenticated()">
+          <a routerLink="/auth/login" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign in</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</header>
+
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/home">
+            <i class="fa fa-feed"></i> Home
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumbs></app-breadcrumbs>
+    </ol>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+
+<footer class="app-footer">
+</footer>

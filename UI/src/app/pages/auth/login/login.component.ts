@@ -18,7 +18,7 @@ export class LoginComponent {
     this.http.post('auth/login', {email: this.email, password: this.password}).subscribe(
       (res: any) => {
         this.authService.setToken(res.token);
-        this.toastr.success('Successfully logged in!');
+        //this.toastr.success('Successfully logged in!'); not necessary
         this.router.navigate(['/']);
         this.loading = false;
       },

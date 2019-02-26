@@ -14,12 +14,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       this.router.navigate(['/auth/login']);
       return false;
     }
-    
+
     // At this point, we know the user is authenticated
     // But we still need to make sure he has permissions to acess the route
     let requiredRole = route.data['requiredRole'];
     if (requiredRole && !this.authService.hasRole(requiredRole)) {
-      this.toastr.error('You do not have permission to access this page.');
+      this.toastr.error('You don\'t have permission to access this page.');
       this.router.navigate(['/']);
       return false;
     }

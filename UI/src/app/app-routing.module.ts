@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Layouts
-//import { FullLayoutComponent } from './layouts/full-layout.component';
+import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 // Guards
@@ -12,6 +12,24 @@ import { AuthGuard } from './guards/auth.guard';
 import { P404Component } from './pages/404.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    component: FullLayoutComponent,
+    data: {
+      title: 'Home'
+    },
+    children: [
+      {
+        path: 'home',
+        loadChildren: './pages/home/home.module#HomeModule',
+      }
+    ]
+  },
   {
     path: 'auth',
     component: SimpleLayoutComponent,
