@@ -27,6 +27,11 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: './pages/home/home.module#HomeModule',
+      },
+      {
+        path: 'activities',
+        //canActivateChild: [AuthGuard],
+        loadChildren: './pages/activities/activities.module#ActivitiesModule'
       }
     ]
   },

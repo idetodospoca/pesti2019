@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './full-layout.component.html'
 })
 export class FullLayoutComponent implements OnInit {
-  
+
   public disabled = false;
   public status: {isopen: boolean} = {isopen: false};
   public user = {email: '', name: ''};
@@ -30,6 +30,7 @@ export class FullLayoutComponent implements OnInit {
 
   logout() {
     this.authService.removeToken();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/']);
+    this.user = this.authService.getUser();
   }
 }

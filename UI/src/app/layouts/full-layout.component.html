@@ -29,6 +29,23 @@
             <i class="fa fa-feed"></i> Home
           </a>
         </li>
+        <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+          <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
+            <i class="fa fa-feed"></i> Activities
+          </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="/activities" [routerLinkActiveOptions]="{exact: true}">
+                <i class="fa fa-list"></i> List of Activities
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.hasRole('professor')">
+              <a class="nav-link" routerLinkActive="active" routerLink="/activities/create">
+                <i class="fa fa-plus"></i> Create Activity
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>

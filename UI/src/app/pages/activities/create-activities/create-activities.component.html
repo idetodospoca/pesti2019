@@ -1,0 +1,26 @@
+<div class="card">
+  <form (ngSubmit)="create()">
+    <div class="card-header text-center">
+      <h3>Create an Activity</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+
+          <button type="submit" class="btn btn-success" [disabled]="form.learning_objectives.length == 0 || loading">
+            <i class="fa fa-save" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Save
+          </button>
+
+          <button type="button" (click)="addLearningObjective()" class="btn btn-primary" [disabled]="loading">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add Learning Objective
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

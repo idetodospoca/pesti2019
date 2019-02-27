@@ -1,0 +1,52 @@
+<div class="card" style="overflow-x:auto;">
+  <div class="card-header text-center">
+    <h3>Activities</h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <table class="table table-bordered table-striped mt-2" >
+          <thead class="thead-inverse">
+            <tr>
+              <th>Description</th>
+              <th>Subject</th>
+              <th>Subject Matter</th>
+              <th>Delivery Mode</th>
+              <th>Interaction</th>
+              <th>Interrelationship, Motivation, Participation, Performance</th>
+              <th>Scope</th>
+              <th>Feedback Use</th>
+              <th>Age</th>
+              <th>Learning Objectives</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loading">
+              <td colspan="5" class="text-center">
+                <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+              </td>
+            </tr>
+            <tr *ngFor="let activity of activities">
+              <td>{{activity.description}}</td>
+              <td>{{activity.subject}}</td>
+              <td>{{activity.subject_matter}}</td>
+              <td>{{activity.delivery_mode}}</td>
+              <td>{{activity.interaction}}</td>
+              <td>{{activity.interrelationship}}, {{activity.motivation}}, {{activity.participation}}, {{activity.performance}}</td>
+              <td>{{activity.scope}}</td>
+              <td>{{activity.feedback_use}}</td>
+              <td>{{activity.age}}</td>
+              <td>
+                <button class="btn btn-dark" title="Learning Objectives" (click)="showLearningObjectives(activity.learning_objectives)">
+                  <i class="fas fa-arrows-alt"></i>
+                </button>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
