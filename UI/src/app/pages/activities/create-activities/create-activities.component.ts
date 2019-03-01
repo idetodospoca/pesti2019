@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { Activity, LearningObjective } from '../../../models';
+
 
 @Component({
   selector: 'app-create-activities',
@@ -7,9 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateActivitiesComponent implements OnInit {
 
-  constructor() { }
+
+  constructor( private http: HttpClient, private toastr: ToastrService) { }
 
   ngOnInit() {
+
   }
 
 }

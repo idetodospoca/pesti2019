@@ -6,21 +6,168 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-
-          <button type="submit" class="btn btn-success" [disabled]="form.learning_objectives.length == 0 || loading">
-            <i class="fa fa-save" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-            Save
-          </button>
-
-          <button type="button" (click)="addLearningObjective()" class="btn btn-primary" [disabled]="loading">
-            <i class="fa fa-plus" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-            Add Learning Objective
-          </button>
-
+        </div>
+        <button type="button" (click)="addLearningObjective()" class="btn btn-primary" [disabled]="loading">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Learning Objective
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            <label>Description</label>
+            <input #description="ngModel" name="subject" type="string" class="form-control"
+            [(ngModel)]="form.description" required>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label>Subject</label>
+            <input #subject="ngModel" name="subject" type="string" class="form-control"
+            [(ngModel)]="form.subject" required>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label>Subject Matter</label>
+            <input #subject_matter="ngModel" name="subject_matter" type="string" class="form-control"
+            [(ngModel)]="form.subject_matter" required>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label for="delivery_mode">Delivery Mode</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="delivery_mode">
+                <option>Face to face</option>
+                <option>Distance</option>
+                <option>Blended</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label for="interaction">Interaction</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="interaction">
+                <option>Class based</option>
+                <option>Group based</option>
+                <option>One to many</option>
+                <option>One to one</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label for="scope">Scope</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="scope">
+                <option>Open ended</option>
+                <option>Close ended</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label for="feedback_use">Feedback Use</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="feedback_use">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-md-1 row-sm-1">
+        <label><b>Perception</b></label>
+      </div>
+      <div class="row">
+        <div class="col-md-1 col-sm-1">
+          <div class="form-group">
+            <label for="interrelationship">Interrelationship</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="interrelationship">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+          <div class="form-group">
+            <label for="motivation">Motivation</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="motivation">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+          <div class="form-group">
+            <label for="participation">Participation</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="participation">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+          <div class="form-group">
+            <label for="performance">Performance</label>
+            <div class="row-md-2 row-sm-2">
+              <select class="form-control" id="performance">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <div class="form-group">
+            <label>Age</label>
+            <input #age="ngModel" name="age" type="number" class="form-control"
+            [(ngModel)]="form.age" required min="5">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-success" [disabled]="form.learning_objectives.length == 0 || loading">
+        <i class="fa fa-save" *ngIf="!loading"></i>
+        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        Save
+      </button>
     </div>
   </form>
 </div>
