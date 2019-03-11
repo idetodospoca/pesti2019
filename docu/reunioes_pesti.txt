@@ -1,0 +1,29 @@
+Data
+08/02/2019
+
+Participantes
+Joel Coelho
+Prof. Dulce Mota
+
+Local
+ISEP
+
+Objetivos
+Análise	e	discussão	sobre	o	tema	a	abordar,
+definição	 de	 ponto	 de	 partida	 para	 o
+desenvolvimento.
+
+
+Data
+01/03/2019
+
+Participantes
+Joel Coelho
+Prof. Dulce Mota
+
+Local
+ISEP
+
+Objetivos
+Discussão sobre o ponto de situação do desenvolvimento.
+Aprofundamento dos vários Casos de Uso de cada ator do sistema.

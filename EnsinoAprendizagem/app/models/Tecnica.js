@@ -23,8 +23,16 @@ let LearningSchema    = new Schema({
 });
 
 
+/*
+  Technique defined by:
+  Init Data + Tlt Data.
+  Init Data consists of name, description and set of rules.
+  Tlt Data is defined by context and structure
+
+*/
 let TecnicaSchema     = new Schema({
 
+  //Init Data
   name  : {
     type     : String,
     required : true
@@ -35,6 +43,7 @@ let TecnicaSchema     = new Schema({
     required : true
   },
 
+  //Context
   delivery_mode : {
     type     : [String],
     required : true,
@@ -87,7 +96,7 @@ let TecnicaSchema     = new Schema({
   },
 
   target_audience : {
-    type     : String,
+    type     : [Number],
     required : true
   },
 
@@ -99,6 +108,13 @@ let TecnicaSchema     = new Schema({
       },
       message : 'At least one learning objective should be defined.'
     }
+  },
+
+  structure : {
+    type      : mongoose.Schema.Types.ObjectId,
+    ref       : 'EstruturaTecnica',
+    required  : true
+
   },
 
   psicologo : {

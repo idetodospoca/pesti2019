@@ -19,10 +19,30 @@ let LearningSchema    = new Schema({
     'Analising', 'Comparing', 'Contrasting', 'Discriminating',  //Analise category
     'Ranking', 'Assessing', 'Monitoring', 'Judging',            //Evaluate category
     'Generating', 'Planning', 'Creating', 'Inventing']          //Create category
-  }
+  },
+
+  subject_matter : {
+    type     : String,
+    required : true
+  },
+
+  // Optinal/if any
+  conditions  : String,
+  degree      : String
 });
 
+
+/*
+  Activity can be defined by:
+  Activity Analytics,
+  Teaching-Learning Context,
+  At least 1 Teaching-Learning Objective.
+
+*/
 let AtividadeSchema   = new Schema({
+
+
+  // Activity Analytics
   description : {
     type     : String,
     required : true
@@ -33,6 +53,8 @@ let AtividadeSchema   = new Schema({
     required : true
   },
 
+
+  // Teaching-Learning Context
   delivery_mode : {
     type     : String,
     required : true,
@@ -45,7 +67,26 @@ let AtividadeSchema   = new Schema({
     enum     : ['Class based', 'Group based', 'One to many', 'One to one']
   },
 
-  // Perception
+  scope : {
+    type     : String,
+    required : true,
+    enum     : ['Open ended', 'Close ended']
+  },
+
+  age : {       // Target Audience
+    type     : Number,
+    required : true,
+    min      : 5
+  },
+
+  feedback_use : {
+    type     : String,
+    required : true,
+    enum     : ['High', 'Medium', 'Low', 'None']
+  },
+
+
+  // Educator's Perception - Part of TLC
   // interrelationship, motivation, participation, performance
 
   interrelationship : {
@@ -72,23 +113,6 @@ let AtividadeSchema   = new Schema({
     enum     : ['High', 'Medium', 'Low', 'None']
   },
 
-  scope : {
-    type     : String,
-    required : true,
-    enum     : ['Open ended', 'Close ended']
-  },
-
-  feedback_use : {
-    type     : String,
-    required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
-  },
-
-  age : {
-    type     : Number,
-    required : true,
-    min      : 0
-  },
 
   learning_objectives : {
     type      : [LearningSchema],
@@ -100,15 +124,22 @@ let AtividadeSchema   = new Schema({
     }
   },
 
-  subject_matter : {
-    type     : String,
-    required : true
+  social_objective : {
+    type  : String,
+    enum  : ['Accept', 'Cooperate', 'Give', 'Relate']
   },
 
-  conditions  : String, //Optional
-  degree      : String, //Optional
+  affective_objective : {
+    type  : String,
+    enum  : ['Listen', 'Modify', 'Perform', //internalizingvalues
+    'Formulate', 'Organize', 'Systhesize',  //organization
+    'Ask', 'Follow', 'Name',                //receivingphenomena
+    'Answer', 'Discuss', 'Help',            //respondingtophenomena
+    'Invite', 'Share', 'Work']              //valuing
+  },
 
-  professor : {
+  //  Teacher that initiates the activity
+  project_manager : {
     type      : mongoose.Schema.Types.ObjectId,
     ref       : 'User',
     required  : true

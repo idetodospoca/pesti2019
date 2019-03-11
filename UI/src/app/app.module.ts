@@ -29,6 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { SharedModule } from './shared/shared.module';
 
 import { LearningobjectiveComponent } from './dialogs/learningobjective/learningobjective.component';
+import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LearningobjectiveComponent } from './dialogs/learningobjective/learning
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    LearningobjectiveComponent
+    LearningobjectiveComponent,
+    CreateLearningobjectiveComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { LearningobjectiveComponent } from './dialogs/learningobjective/learning
     AuthGuard
   ],
   entryComponents: [
-    LearningobjectiveComponent
+    LearningobjectiveComponent,
+    CreateLearningobjectiveComponent
   ],
   bootstrap: [AppComponent]
 })

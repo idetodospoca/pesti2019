@@ -32,7 +32,7 @@ var UserSchema   = new Schema({
   role: {
     type     : String,
     required : true,
-    enum     : ['admin', 'professor', 'psicologo']
+    enum     : ['admin', 'professor', 'psicologo_escolar', 'psicologo_educacional']
   }
 });
 

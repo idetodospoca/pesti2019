@@ -1,0 +1,39 @@
+<form (ngSubmit)="create()" novalidate #f="ngForm">
+  <div class="modal-header bg-primary">
+    <h4 class="modal-title pull-left">New Learning Objective</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>Knowledge Category</label>
+          <select #knowledge_category="ngModel" name="knowledge_category" class="form-control" [(ngModel)]="form.knowledge_category"
+           required  size>
+          <option>Factual</option>
+          <option>Factual</option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label>Behaviour</label>
+        <select #behaviour="ngModel" name="behaviour" class="form-control" [(ngModel)]="form.behaviour"
+         required  size>
+        <option>Factual</option>
+      </select>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-success" [disabled]="f.invalid">
+    <i class="fa fa-save"></i> Save
+  </button>
+  <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+    <i class="fa fa-times-circle"></i> Close
+  </button>
+</div>
+</form>

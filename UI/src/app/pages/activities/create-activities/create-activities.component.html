@@ -163,7 +163,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <button type="submit" class="btn btn-success" [disabled]="form.learning_objectives.length == 0 || loading">
+      <button type="submit" class="btn btn-success" [disabled]="loading">
         <i class="fa fa-save" *ngIf="!loading"></i>
         <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
         Save

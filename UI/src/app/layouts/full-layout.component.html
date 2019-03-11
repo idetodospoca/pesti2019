@@ -15,6 +15,9 @@
         <div *ngIf="!authService.isAuthenticated()">
           <a routerLink="/auth/login" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign in</a>
         </div>
+        <div *ngIf="!authService.isAuthenticated()">
+          <a routerLink="/auth/register" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign up</a>
+        </div>
       </div>
     </li>
   </ul>
