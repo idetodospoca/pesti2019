@@ -27,3 +27,17 @@ ISEP
 Objetivos
 Discussão sobre o ponto de situação do desenvolvimento.
 Aprofundamento dos vários Casos de Uso de cada ator do sistema.
+
+
+Data
+01/03/2019
+
+Participantes
+Joel Coelho
+Prof. Dulce Mota
+
+Local
+ISEP
+
+Objetivos
+Esclarecimento de dúvidas.
