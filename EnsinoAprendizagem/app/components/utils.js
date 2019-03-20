@@ -12,18 +12,18 @@ function handleValidationError(err, res){
   }
   return res.status(422).json({
     error   : 'validation_error',
-    message : 'Alguns campos falharam as regras de validação.',
+    message : 'Some fields could not be validated.',
     data    : errors
   });
 }
 
 function handleCastError(err, res){
-  return res.status(404).json({error: 'not_found', message: `${err.model.modelName} inexistente.`});
+  return res.status(404).json({error: 'not_found', message: `${err.model.modelName} does not exist.`});
 }
 
 function handleApiError(err, res) {
   if(err.response.status == 400) {
-    let data = err.response.data; //{ Texto: [ 'The Texto field is required.' ] }
+    let data = err.response.data;
     let errors = [];
     for (let property of Object.keys(data) ) {
       for(let errMessage of data[property]) {
@@ -36,11 +36,10 @@ function handleApiError(err, res) {
     }
     return res.status(422).json({
       error   : 'validation_error',
-      message : 'Alguns campos falharam as regras de validação.',
+      message : 'Some fields could not be validated.',
       data    : errors
     });
   }
-  // console.log('here', err.request);
 
   return res.status(err.response.status).json({error: 'invalid_request', message: err.response.statusText});
 }
@@ -58,7 +57,7 @@ function handleError(req, res, defaultStatus){
     console.error('An unexpected error has occurred', err);
     return res.status(defaultStatus || 500).json({
       error   : 'internal_server_error',
-      message : 'Oops, parece que algo correu mal. Por favor, tente mais tarde.'
+      message : 'Something went wrong, please try again later.'
     });
   };
 }

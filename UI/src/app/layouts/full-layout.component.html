@@ -13,7 +13,7 @@
           <button type="button" class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i>Sign out</button>
         </div>
         <div *ngIf="!authService.isAuthenticated()">
-          <a routerLink="/auth/login" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign in</a>
+          <a routerLink="/auth/login" class="dropdown-item"><i class="fa fa-sign-in"></i>Log in</a>
         </div>
         <div *ngIf="!authService.isAuthenticated()">
           <a routerLink="/auth/register" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign up</a>

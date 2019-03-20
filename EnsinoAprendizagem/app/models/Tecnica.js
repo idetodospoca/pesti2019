@@ -2,24 +2,100 @@ const mongoose        = require('mongoose');
 const Schema          = mongoose.Schema;
 const idValidator     = require('mongoose-id-validator');
 
+const EVAL  = ['High', 'Medium', 'Low', 'None']
+
+let TaskSchema        = new Schema({
+
+  type  : {
+    type      : String,
+    required  : true
+  },
+
+  description  : {
+    type      : String,
+    required  : true
+  },
+
+  role  : {
+    type      : String,
+    required  : true,
+    enum      : ['Student', 'Staff']
+  },
+
+  resources : [String]
+
+});
+
+let PhaseSchema       = new Schema({
+
+  name  : {
+    type      : String,
+    required  : true
+  },
+
+  tasks  : {
+    type  : [TaskSchema],
+    validate  : {
+      validator: function(v){
+        return v.length >= 1;
+      },
+      message : 'At least one task should be defined.'
+    }
+  }
+});
+
+let ModuleSchema      = new Schema({
+
+  name  : {
+    type      : String,
+    required  : true
+  },
+
+  phases  : {
+    type  : [PhaseSchema],
+    validate  : {
+      validator: function(v){
+        return v.length >= 1;
+      },
+      message : 'At least one phase should be defined.'
+    }
+  }
+});
+
+
+let EstruturaTecnicaSchema   = new Schema({
+
+  modules : {
+    type      : [ModuleSchema],
+    validate  : {
+      validator: function(v){
+        return v.length >= 1;
+      },
+      message : 'At least one module should be defined.'
+    }
+  }
+});
 
 let LearningSchema    = new Schema({
   knowledge_category : {
     type     : String,
     required : true,
-    enum     : ['Factual', 'Conceptual', 'Procedural', 'Megacognitive']
+    enum     : ['Factual', 'Conceptual', 'Procedural', 'Metacognitive']
   },
 
   behaviour : {
     type     : String,
-    required : true,
-    enum     : ['Defining', 'Describing', 'Listing', 'Recall',  //Remember category
-    'Explaining', 'Generalizing', 'Rewriting', 'Summarizing',   //Understand category
-    'Implementing', 'Organizing', 'Solving', 'Constructing',    //Apply category
-    'Analising', 'Comparing', 'Contrasting', 'Discriminating',  //Analise category
-    'Ranking', 'Assessing', 'Monitoring', 'Judging',            //Evaluate category
-    'Generating', 'Planning', 'Creating', 'Inventing']          //Create category
-  }
+    required : true
+  },
+
+  subject_matter : {
+    type     : String,
+    required : true
+  },
+
+  // Optinal/if any
+  conditions  : String,
+  degree      : String
 });
 
 
@@ -43,17 +119,17 @@ let TecnicaSchema     = new Schema({
     required : true
   },
 
+  rules : [String],
+
   //Context
   delivery_mode : {
     type     : [String],
-    required : true,
-    enum     : ['Face to face', 'Distance', 'Blended']
+    required : true
   },
 
   interaction : {
     type     : [String],
-    required : true,
-    enum     : ['Class based', 'Group based', 'One to many', 'One to one']
+    required : true
   },
 
   // Perception
@@ -62,37 +138,36 @@ let TecnicaSchema     = new Schema({
   interrelationship : {
     type     : [String],
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   motivation : {
     type     : [String],
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   participation : {
     type     : [String],
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   performance : {
     type     : [String],
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   scope : {
     type     : [String],
-    required : true,
-    enum     : ['Open ended', 'Close ended']
+    required : true
   },
 
   feedback_use : {
     type     : [String],
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   target_audience : {
@@ -110,14 +185,20 @@ let TecnicaSchema     = new Schema({
     }
   },
 
-  structure : {
-    type      : mongoose.Schema.Types.ObjectId,
-    ref       : 'EstruturaTecnica',
-    required  : true
-
+  affective_objectives : {
+    type  : [String]
   },
 
-  psicologo : {
+  social_objectives : {
+    type  : [String]
+  },
+
+  structure : {
+    type      : EstruturaTecnicaSchema,
+    required  : true
+  },
+
+  psychologist : {
     type      : mongoose.Schema.Types.ObjectId,
     ref       : 'User',
     required  : true

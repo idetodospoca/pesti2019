@@ -7,20 +7,20 @@ const timestamps      = require('../components/timestamps');
 var UserSchema   = new Schema({
   name : {
     type     : String,
-    required : [true, "`Name` is required."]
+    required : [true, "Name is required."]
   },
 
   email : {
     type     : String,
-    required : [true, "`E-mail` is required."],
+    required : [true, "E-mail is required."],
     index: true,
     unique: true
   },
 
   password : {
     type     : String,
-    required : [true, "`Password` is required."],
-    select: false, //Hide from general queries
+    required : [true, "Password is required."],
+    select   : false, //Hide from general queries
     validate : {
       validator: function(v) {
         return v.length >= 8;

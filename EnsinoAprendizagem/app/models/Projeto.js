@@ -2,23 +2,18 @@ const mongoose        = require('mongoose');
 const Schema          = mongoose.Schema;
 const idValidator     = require('mongoose-id-validator');
 
+const EVAL  = ['High', 'Medium', 'Low', 'None']
 
 let LearningSchema    = new Schema({
   knowledge_category : {
     type     : String,
     required : true,
-    enum     : ['Factual', 'Conceptual', 'Procedural', 'Megacognitive']
+    enum     : ['Factual', 'Conceptual', 'Procedural', 'Metacognitive']
   },
 
   behaviour : {
     type     : String,
-    required : true,
-    enum     : ['Defining', 'Describing', 'Listing', 'Recall',  //Remember category
-    'Explaining', 'Generalizing', 'Rewriting', 'Summarizing',   //Understand category
-    'Implementing', 'Organizing', 'Solving', 'Constructing',    //Apply category
-    'Analising', 'Comparing', 'Contrasting', 'Discriminating',  //Analise category
-    'Ranking', 'Assessing', 'Monitoring', 'Judging',            //Evaluate category
-    'Generating', 'Planning', 'Creating', 'Inventing']          //Create category
+    required : true
   },
 
   subject_matter : {
@@ -33,10 +28,10 @@ let LearningSchema    = new Schema({
 
 
 /*
-  Activity can be defined by:
-  Activity Analytics,
-  Teaching-Learning Context,
-  At least 1 Teaching-Learning Objective.
+Activity can be defined by:
+Activity Analytics,
+Teaching-Learning Context,
+At least 1 Teaching-Learning Objective.
 
 */
 let AtividadeSchema   = new Schema({
@@ -57,20 +52,17 @@ let AtividadeSchema   = new Schema({
   // Teaching-Learning Context
   delivery_mode : {
     type     : String,
-    required : true,
-    enum     : ['Face to face', 'Distance', 'Blended']
+    required : true
   },
 
   interaction : {
     type     : String,
-    required : true,
-    enum     : ['Class based', 'Group based', 'One to many', 'One to one']
+    required : true
   },
 
   scope : {
     type     : String,
-    required : true,
-    enum     : ['Open ended', 'Close ended']
+    required : true
   },
 
   age : {       // Target Audience
@@ -82,7 +74,7 @@ let AtividadeSchema   = new Schema({
   feedback_use : {
     type     : String,
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
 
@@ -92,25 +84,25 @@ let AtividadeSchema   = new Schema({
   interrelationship : {
     type     : String,
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   motivation : {
     type     : String,
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   participation : {
     type     : String,
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
   performance : {
     type     : String,
     required : true,
-    enum     : ['High', 'Medium', 'Low', 'None']
+    enum     : EVAL
   },
 
 
@@ -124,18 +116,37 @@ let AtividadeSchema   = new Schema({
     }
   },
 
-  social_objective : {
-    type  : String,
-    enum  : ['Accept', 'Cooperate', 'Give', 'Relate']
+  affective_objectives : {
+    type  : [String]
   },
 
-  affective_objective : {
-    type  : String,
-    enum  : ['Listen', 'Modify', 'Perform', //internalizingvalues
-    'Formulate', 'Organize', 'Systhesize',  //organization
-    'Ask', 'Follow', 'Name',                //receivingphenomena
-    'Answer', 'Discuss', 'Help',            //respondingtophenomena
-    'Invite', 'Share', 'Work']              //valuing
+  social_objectives : {
+    type  : [String]
+  }
+
+});
+
+
+let ProjetoSchema = new Schema({
+
+  name  : {
+    type     : String,
+    required : true
+  },
+
+  goal  : {
+    type     : String,
+    required : true
+  },
+
+  activity :  {
+    type      : AtividadeSchema,
+    required  : true
+  },
+
+  date : {
+    type: Date,
+    default: Date.now
   },
 
   //  Teacher that initiates the activity
@@ -143,11 +154,17 @@ let AtividadeSchema   = new Schema({
     type      : mongoose.Schema.Types.ObjectId,
     ref       : 'User',
     required  : true
+  },
+
+  //  Teachers invited to collaborate
+  teachers : {
+    type      : [mongoose.Schema.Types.ObjectId],
+    ref       : 'User',
   }
 
 });
 
-AtividadeSchema.plugin(idValidator);
+ProjetoSchema.plugin(idValidator);
 
 
-module.exports = mongoose.model('Atividade', AtividadeSchema);
+module.exports = mongoose.model('Projeto', ProjetoSchema);
