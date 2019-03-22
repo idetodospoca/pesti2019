@@ -17,21 +17,8 @@ function index(req, res) {
 function create(req, res) {
 
   let projeto                   = new Projeto();
-  let atividade                 = req.body.atividade;
-  let learning_objectives       = req.body.learning_objectives;
-
-
-  atividade.learning_objectives = learning_objectives.map(l =>  {
-    return  l;
-  });
-
-  projeto.name                  = req.body.name;
-  projeto.goal                  = req.body.goal;
-  projeto.activity              = atividade.map(a =>  { return  a; });
-  projeto.date                  = req.body.date;
+  Object.assign(projeto, { ...req.body });
   projeto.project_manager       = req.user;
-  projeto.teachers              = req.body.teachers;
-
 
   projeto.save()
   .then(p => {
@@ -40,6 +27,7 @@ function create(req, res) {
   .catch(utils.handleError(req, res));
 
 }
+
 
 function remove(req, res) {
 
@@ -60,7 +48,6 @@ function remove(req, res) {
     res.status(200).send("Project deleted.");
   })
   .catch(utils.handleError(req, res));
-
 
 }
 

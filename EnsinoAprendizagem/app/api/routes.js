@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 router.use('/auth', require('./auth'));
 router.use('/users', auth.isAuthenticated(), auth.hasRole('admin'), require('./utilizadores'));
 router.use('/projects', require('./projetos'));
-router.use('/tecnicas', auth.isAuthenticated(), auth.hasRole('psicologo_escolar', 'psicologo_educacional'), require('./tecnicas'));
+router.use('/techniques', auth.isAuthenticated(), auth.hasRole('psicologo_escolar', 'psicologo_educacional'), require('./tecnicas'));
+router.use('/attributes', auth.isAuthenticated(), require('./atributos'));
 
 module.exports = router;

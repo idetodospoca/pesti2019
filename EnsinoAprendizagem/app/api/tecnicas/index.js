@@ -2,8 +2,9 @@ const router     = require('express').Router();
 const controller = require('./tecnicas.controller');
 const auth       = require('../middleware/auth.middleware');
 
-router.get('/', auth.isAuthenticated(), auth.hasRole('psicologo'), controller.index);
-router.post('/', auth.isAuthenticated(), auth.hasRole('psicologo'), controller.create);
-router.put('/:id', auth.isAuthenticated(), auth.hasRole('psicologo'), controller.edit);
+router.get('/', auth.isAuthenticated(), auth.hasRole('psicologo_escolar'), controller.index);
+router.post('/', auth.isAuthenticated(), auth.hasRole('psicologo_escolar'), controller.create);
+router.delete('/:id', auth.isAuthenticated(), auth.hasRole('psicologo_escolar'), controller.remove);
+router.put('/:id', auth.isAuthenticated(), auth.hasRole('psicologo_escolar'), controller.edit);
 
 module.exports = router;

@@ -17,18 +17,7 @@ function index(req, res) {
 function create(req, res) {
 
   let atributos                   = new Atributos();
-  let behaviour                   = req.body.behaviour;
-  let affective_objectives        = req.body.affective_objectives;
-  let social_objectives           = req.body.social_objectives;
-  let task_types                  = req.body.task_types;
-
-  atributos.delivery_mode         = req.body.delivery_mode;
-  atributos.interaction           = req.body.interaction;
-  atributos.resolution_scope      = req.body.resolution_scope;
-  atributos.behaviour             = behaviour.map(b => { return b; });
-  atributos.affective_objectives  = affective_objectives.map(af => { return af; });
-  atributos.social_objectives     = social_objectives.map(s => { return s; });
-  atributos.task_types            = task_types.map(t => { return t; });
+  Object.assign(atributos, { ...req.body });
   atributos.psychologist          = req.user;
 
   atributos.save()
