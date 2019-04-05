@@ -41,12 +41,15 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     SIDEBAR_TOGGLE_DIRECTIVES,
     LearningobjectiveComponent,
     CreateLearningobjectiveComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    }),
     BrowserAnimationsModule,
     SharedModule
   ],
@@ -62,6 +65,7 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
   entryComponents: [
     LearningobjectiveComponent,
     CreateLearningobjectiveComponent
+
   ],
   bootstrap: [AppComponent]
 })

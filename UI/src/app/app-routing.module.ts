@@ -30,8 +30,12 @@ const routes: Routes = [
       },
       {
         path: 'activities',
-        //canActivateChild: [AuthGuard],
         loadChildren: './pages/activities/activities.module#ActivitiesModule'
+      },
+      {
+        path: 'attributes',
+        canActivateChild: [AuthGuard],
+        loadChildren: './pages/attributes/attributes.module#AttributesModule'
       }
     ]
   },

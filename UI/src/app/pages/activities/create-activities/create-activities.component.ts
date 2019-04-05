@@ -16,9 +16,7 @@ export class CreateActivitiesComponent implements OnInit {
   loading        : boolean = false;
   form           : Partial<Activity> = {
     description : "",
-    subject : "",
-    subject_matter : "",
-    age : 5
+
   };
 
   bsModalRef     : BsModalRef;

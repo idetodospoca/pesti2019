@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl      : 'https://ensinoaprendizagem.herokuapp.com/api/',
+  apiUrl      : 'https://ensinoaprendizagem.herokuapp.com/api',
   //socketUrl   : '',
 };
 

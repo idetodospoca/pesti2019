@@ -12,7 +12,10 @@ export class CreateLearningobjectiveComponent implements OnInit {
 
   form    :   Partial<LearningObjective> = {
     knowledge_category  : "",
-    behaviour           : ""
+    behaviour           : "",
+    subject_matter      : "",
+    conditions          : "",
+    degree              : ""
   };
   canceled : boolean = false;
   constructor(public bsModalRef: BsModalRef, private toastr: ToastrService) { }

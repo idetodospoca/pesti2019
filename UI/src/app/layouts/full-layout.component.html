@@ -49,6 +49,23 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngIf="authService.hasRole('psicologo_educacional')">
+          <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
+            <i class="fa fa-feed"></i> Attributes
+          </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item" *ngIf="authService.hasRole('psicologo_educacional')">
+              <a class="nav-link" routerLinkActive="active" routerLink="/attributes" [routerLinkActiveOptions]="{exact: true}">
+                <i class="fa fa-list"></i> Available Attributes
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.hasRole('psicologo_educacional')">
+              <a class="nav-link" routerLinkActive="active" routerLink="/attributes/create">
+                <i class="fa fa-plus"></i> New Attributes
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>

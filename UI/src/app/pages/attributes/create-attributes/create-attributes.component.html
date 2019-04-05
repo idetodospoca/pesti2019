@@ -1,0 +1,163 @@
+<div class="card">
+  <form (ngSubmit)="create()">
+    <div class="card-header text-center">
+      <h3>New Attributes</h3>
+    </div>
+
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <h4><label>Delivery Mode</label></h4>
+            <textarea name="delivery" #delivery="ngModel" rows="5" [(ngModel)]="delivery_mode" class="form-control" placeholder="One definition per line"></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <h4><label>Interaction</label></h4>
+            <textarea name="interaction" #interact="ngModel" rows="5" [(ngModel)]="interaction" class="form-control" placeholder="One definition per line"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <h4><label>Resolution Scope</label></h4>
+            <textarea name="resolution_scope" #resolution="ngModel" rows="5" [(ngModel)]="resolution_scope" class="form-control" placeholder="One definition per line"></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <h4><label>Social Objectives</label></h4>
+            <textarea name="social_objectives" #social="ngModel" rows="5" [(ngModel)]="social_objectives" class="form-control" placeholder="One definition per line"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+                <h4>Behaviour</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <label>Category</label>
+                    <select #behaviour_cat="ngModel" class="form-control" [(ngModel)]="behaviour_category" id="behaviour_category">
+                      <option>Remember</option>
+                      <option>Understand</option>
+                      <option>Apply</option>
+                      <option>Analise</option>
+                      <option>Evaluate</option>
+                      <option>Create</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <label>Verb</label>
+                    <input type="text" #behaviour="ngModel" name="behaviour_verb" class="form-control" [(ngModel)]="behaviour_verb">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-success" [disabled]="behaviour_verb == '' || loading" (click)="addBehaviour()">
+                  <i class="fa fa-plus" *ngIf="!loading"></i>
+                  <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+                <h4>Affective Objectives</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <label>Category</label>
+                    <select class="form-control" id="affective_category">
+                      <option>Internalizing Values</option>
+                      <option>Organization</option>
+                      <option>Receiving Phenomena</option>
+                      <option>Responding to Phenomena</option>
+                      <option>Valuing</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <label>Verb</label>
+                    <input type="text" #affective="ngModel" name="affective_verb" class="form-control" [(ngModel)]="affective_verb">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-success" [disabled]="affective_verb == '' || loading" (click)="addAffective()">
+                  <i class="fa fa-plus" *ngIf="!loading"></i>
+                  <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+                <h4>Task types</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <label>Category</label>
+                    <input type="text" #category="ngModel" name="task_category" class="form-control" [(ngModel)]="task_category">
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <label>Verb</label>
+                    <input type="text" #verb="ngModel" name="task_verb" class="form-control" [(ngModel)]="task_verb">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-success" [disabled]="task_category == '' && task_verb == ''" (click)="addTask()">
+                  <i class="fa fa-plus" *ngIf="!loading"></i>
+                  <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-success" [disabled]="loading">
+        <i class="fa fa-save" *ngIf="!loading"></i>
+        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        Save
+      </button>
+    </div>
+
+  </form>
+</div>
