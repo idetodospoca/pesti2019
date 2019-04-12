@@ -10,7 +10,10 @@
 							<span class="input-group-addon">
 								<i class="fa fa-envelope"></i>
 							</span>
-							<input type="text" class="form-control" placeholder="E-mail" name="email" [(ngModel)]="email">
+							<input type="email" class="form-control" placeholder="E-mail" name="email" [(ngModel)]="email">
+								<div class="invalid-feedback">
+          				Please provide a valid e-mail.
+        				</div>
 						</div>
 
 						<div class="input-group mb-3">
@@ -31,7 +34,7 @@
 							<span class="input-group-addon">
 								<i class="fa fa-lock"></i>
 							</span>
-							<input type="password" class="form-control" placeholder="Confirm" name="password2" [(ngModel)]="passwordConfirmation">
+							<input type="password" class="form-control" placeholder="Repeat Password" name="password2" [(ngModel)]="passwordConfirmation">
 						</div>
 
 						<button type="submit" class="btn btn-block btn-success mb-3" (click)="register()" [disabled]="loading">

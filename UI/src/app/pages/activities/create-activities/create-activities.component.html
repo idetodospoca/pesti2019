@@ -1,173 +1,229 @@
-<div class="card">
-  <form (ngSubmit)="create()">
-    <div class="card-header text-center">
-      <h3>Create an Activity</h3>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
+<form (ngSubmit)="create()" novalidate #f="ngForm">
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+
+
+        <div class="form-group row p-2">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-4">
+            <input #name="ngModel" type="text" name="name" class="form-control" placeholder="Project Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
         </div>
-        <button type="button" (click)="addLearningObjective()" class="btn btn-primary" [disabled]="loading">
-          <i class="fa fa-plus" *ngIf="!loading"></i>
+
+        <div class="form-group row p-2">
+          <label for="goal" class="col-sm-2 col-form-label">Goal</label>
+          <div class="col-sm-4">
+            <input #goal="ngModel" type="text" class="form-control" name="goal" placeholder="Main goal of the project" [(ngModel)]="form.goal" required [ngClass]="{'is-invalid': isInvalid(goal)}">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-4">
+            <input #description="ngModel" type="text" class="form-control" name="description" [(ngModel)]="form.activity.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="subject" class="col-sm-2 col-form-label">Subject</label>
+          <div class="col-sm-4">
+            <input #subject="ngModel" type="text" class="form-control" name="subject" [(ngModel)]="form.activity.subject" required [ngClass]="{'is-invalid': isInvalid(subject)}">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+
+        <div class="form-group row p-2">
+          <label for="age" class="col-sm-2 col-form-label">Age group</label>
+          <div class="col-sm-4">
+            <input #age="ngModel" type="number" class="form-control" name="age" min="5" value="5" [(ngModel)]="form.activity.age" required [ngClass]="{'is-invalid': isInvalid(age)}">
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+
+        <div class="form-group row p-2">
+          <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label>
+          <div class="col-sm-4">
+            <select #delivery_mode="ngModel" class="form-control" name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
+              <option *ngFor="let at of attributes.behaviour" [ngValue]="at.category">{{at.category}}</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="interaction" class="col-sm-2 col-form-label">Interaction</label>
+          <div class="col-sm-4">
+            <select #interaction="ngModel" class="form-control" name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
+
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label>
+          <div class="col-sm-4">
+            <select #resolution_scope="ngModel" class="form-control" name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
+
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="feedback_use" class="col-sm-2 col-form-label">Feedback Use</label>
+          <div class="col-sm-4">
+            <select #feedback_use="ngModel" class="form-control" name="feedback_use" [(ngModel)]="form.activity.feedback_use" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
+
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="None">None</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="row p-2">
+          <p><strong>Educator's Perception</strong></p>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="interrelationship" class="col-sm-2 col-form-label">Interrelationship</label>
+          <div class="col-sm-4">
+            <select #interrelationship="ngModel" class="form-control" name="interrelationship" [(ngModel)]="form.activity.interrelationship" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
+
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="None">None</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="motivation" class="col-sm-2 col-form-label">Motivation</label>
+          <div class="col-sm-4">
+            <select #motivation="ngModel" class="form-control" name="motivation" [(ngModel)]="form.activity.motivation" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
+
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="None">None</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="participation" class="col-sm-2 col-form-label">Participation</label>
+          <div class="col-sm-4">
+            <select #participation="ngModel" class="form-control" name="participation" [(ngModel)]="form.activity.participation" required [ngClass]="{'is-invalid': isInvalid(participation)}">
+
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="None">None</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="form-group row p-2">
+          <label for="performance" class="col-sm-2 col-form-label">Performance</label>
+          <div class="col-sm-4">
+            <select #performance="ngModel" class="form-control" name="performance" [(ngModel)]="form.activity.performance" required [ngClass]="{'is-invalid': isInvalid(performance)}">
+
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="None">None</option>
+
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="row p-2">
+          <p><strong>Learning Objectives</strong></p>
+        </div>
+        <div class="form-group row p-2">
+          <button class="btn btn-success"  (click)="addLearningObjective()" [disabled]="">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add Learning Objective
+          </button>
+
+
+          <table class="table table-bordered table-stripped table-responsive">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Knowledge Category</th>
+                <th>Behaviour</th>
+                <th>Subject Matter</th>
+                <th>Conditions</th>
+                <th>Degree</th>
+                <th>Ações</th>
+              </tr>
+
+            </thead>
+            <tr *ngIf="form.activity.learning_objectives.length == 0" class="text-center">
+              <td colspan="7">You need to add at least 1 Learning Objective</td>
+            </tr>
+            <tr *ngFor="let lo of form.activity.learning_objectives; let number = index">
+              <td>{{lo.knowledge_category}}</td>
+              <td>{{lo.behaviour}}</td>
+              <td>{{lo.subject_matter}}</td>
+              <td>{{lo.conditions}}</td>
+              <td>{{lo.degree}}</td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="editLO(number)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteLO(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
+
+        </div>
+
+
+
+
+
+        <button type="submit" class="btn btn-success float-right"  [disabled]="f.invalid">
+          <i class="fa fa-save" *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-          Add Learning Objective
+          Save
         </button>
+
+
       </div>
-      <div class="row">
-        <div class="col-md-4 col-sm-4">
-          <div class="form-group">
-            <label>Description</label>
-            <input #description="ngModel" name="subject" type="string" class="form-control"
-            [(ngModel)]="form.description" required>
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label>Subject</label>
-            <input #subject="ngModel" name="subject" type="string" class="form-control"
-            [(ngModel)]="form.subject" required>
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label>Subject Matter</label>
-            <input #subject_matter="ngModel" name="subject_matter" type="string" class="form-control"
-            [(ngModel)]="form.subject_matter" required>
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label for="delivery_mode">Delivery Mode</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="delivery_mode">
-                <option>Face to face</option>
-                <option>Distance</option>
-                <option>Blended</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label for="interaction">Interaction</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="interaction">
-                <option>Class based</option>
-                <option>Group based</option>
-                <option>One to many</option>
-                <option>One to one</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label for="scope">Scope</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="scope">
-                <option>Open ended</option>
-                <option>Close ended</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label for="feedback_use">Feedback Use</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="feedback_use">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row-md-1 row-sm-1">
-        <label><b>Perception</b></label>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-sm-1">
-          <div class="form-group">
-            <label for="interrelationship">Interrelationship</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="interrelationship">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1 col-sm-1">
-          <div class="form-group">
-            <label for="motivation">Motivation</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="motivation">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1 col-sm-1">
-          <div class="form-group">
-            <label for="participation">Participation</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="participation">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1 col-sm-1">
-          <div class="form-group">
-            <label for="performance">Performance</label>
-            <div class="row-md-2 row-sm-2">
-              <select class="form-control" id="performance">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <div class="form-group">
-            <label>Age</label>
-            <input #age="ngModel" name="age" type="number" class="form-control"
-            [(ngModel)]="form.age" required min="5">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-      </div>
+
     </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-success" [disabled]="loading">
-        <i class="fa fa-save" *ngIf="!loading"></i>
-        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-        Save
-      </button>
-    </div>
-  </form>
-</div>
+
+
+  </div>
+</form>

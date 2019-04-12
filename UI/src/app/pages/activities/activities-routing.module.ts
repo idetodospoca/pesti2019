@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Activities'
+      title: 'Projects'
     },
     children: [{
       path: '',
@@ -22,7 +22,7 @@ const routes: Routes = [
     }, {
       path: 'create',
       data: {
-        title: 'Create Activity',
+        title: 'New Project',
         requiredRole: ['professor']
       },
       component: CreateActivitiesComponent,

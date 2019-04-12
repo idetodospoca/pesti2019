@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <table class="table table-bordered table-striped table-responsive mt-2" >
+        <table class="table table-bordered table-striped table-responsive mt-2" id="list">
           <thead class="thead-inverse">
             <tr>
               <th>Description</th>
@@ -27,10 +27,10 @@
                 <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
               </td>
             </tr>
-            <tr *ngFor="let activity of activities">
-              <td>{{activity.description}}</td>
-              <td>{{activity.subject}}</td>
-              <td>{{activity.subject_matter}}</td>
+            <tr >
+              <td>a</td>
+              <td>b</td>
+              <td>c</td>
               <td>{{activity.delivery_mode}}</td>
               <td>{{activity.interaction}}</td>
               <td>{{activity.interrelationship}}, {{activity.motivation}}, {{activity.participation}}, {{activity.performance}}</td>

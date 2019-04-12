@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CreateAttributesComponent implements OnInit {
 
-  loading         : boolean = false;
+
   form            : Partial<Attributes> = {
     delivery_mode         : [],
     interaction           : [],
@@ -23,15 +23,17 @@ export class CreateAttributesComponent implements OnInit {
     task_types            : []
   };
 
-  behaviour_verb  : string = "";
-  affective_verb  : string = "";
-  task_category   : string = "";
-  task_verb       : string = "";
+  behaviour_verb      : string = "";
+  behaviour_category  : string = "";
+  affective_category  : string = "";
+  affective_verb      : string = "";
+  task_category       : string = "";
+  task_verb           : string = "";
+  delivery_mode       : string = "";
+  interaction         : string = "";
+  resolution_scope    : string = "";
+  social_objectives   : string = "";
 
-  delivery_mode     : string = "";
-  interaction       : string = "";
-  resolution_scope  : string = "";
-  social_objectives : string = "";
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -40,23 +42,10 @@ export class CreateAttributesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.toastr.info('Each definition should be in a separate line.', '', {
-      timeOut: 0,
-      extendedTimeOut: 0
-    });
 
-    this.toastr.info('Attributes can be defined in this page.', '', {
-      timeOut: 0,
-      extendedTimeOut: 0
-    });
   }
 
   create() {
-    this.form.delivery_mode.push(...this.delivery_mode.split("\n"));
-    this.form.interaction.push(...this.interaction.split("\n"));
-    this.form.resolution_scope.push(...this.resolution_scope.split("\n"));
-    this.form.social_objectives.push(...this.social_objectives.split("\n"));
-
     this.http.post<Attributes>(`attributes`, this.form).subscribe(
       response => {
         this.toastr.success('Attributes successfully added.', 'Success');
@@ -65,24 +54,45 @@ export class CreateAttributesComponent implements OnInit {
     );
   }
 
+  addDelivery() {
+    let DeliveryMode = {name: this.delivery_mode};
+    this.form.delivery_mode.push(DeliveryMode);
+    this.delivery_mode = "";
+  }
+
+  addInteraction() {
+    let Interaction = {name: this.interaction};
+    this.form.interaction.push(Interaction);
+    this.interaction = "";
+  }
+
+  addResolution() {
+    let Resolution = {name: this.resolution_scope};
+    this.form.resolution_scope.push(Resolution);
+    this.resolution_scope = "";
+  }
+
+  addSocial() {
+    let SocialObjective = {name: this.social_objectives};
+    this.form.social_objectives.push(SocialObjective);
+    this.social_objectives = "";
+  }
+
   addBehaviour() {
-    let Behaviour = {category: (<HTMLSelectElement>document.getElementById('behaviour_category')).value, verb: this.behaviour_verb};
+    let Behaviour = {category: this.behaviour_category, verb: this.behaviour_verb};
     this.form.behaviour.push(Behaviour);
-    this.toastr.success('Behaviour successfully added.');
     this.behaviour_verb = "";
   }
 
   addAffective() {
-    let AffectiveObjective = {category: (<HTMLSelectElement>document.getElementById('affective_category')).value, verb: this.affective_verb};
+    let AffectiveObjective = {category: this.affective_category, verb: this.affective_verb};
     this.form.affective_objectives.push(AffectiveObjective);
-    this.toastr.success('Affective Objective successfully added.');
     this.affective_verb = "";
   }
 
   addTask() {
     let TaskType = {category: this.task_category, verb: this.task_verb};
     this.form.task_types.push(TaskType);
-    this.toastr.success('Task Type successfully added.');
     this.task_category = "";
     this.task_verb = "";
   }

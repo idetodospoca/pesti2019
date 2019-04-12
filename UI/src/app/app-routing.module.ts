@@ -29,7 +29,7 @@ const routes: Routes = [
         loadChildren: './pages/home/home.module#HomeModule',
       },
       {
-        path: 'activities',
+        path: 'projects',
         loadChildren: './pages/activities/activities.module#ActivitiesModule'
       },
       {

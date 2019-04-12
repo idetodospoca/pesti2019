@@ -1,55 +1,85 @@
 const mongoose        = require('mongoose');
 const Schema          = mongoose.Schema;
 
+let DeliveryModeSchema          = new Schema({
+  name  : {
+    type      : String,
+    required  : true
+  }
+});
 
-let BehaviourSchema = new Schema({
+let ResolutionScopeSchema       = new Schema({
+  name  : {
+    type      : String,
+    required  : true
+  }
+});
+
+let InteractionSchema           = new Schema({
+  name  : {
+    type      : String,
+    required  : true
+  }
+});
+
+let BehaviourSchema             = new Schema({
   category  : {
     type      : String,
     required  : true,
     enum      : ['Remember', 'Understand', 'Apply', 'Analise', 'Evaluate', 'Create']
   },
 
-  verb  : {
+  verb      : {
     type      : String,
     required  : true
   }
 
 });
 
-let AffectiveObjectiveSchema = new Schema({
+
+let AffectiveObjectiveSchema    = new Schema({
   category  : {
     type      : String,
     required  : true,
     enum      : ['Internalizing Values', 'Organization', 'Receiving Phenomena', 'Responding to Phenomena', 'Valuing']
   },
 
-  verb  : {
+  verb      : {
     type      : String,
     required  : true
   }
 
 });
 
-let TaskTypeSchema  = new Schema({
+let SocialObjectiveSchema       = new Schema({
+  name  : {
+    type      : String,
+    required  : true
+  }
+});
+
+
+
+let TaskTypeSchema              = new Schema({
   category  : {
     type      : String,
     required  : true
   },
 
-  verb  : {
+  verb      : {
     type      : String,
     required  : true
   }
 
 });
 
-let AtributosSchema = new Schema({
-  delivery_mode         : [String],
-  interaction           : [String],
-  resolution_scope      : [String],
+let AtributosSchema             = new Schema({
+  delivery_mode         : [DeliveryModeSchema],
+  interaction           : [InteractionSchema],
+  resolution_scope      : [ResolutionScopeSchema],
   behaviour             : [BehaviourSchema],
   affective_objectives  : [AffectiveObjectiveSchema],
-  social_objectives     : [String],
+  social_objectives     : [SocialObjectiveSchema],
   task_types            : [TaskTypeSchema],
   psychologist          : {
     type      : mongoose.Schema.Types.ObjectId,

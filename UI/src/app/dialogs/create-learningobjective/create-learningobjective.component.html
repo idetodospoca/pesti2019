@@ -6,36 +6,73 @@
     </button>
   </div>
   <div class="modal-body">
+
     <div class="row">
-      <div class="col">
+
+      <div class="col-md-6 col-sm-12">
         <div class="form-group">
-          <label>Knowledge Category</label>
-          <select #knowledge_category="ngModel" name="knowledge_category" class="form-control" [(ngModel)]="form.knowledge_category"
-           required  size>
-          <option>Factual</option>
-          <option>Conceptual</option>
-          <option>Procedural</option>
-          <option>Metacognitive</option>
-        </select>
+          <label for="knowledge_category">Knowledge Category</label>
+          <select  #knowledge_category="ngModel" name="knowledge_category" class="form-control" [(ngModel)]="form.knowledge_category" required [ngClass]="{'is-invalid': isInvalid(knowledge_category)}">
+            <option value="Factual">Factual</option>
+            <option value="Conceptual">Conceptual</option>
+            <option value="Procedural">Procedural</option>
+            <option value="Metacognitive">Metacognitive</option>
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="behaviour">Behaviour</label>
+          <select  #behaviour="ngModel" name="behaviour" class="form-control" [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
+            <option value="Factual">Factual</option>
+
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
       </div>
     </div>
-    <div class="col">
-      <div class="form-group">
-        <label>Behaviour</label>
-        <select #behaviour="ngModel" name="behaviour" class="form-control" [(ngModel)]="form.behaviour"
-         required  size>
-        
-      </select>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="subject_matter">Subject Matter</label>
+          <input #subject="ngModel" type="text" name="subject" class="form-control" placeholder="Subject Matter" [(ngModel)]="form.subject_matter"  required [ngClass]="{'is-invalid': isInvalid(subject)}">
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+      </div>
+
     </div>
+
+    <div class="row">
+
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="conditions">Conditions</label>
+          <input type="text"  name="conditions" class="form-control" placeholder="Conditions" [(ngModel)]="form.conditions">
+        </div>
+      </div>
+
+
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="degree">Degree</label>
+          <input type="text"  name="degree" class="form-control" placeholder="Degree" [(ngModel)]="form.degree">
+        </div>
+      </div>
+
+    </div>
+
+
+
   </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="f.invalid">
+      <i class="fa fa-save"></i> Save
+    </button>
+    <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+      <i class="fa fa-times-circle"></i> Close
+    </button>
   </div>
-</div>
-<div class="modal-footer">
-  <button type="submit" class="btn btn-success" [disabled]="f.invalid">
-    <i class="fa fa-save"></i> Save
-  </button>
-  <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
-    <i class="fa fa-times-circle"></i> Close
-  </button>
-</div>
 </form>

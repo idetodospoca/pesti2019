@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { LearningObjective } from '../../models/LearningObjective';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-learningobjective',
@@ -18,7 +19,12 @@ export class CreateLearningobjectiveComponent implements OnInit {
     degree              : ""
   };
   canceled : boolean = false;
-  constructor(public bsModalRef: BsModalRef, private toastr: ToastrService) { }
+  
+  constructor(
+    public bsModalRef: BsModalRef,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
     this.canceled = false;
@@ -32,6 +38,10 @@ export class CreateLearningobjectiveComponent implements OnInit {
 
   create() {
     this.bsModalRef.hide();
+  }
+
+  isInvalid(field: any): boolean {
+    return field.invalid && (field.dirty || field.touched);
   }
 
 

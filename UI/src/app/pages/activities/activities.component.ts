@@ -5,6 +5,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Activity, LearningObjective } from '../../models';
 import { AuthService } from '../../services/auth.service';
 import { LearningobjectiveComponent } from '../../dialogs/learningobjective/learningobjective.component';
+//import *  as jquery from 'jquery';
+
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
@@ -15,6 +17,7 @@ export class ActivitiesComponent implements OnInit {
   activities  : Array<Activity>;
   bsModalRef  : BsModalRef;
   loading     : boolean = false;
+  
 
   constructor
   (
@@ -25,6 +28,8 @@ export class ActivitiesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+
     this.getActivities();
   }
 
@@ -47,6 +52,8 @@ export class ActivitiesComponent implements OnInit {
     this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
     this.bsModalRef.content.learning_objectives = learningObjective;
   }
+
+
 
 
 }

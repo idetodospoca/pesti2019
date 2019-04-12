@@ -1,8 +1,25 @@
 import { User } from "./User"
 
+
+export class DeliveryMode {
+  name      : string;
+}
+
+export class Interaction {
+  name      : string;
+}
+
+export class ResolutionScope {
+  name      : string;
+}
+
 export class Behaviour {
   category  : string;
   verb      : string;
+}
+
+export class SocialObjective {
+  name      : string;
 }
 
 export class AffectiveObjective {
@@ -16,12 +33,12 @@ export class TaskType {
 }
 
 export class Attributes {
-  delivery_mode         : string[];
-  interaction           : string[];
-  resolution_scope      : string[];
+  delivery_mode         : DeliveryMode[];
+  interaction           : Interaction[];
+  resolution_scope      : ResolutionScope[];
   behaviour             : Behaviour[];
   affective_objectives  : AffectiveObjective[];
-  social_objectives     : string[];
+  social_objectives     : SocialObjective[];
   task_types            : TaskType[];
   psychologist          : User;
 }
