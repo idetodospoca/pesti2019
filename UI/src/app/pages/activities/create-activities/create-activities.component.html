@@ -48,34 +48,37 @@
 
         <div class="form-group row p-2">
           <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label>
-          <div class="col-sm-4">
-            <select #delivery_mode="ngModel" class="form-control" name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
-              <option *ngFor="let at of attributes.behaviour" [ngValue]="at.category">{{at.category}}</option>
+          <div   class="col-sm-4" >
 
+            <select #delivery_mode="ngModel" class="form-control" name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
+              <option *ngFor="let item of delivery_modes" [ngValue]="item">{{item}}</option>
             </select>
             <div class="invalid-feedback">This field is required</div>
+
           </div>
         </div>
 
         <div class="form-group row p-2">
           <label for="interaction" class="col-sm-2 col-form-label">Interaction</label>
           <div class="col-sm-4">
+
             <select #interaction="ngModel" class="form-control" name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
-
-
+                <option  *ngFor="let item of interactions" [ngValue]="item">{{item}}</option>
             </select>
             <div class="invalid-feedback">This field is required</div>
+
           </div>
         </div>
 
         <div class="form-group row p-2">
           <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label>
           <div class="col-sm-4">
+
             <select #resolution_scope="ngModel" class="form-control" name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
-
-
+                <option  *ngFor="let item of reso_scopes" [ngValue]="item">{{item}}</option>
             </select>
             <div class="invalid-feedback">This field is required</div>
+
           </div>
         </div>
 
@@ -96,7 +99,7 @@
         </div>
 
         <div class="row p-2">
-          <p><strong>Educator's Perception</strong></p>
+          <p><strong>EDUCATOR'S PERCEPTION</strong></p>
         </div>
 
         <div class="form-group row p-2">
@@ -164,49 +167,133 @@
         </div>
 
         <div class="row p-2">
-          <p><strong>Learning Objectives</strong></p>
+          <p><strong>LEARNING OBJECTIVES</strong></p>
         </div>
         <div class="form-group row p-2">
-          <button class="btn btn-success"  (click)="addLearningObjective()" [disabled]="">
+          <button type="button" class="btn btn-success"  (click)="addLearningObjective()" [disabled]="loading">
             <i class="fa fa-plus" *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
             Add Learning Objective
           </button>
+          </div>
+
+          <div class="form-group p-2">
+            <table *ngIf="form.activity.learning_objectives.length != 0" class="table table-bordered table-stripped table-responsive">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>Knowledge Category</th>
+                  <th>Behaviour</th>
+                  <th>Subject Matter</th>
+                  <th>Conditions</th>
+                  <th>Degree</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tr *ngFor="let lo of form.activity.learning_objectives; let number = index">
+                <td>{{lo.knowledge_category}}</td>
+                <td>{{lo.behaviour}}</td>
+                <td>{{lo.subject_matter}}</td>
+                <td>{{lo.conditions}}</td>
+                <td>{{lo.degree}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" (click)="editLO(number)">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" (click)="deleteLO(number)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+
+        <div *ngIf="form.activity.learning_objectives.length == 0" class="form-group p-2 alert alert-info" role="alert">
+          You need to add at least one Learning Objective.
+        </div>
 
 
-          <table class="table table-bordered table-stripped table-responsive">
+        <div class="row p-2">
+          <p><strong>AFFECTIVE OBJECTIVES</strong></p>
+        </div>
+        <div class="form-group row p-2">
+          <div class="col">
+            <select #affectiveobj="ngModel" class="form-control" name="affectiveobj" [(ngModel)]="ao">
+                <option *ngFor="let item of affective" [ngValue]="item.verb">{{item.category}}: {{item.verb}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-success"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
+              <i class="fa fa-plus" *ngIf="!loading"></i>
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+              Add Affective Objective
+            </button>
+          </div>
+
+        </div>
+        <div class="form-group row p-2">
+          <table *ngIf="form.activity.affective_objectives.length != 0" class="table table-bordered  table-responsive">
             <thead class="thead-inverse">
               <tr>
-                <th>Knowledge Category</th>
-                <th>Behaviour</th>
-                <th>Subject Matter</th>
-                <th>Conditions</th>
-                <th>Degree</th>
-                <th>Ações</th>
+                <th>Affective Objective</th>
+                <th>Actions</th>
               </tr>
 
             </thead>
-            <tr *ngIf="form.activity.learning_objectives.length == 0" class="text-center">
-              <td colspan="7">You need to add at least 1 Learning Objective</td>
-            </tr>
-            <tr *ngFor="let lo of form.activity.learning_objectives; let number = index">
-              <td>{{lo.knowledge_category}}</td>
-              <td>{{lo.behaviour}}</td>
-              <td>{{lo.subject_matter}}</td>
-              <td>{{lo.conditions}}</td>
-              <td>{{lo.degree}}</td>
+
+            <tr *ngFor="let ao of form.activity.affective_objectives; let number = index">
+              <td>{{ao}}</td>
               <td>
-                <button type="button" class="btn btn-primary" (click)="editLO(number)">
-                  <i class="fa fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger" (click)="deleteLO(number)">
+                <button type="button" class="btn btn-danger" (click)="deleteAO(number)">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
             </tr>
 
           </table>
+        </div>
 
+
+        <div class="row p-2">
+          <p><strong>SOCIAL OBJECTIVES</strong></p>
+        </div>
+        <div class="form-group row p-2">
+          <div class="col">
+            <select #socialobj="ngModel" class="form-control" name="socialobj" [(ngModel)]="so">
+                <option *ngFor="let item of social" [ngValue]="item.name">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
+              <i class="fa fa-plus" *ngIf="!loading"></i>
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+              Add Social Objective
+            </button>
+          </div>
+
+        </div>
+        <div class="form-group row p-2">
+          <table *ngIf="form.activity.social_objectives.length != 0" class="table table-bordered  table-responsive">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Social Objective</th>
+                <th>Actions</th>
+              </tr>
+
+            </thead>
+
+            <tr *ngFor="let so of form.activity.social_objectives; let number = index">
+              <td>{{so}}</td>
+              <td>
+                <button type="button" class="btn btn-danger" (click)="deleteSO(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
         </div>
 
 

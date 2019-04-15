@@ -4,8 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Activity, LearningObjective } from '../../models';
 import { AuthService } from '../../services/auth.service';
-import { LearningobjectiveComponent } from '../../dialogs/learningobjective/learningobjective.component';
-//import *  as jquery from 'jquery';
 
 @Component({
   selector: 'app-activities',
@@ -17,7 +15,7 @@ export class ActivitiesComponent implements OnInit {
   activities  : Array<Activity>;
   bsModalRef  : BsModalRef;
   loading     : boolean = false;
-  
+
 
   constructor
   (
@@ -48,10 +46,10 @@ export class ActivitiesComponent implements OnInit {
     );
   }
 
-  showLearningObjectives(learningObjective: LearningObjective) {
-    this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
-    this.bsModalRef.content.learning_objectives = learningObjective;
-  }
+  // showLearningObjectives(learningObjective: LearningObjective) {
+  //   this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
+  //   this.bsModalRef.content.learning_objectives = learningObjective;
+  // }
 
 
 

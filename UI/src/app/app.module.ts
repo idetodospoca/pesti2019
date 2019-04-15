@@ -28,7 +28,6 @@ import { AuthGuard } from './guards/auth.guard';
 
 import { SharedModule } from './shared/shared.module';
 
-import { LearningobjectiveComponent } from './dialogs/learningobjective/learningobjective.component';
 import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
 
 @NgModule({
@@ -39,7 +38,6 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    LearningobjectiveComponent,
     CreateLearningobjectiveComponent
 
   ],
@@ -63,7 +61,6 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     AuthGuard
   ],
   entryComponents: [
-    LearningobjectiveComponent,
     CreateLearningobjectiveComponent
 
   ],

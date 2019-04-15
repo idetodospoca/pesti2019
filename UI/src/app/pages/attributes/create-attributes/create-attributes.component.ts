@@ -97,6 +97,34 @@ export class CreateAttributesComponent implements OnInit {
     this.task_verb = "";
   }
 
+  deleteDM(number: number) {
+    this.form.delivery_mode.splice(number, 1);
+  }
+
+  deleteINT(number: number) {
+    this.form.interaction.splice(number, 1);
+  }
+
+  deleteBH(number: number) {
+    this.form.behaviour.splice(number, 1);
+  }
+
+  deleteRS(number: number) {
+    this.form.resolution_scope.splice(number, 1);
+  }
+
+  deleteSO(number: number) {
+    this.form.social_objectives.splice(number, 1);
+  }
+
+  deleteAO(number: number) {
+    this.form.affective_objectives.splice(number, 1);
+  }
+
+  deleteTT(number: number) {
+    this.form.task_types.splice(number, 1);
+  }
+
   private handleError(err) {
     this.toastr.error(err.error.message, 'Error');
   }

@@ -21,13 +21,12 @@
           <div class="invalid-feedback">This field is required</div>
         </div>
       </div>
-      
+
       <div class="col-md-6 col-sm-12">
         <div class="form-group">
           <label for="behaviour">Behaviour</label>
           <select  #behaviour="ngModel" name="behaviour" class="form-control" [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
-            <option value="Factual">Factual</option>
-
+              <option *ngFor="let item of behaviour_cat" [ngValue]="item">{{item}}</option>
           </select>
           <div class="invalid-feedback">This field is required</div>
         </div>
@@ -71,7 +70,7 @@
     <button type="submit" class="btn btn-success" [disabled]="f.invalid">
       <i class="fa fa-save"></i> Save
     </button>
-    <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+    <button type="button" class="btn btn-danger" (click)="cancel()">
       <i class="fa fa-times-circle"></i> Close
     </button>
   </div>

@@ -3,188 +3,377 @@
     <div class="card">
       <div class="jumbotron">
         <h1 class="display-4">Define new attributes</h1>
-        <p class="lead">In this section you can define new attributes. These attributes will determine the possible options for each learning technique.
-        Any number of definitions can be proviced for each attribute.</p>
+        <p class="lead">In this section you can define new attributes. These attributes will determine the possible options for each new project and learning technique.
+          Any number of definitions can be proviced for each attribute.</p>
 
-      </div>
-      <div class="card-body">
-        <form (ngSubmit)="create()">
-          <div class="form-group">
-            <div class="col">
-              <h4><label>Delivery Mode</label></h4>
-              <div class="input-group mb-3">
-                <input type="text" name="delivery" #delivery="ngModel" [(ngModel)]="delivery_mode" class="form-control">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-success" [disabled]="delivery_mode == '' || loading" (click)="addDelivery()">
-                    <i class="fa fa-plus" *ngIf="!loading"></i>
-                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                    Add
-                  </button>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="create()">
+            <div class="form-group row">
+              <div class="col">
+                <h4><label for="delivery">Delivery Mode</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <input type="text" name="delivery" #delivery="ngModel" [(ngModel)]="delivery_mode" class="form-control">
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-success" [disabled]="delivery_mode == '' || loading" (click)="addDelivery()">
+                      <i class="fa fa-plus" *ngIf="!loading"></i>
+                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                      Add
+                    </button>
+                  </div>
+
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="form-group">
-
-            <div class="col">
-              <h4><label>Interaction</label></h4>
-              <div class="input-group mb-3">
-                <input type="text" name="delivery" #interact="ngModel" [(ngModel)]="interaction" class="form-control">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-success" [disabled]="interaction == '' || loading" (click)="addInteraction()">
-                    <i class="fa fa-plus" *ngIf="!loading"></i>
-                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                    Add
-                  </button>
-                </div>
               </div>
             </div>
 
-          </div>
+            <div class="form-group p-2">
+              <table *ngIf="form.delivery_mode.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Delivery Mode</th>
+                    <th>Actions</th>
+                  </tr>
 
-          <div class="form-group">
+                </thead>
 
-            <div class="col">
-              <h4><label>Resolution Scope</label></h4>
-              <div class="input-group mb-3">
-                <input type="text" name="resolution_scope" #resolution="ngModel" [(ngModel)]="resolution_scope" class="form-control">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-success" [disabled]="resolution_scope == '' || loading" (click)="addResolution()">
-                    <i class="fa fa-plus" *ngIf="!loading"></i>
-                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                    Add
-                  </button>
-                </div>
-              </div>
+                <tr *ngFor="let dm of form.delivery_mode; let number = index">
+                  <td>{{dm.name}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteDM(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
             </div>
 
-          </div>
+            <div class="form-group row">
 
-          <div class="form-group">
-
-            <div class="col">
-              <h4><label>Social Objectives</label></h4>
-              <div class="input-group mb-3">
-                <input type="text" name="social_objectives" #social="ngModel" [(ngModel)]="social_objectives" class="form-control">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-success" [disabled]="social_objectives == '' || loading" (click)="addSocial()">
-                    <i class="fa fa-plus" *ngIf="!loading"></i>
-                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                    Add
-                  </button>
+              <div class="col">
+                <h4><label>Interaction</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <input type="text" name="delivery" #interact="ngModel" [(ngModel)]="interaction" class="form-control">
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-success" [disabled]="interaction == '' || loading" (click)="addInteraction()">
+                      <i class="fa fa-plus" *ngIf="!loading"></i>
+                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-          </div>
+            <div class="form-group p-2">
+              <table *ngIf="form.interaction.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Interaction</th>
+                    <th>Actions</th>
+                  </tr>
 
-          <div class="form-group">
+                </thead>
 
-            <div class="col">
-              <h4><label>Behaviour</label></h4>
-              <div class="row">
-                <div class="col">
-                  <label>Category</label>
-                  <select #behaviour_cat="ngModel" class="form-control" name="behaviour_cat" [(ngModel)]="behaviour_category">
-                    <option value="Remember">Remember</option>
-                    <option value="Understand">Understand</option>
-                    <option value="Apply">Apply</option>
-                    <option value="Analise">Analise</option>
-                    <option value="Evaluate">Evaluate</option>
-                    <option value="Create">Create</option>
-                  </select>
+                <tr *ngFor="let dm of form.interaction; let number = index">
+                  <td>{{dm.name}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteINT(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="form-group row">
+
+              <div class="col">
+                <h4><label>Resolution Scope</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <input type="text" name="resolution_scope" #resolution="ngModel" [(ngModel)]="resolution_scope" class="form-control">
+
+
+                  </div>
+                  <div class="col">
+
+                    <button type="button" class="btn btn-success" [disabled]="resolution_scope == '' || loading" (click)="addResolution()">
+                      <i class="fa fa-plus" *ngIf="!loading"></i>
+                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                      Add
+                    </button>
+                  </div>
+
                 </div>
-                <div class="col-lg">
-                  <label>Verb</label>
-                  <div class="input-group mb-3">
-                    <input type="text" #behaviour="ngModel" name="behaviour_verb" class="form-control" [(ngModel)]="behaviour_verb">
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-success" [disabled]="behaviour_verb == '' || loading" (click)="addBehaviour()">
-                        <i class="fa fa-plus" *ngIf="!loading"></i>
-                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                        Add
-                      </button>
+
+              </div>
+
+            </div>
+
+            <div class="form-group p-2">
+              <table *ngIf="form.resolution_scope.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Resolution Scope</th>
+                    <th>Actions</th>
+                  </tr>
+
+                </thead>
+
+                <tr *ngFor="let dm of form.resolution_scope; let number = index">
+                  <td>{{dm.name}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteRS(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="form-group row">
+
+              <div class="col">
+                <h4><label>Social Objectives</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <input type="text" name="social_objectives" #social="ngModel" [(ngModel)]="social_objectives" class="form-control">
+
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-success" [disabled]="social_objectives == '' || loading" (click)="addSocial()">
+                      <i class="fa fa-plus" *ngIf="!loading"></i>
+                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                      Add
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="form-group p-2">
+              <table *ngIf="form.social_objectives.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Social Objectives</th>
+                    <th>Actions</th>
+                  </tr>
+
+                </thead>
+
+                <tr *ngFor="let dm of form.social_objectives; let number = index">
+                  <td>{{dm.name}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteSO(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="form-group row">
+
+              <div class="col">
+                <h4><label>Behaviour</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <label>Category</label>
+                    <select #behaviour_cat="ngModel" class="form-control" name="behaviour_cat" [(ngModel)]="behaviour_category">
+                      <option value="Remember">Remember</option>
+                      <option value="Understand">Understand</option>
+                      <option value="Apply">Apply</option>
+                      <option value="Analise">Analise</option>
+                      <option value="Evaluate">Evaluate</option>
+                      <option value="Create">Create</option>
+                    </select>
+
+                  </div>
+                  <div class="col">
+                    <label>Verb</label>
+                    <div class="form-group row">
+                      <div class="col">
+                        <input type="text" #behaviour="ngModel" name="behaviour_verb" class="form-control" [(ngModel)]="behaviour_verb">
+                      </div>
+                      <div class="col">
+                        <button type="button" class="btn btn-success" [disabled]="behaviour_verb == '' || loading" (click)="addBehaviour()">
+                          <i class="fa fa-plus" *ngIf="!loading"></i>
+                          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                          Add
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
             </div>
-          </div>
 
-          <div class="form-group">
+            <div class="form-group p-2">
+              <table *ngIf="form.behaviour.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Category</th>
+                    <th>Verb</th>
+                    <th>Actions</th>
+                  </tr>
 
-            <div class="col">
-              <h4><label>Affective Objectives</label></h4>
-              <div class="row">
-                <div class="col">
-                  <label>Category</label>
-                  <select #affective_cat="ngModel" class="form-control" name="affective_cat" [(ngModel)]="affective_category">
-                    <option value="Internalizing Values">Internalizing Values</option>
-                    <option value="Organization">Organization</option>
-                    <option value="Receiving Phenomena">Receiving Phenomena</option>
-                    <option value="Responding to Phenomena">Responding to Phenomena</option>
-                    <option value="Valuing">Valuing</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label>Verb</label>
-                  <div class="input-group">
-                    <input type="text" #affective="ngModel" name="affective_verb" class="form-control" [(ngModel)]="affective_verb">
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-success" [disabled]="affective_verb == '' || loading" (click)="addAffective()">
-                        <i class="fa fa-plus" *ngIf="!loading"></i>
-                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                        Add
-                      </button>
+                </thead>
+
+                <tr *ngFor="let dm of form.behaviour; let number = index">
+                  <td>{{dm.category}}</td>
+                  <td>{{dm.verb}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteBH(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="form-group row">
+              <div class="col">
+                <h4><label>Affective Objectives</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <label>Category</label>
+                    <select #affective_cat="ngModel" class="form-control" name="affective_cat" [(ngModel)]="affective_category">
+                      <option value="Internalizing Values">Internalizing Values</option>
+                      <option value="Organization">Organization</option>
+                      <option value="Receiving Phenomena">Receiving Phenomena</option>
+                      <option value="Responding to Phenomena">Responding to Phenomena</option>
+                      <option value="Valuing">Valuing</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label>Verb</label>
+                    <div class="form-group row">
+                      <div class="col">
+                        <input type="text" #affective="ngModel" name="affective_verb" class="form-control" [(ngModel)]="affective_verb">
+                      </div>
+                      <div class="col">
+                        <button type="button" class="btn btn-success" [disabled]="affective_verb == '' || loading" (click)="addAffective()">
+                          <i class="fa fa-plus" *ngIf="!loading"></i>
+                          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                          Add
+                        </button>
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
+            <div class="form-group p-2">
+              <table *ngIf="form.affective_objectives.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Category</th>
+                    <th>Verb</th>
+                    <th>Actions</th>
+                  </tr>
 
-          <div class="form-group">
+                </thead>
 
-            <div class="col">
-              <h4><label>Task types</label></h4>
-              <div class="row">
-                <div class="col">
-                  <label>Category</label>
-                  <input type="text" #category="ngModel" name="task_category" class="form-control" [(ngModel)]="task_category">
-                </div>
-                <div class="col">
-                  <label>Verb</label>
-                  <div class="input-group">
-                    <input type="text" #verb="ngModel" name="task_verb" class="form-control" [(ngModel)]="task_verb">
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-success" [disabled]="task_category == '' || task_verb == ''" (click)="addTask()">
-                        <i class="fa fa-plus" *ngIf="!loading"></i>
-                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                        Add
-                      </button>
-                    </div>
+                <tr *ngFor="let dm of form.affective_objectives; let number = index">
+                  <td>{{dm.category}}</td>
+                  <td>{{dm.verb}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteAO(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="form-group row">
+
+              <div class="col">
+                <h4><label>Task types</label></h4>
+                <div class="form-group row">
+                  <div class="col">
+                    <label>Category</label>
+                    <input type="text" #category="ngModel" name="task_category" class="form-control" [(ngModel)]="task_category">
+
                   </div>
+                  <div class="col">
+                    <label>Verb</label>
+                    <div class="form-group row">
+                      <div class="col">
+                        <input type="text" #verb="ngModel" name="task_verb" class="form-control" [(ngModel)]="task_verb">
+                      </div>
+                      <div class="col">
+                        <button type="button" class="btn btn-success" [disabled]="task_category == '' || task_verb == ''" (click)="addTask()">
+                          <i class="fa fa-plus" *ngIf="!loading"></i>
+                          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                          Add
+                        </button>
+                      </div>
+
+                    </div>
+
+                  </div>
+
                 </div>
+
               </div>
             </div>
-          </div>
 
-          <div class="row justify-content-center">
-            <button type="submit" class="btn btn-success float-right"  [disabled]="loading || (form.delivery_mode.length == [] && form.interaction.length == [] && form.resolution_scope.length == [] && form.social_objectives.length == [] && form.behaviour.length == [] && form.affective_objectives.length == [] && form.task_types.length == [])">
-              <i class="fa fa-save" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Save
-            </button>
-          </div>
+            <div class="form-group p-2">
+              <table *ngIf="form.task_types.length != 0" class="table table-bordered table-stripped table-responsive">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Category</th>
+                    <th>Verb</th>
+                    <th>Actions</th>
+                  </tr>
+
+                </thead>
+
+                <tr *ngFor="let dm of form.task_types; let number = index">
+                  <td>{{dm.category}}</td>
+                  <td>{{dm.verb}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteTT(number)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="row justify-content-center">
+              <button type="submit" class="btn btn-success float-right"  [disabled]="loading || (form.delivery_mode.length == [] && form.interaction.length == [] && form.resolution_scope.length == [] && form.social_objectives.length == [] && form.behaviour.length == [] && form.affective_objectives.length == [] && form.task_types.length == [])">
+                <i class="fa fa-save" *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                Save
+              </button>
+            </div>
 
 
 
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>

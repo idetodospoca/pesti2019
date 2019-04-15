@@ -14,10 +14,24 @@ import 'rxjs/add/observable/forkJoin';
   templateUrl: './create-activities.component.html',
   styleUrls: ['./create-activities.component.scss']
 })
+
+
 export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   loading        : boolean = false;
   currentEditing : number = -1;
+  bsModalRef    : BsModalRef;
+  modalSub      : Subscription;
+
+  delivery_modes    : Array<any> = [];
+  interactions      : Array<any> = [];
+  reso_scopes       : Array<any> = [];
+  social_obvj       : Array<any> = [];
+  behaviour_cat     : Array<any> = [];
+  affective         : Array<any> = [];
+  social            : Array<any> = [];
+
+
 
   form           : Partial<Project> = {
     name      : "",
@@ -40,10 +54,10 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     }
   };
 
-  bsModalRef    : BsModalRef;
-  modalSub      : Subscription;
-  attributes    : Array<Attributes> = [];
-  //mappedArray   : Array<String> = [];
+  ao : string = "";
+  so : string = "";
+
+
 
   constructor(
     private http: HttpClient,
@@ -59,22 +73,28 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
     this.getAttributes();
 
-    //let mappedArray = this.attributes.reduce((acc, curr) => {return acc = [...acc, ...curr.behaviour]});
-
   }
 
   ngOnDestroy() {
     this.destroyHandler();
   }
 
-  create(){
+  create() {
+
+    this.http.post<Project>(`projects`, this.form).subscribe(
+      response => {
+        this.toastr.success('Project successfully added.', 'Success');
+      },
+      err => this.handleError(err)
+    );
+
+    this.router.navigate(['/']);
 
 
   }
 
-  addLearningObjective(){
-    this.bsModalRef = this.setupModal();
-  }
+
+
 
 
 
@@ -83,15 +103,41 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     this.http.get<Attributes[]>('attributes')
     .subscribe(
       response => {
-        this.attributes = response;
 
+        this.delivery_modes = response.map(response => response['delivery_mode'].map(res => res.name));
+        this.delivery_modes = [].concat.apply([], this.delivery_modes);
+
+        this.interactions   = response.map(response => response['interaction'].map(res => res.name));
+        this.interactions   = [].concat.apply([], this.interactions);
+
+        this.reso_scopes    = response.map(response => response['resolution_scope'].map(res => res.name));
+        this.reso_scopes    = [].concat.apply([], this.reso_scopes);
+
+        this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
+        this.social_obvj    = [].concat.apply([], this.social_obvj);
+
+        this.behaviour_cat = response.map(response => response['behaviour'].map(res => res.verb));
+        this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
+
+        this.affective = response.map(response => response['affective_objectives']);
+        this.affective = ([].concat.apply([], this.affective)).sort();
+
+        this.social = response.map(response => response['social_objectives']);
+        this.social = ([].concat.apply([], this.social)).sort();
+        //console.log(this.affective);
         this.loading = false;
+
       },
       err => {
         this.toastr.error(err.error.message, 'Error');
         this.loading = false;
       }
     );
+  }
+
+  addLearningObjective() {
+
+    this.bsModalRef = this.setupModal();
   }
 
   deleteLO(number: number) {
@@ -109,6 +155,27 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     for (let property of Object.keys(p)){
       this.bsModalRef.content.form[property] = p[property];
     }
+  }
+
+
+  addAffectiveObjective() {
+    this.form.activity.affective_objectives.push(this.ao);
+    this.ao = "";
+  }
+
+  deleteAO(number: number) {
+    this.form.activity.affective_objectives.splice(number, 1);
+  }
+
+
+
+  addSocialObjective() {
+    this.form.activity.social_objectives.push(this.so);
+    this.so = "";
+  }
+
+  deleteSO(number: number) {
+    this.form.activity.social_objectives.splice(number, 1);
   }
 
   private destroyHandler() {
@@ -135,7 +202,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   private setupModal() : BsModalRef {
     let ref = this.modalService.show(CreateLearningobjectiveComponent, {class: 'modal-lg'});
-
+    ref.content.behaviour_cat = this.behaviour_cat;
     return ref;
   }
 

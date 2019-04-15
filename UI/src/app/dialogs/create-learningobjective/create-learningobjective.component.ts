@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CreateLearningobjectiveComponent implements OnInit {
 
+
   form    :   Partial<LearningObjective> = {
     knowledge_category  : "",
     behaviour           : "",
@@ -19,7 +20,8 @@ export class CreateLearningobjectiveComponent implements OnInit {
     degree              : ""
   };
   canceled : boolean = false;
-  
+  behaviour_cat : Array<string> = [];
+
   constructor(
     public bsModalRef: BsModalRef,
     private http: HttpClient,
@@ -28,8 +30,8 @@ export class CreateLearningobjectiveComponent implements OnInit {
 
   ngOnInit() {
     this.canceled = false;
-  }
 
+  }
 
   cancel() {
     this.canceled = true;
@@ -43,7 +45,6 @@ export class CreateLearningobjectiveComponent implements OnInit {
   isInvalid(field: any): boolean {
     return field.invalid && (field.dirty || field.touched);
   }
-
 
   private handleError(err: any) {
     this.toastr.error(err.error.message, 'Error');
