@@ -11,13 +11,18 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 export class RegisterComponent {
 
-  errors: Array<string> = [];
-  email: string = '';
-  name: string = '';
-  password: string = '';
-  passwordConfirmation: string = '';
-  loading: boolean = false;
-  constructor(private authService: AuthService, private http: HttpClient, private toastr: ToastrService, private router: Router) { }
+  errors                : Array<string> = [];
+  email                 : string = '';
+  name                  : string = '';
+  password              : string = '';
+  passwordConfirmation  : string = '';
+  loading               : boolean = false;
+  
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   register() {
     this.loading = true;

@@ -18,10 +18,10 @@ import 'rxjs/add/observable/forkJoin';
 
 export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
-  loading        : boolean = false;
-  currentEditing : number = -1;
-  bsModalRef    : BsModalRef;
-  modalSub      : Subscription;
+  loading         : boolean = false;
+  currentEditing  : number = -1;
+  bsModalRef      : BsModalRef;
+  modalSub        : Subscription;
 
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
@@ -156,11 +156,16 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       this.bsModalRef.content.form[property] = p[property];
     }
   }
-
+  
 
   addAffectiveObjective() {
-    this.form.activity.affective_objectives.push(this.ao);
-    this.ao = "";
+    if  (this.form.activity.affective_objectives.includes(this.ao)) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      this.form.activity.affective_objectives.push(this.ao);
+      this.ao = "";
+    }
+
   }
 
   deleteAO(number: number) {
@@ -170,8 +175,13 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
 
   addSocialObjective() {
-    this.form.activity.social_objectives.push(this.so);
-    this.so = "";
+    if  (this.form.activity.social_objectives.includes(this.so)) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      this.form.activity.social_objectives.push(this.so);
+      this.so = "";
+    }
+
   }
 
   deleteSO(number: number) {

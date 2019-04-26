@@ -1,316 +1,375 @@
 <form (ngSubmit)="create()" novalidate #f="ngForm">
-  <div class="container">
-    <div class="card">
-      <div class="card-body">
-
-
-        <div class="form-group row p-2">
-          <label for="name" class="col-sm-2 col-form-label">Name</label>
-          <div class="col-sm-4">
-            <input #name="ngModel" type="text" name="name" class="form-control" placeholder="Project Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="goal" class="col-sm-2 col-form-label">Goal</label>
-          <div class="col-sm-4">
-            <input #goal="ngModel" type="text" class="form-control" name="goal" placeholder="Main goal of the project" [(ngModel)]="form.goal" required [ngClass]="{'is-invalid': isInvalid(goal)}">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="description" class="col-sm-2 col-form-label">Description</label>
-          <div class="col-sm-4">
-            <input #description="ngModel" type="text" class="form-control" name="description" [(ngModel)]="form.activity.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="subject" class="col-sm-2 col-form-label">Subject</label>
-          <div class="col-sm-4">
-            <input #subject="ngModel" type="text" class="form-control" name="subject" [(ngModel)]="form.activity.subject" required [ngClass]="{'is-invalid': isInvalid(subject)}">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-
-
-        <div class="form-group row p-2">
-          <label for="age" class="col-sm-2 col-form-label">Age group</label>
-          <div class="col-sm-4">
-            <input #age="ngModel" type="number" class="form-control" name="age" min="5" value="5" [(ngModel)]="form.activity.age" required [ngClass]="{'is-invalid': isInvalid(age)}">
-            <div class="invalid-feedback">This field is required</div>
-          </div>
-        </div>
-
-
-        <div class="form-group row p-2">
-          <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label>
-          <div   class="col-sm-4" >
-
-            <select #delivery_mode="ngModel" class="form-control" name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
-              <option *ngFor="let item of delivery_modes" [ngValue]="item">{{item}}</option>
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="interaction" class="col-sm-2 col-form-label">Interaction</label>
-          <div class="col-sm-4">
-
-            <select #interaction="ngModel" class="form-control" name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
-                <option  *ngFor="let item of interactions" [ngValue]="item">{{item}}</option>
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label>
-          <div class="col-sm-4">
-
-            <select #resolution_scope="ngModel" class="form-control" name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
-                <option  *ngFor="let item of reso_scopes" [ngValue]="item">{{item}}</option>
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="feedback_use" class="col-sm-2 col-form-label">Feedback Use</label>
-          <div class="col-sm-4">
-            <select #feedback_use="ngModel" class="form-control" name="feedback_use" [(ngModel)]="form.activity.feedback_use" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
-
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="None">None</option>
-
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="row p-2">
-          <p><strong>EDUCATOR'S PERCEPTION</strong></p>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="interrelationship" class="col-sm-2 col-form-label">Interrelationship</label>
-          <div class="col-sm-4">
-            <select #interrelationship="ngModel" class="form-control" name="interrelationship" [(ngModel)]="form.activity.interrelationship" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
-
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="None">None</option>
-
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="motivation" class="col-sm-2 col-form-label">Motivation</label>
-          <div class="col-sm-4">
-            <select #motivation="ngModel" class="form-control" name="motivation" [(ngModel)]="form.activity.motivation" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
-
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="None">None</option>
-
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="participation" class="col-sm-2 col-form-label">Participation</label>
-          <div class="col-sm-4">
-            <select #participation="ngModel" class="form-control" name="participation" [(ngModel)]="form.activity.participation" required [ngClass]="{'is-invalid': isInvalid(participation)}">
-
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="None">None</option>
-
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-          <label for="performance" class="col-sm-2 col-form-label">Performance</label>
-          <div class="col-sm-4">
-            <select #performance="ngModel" class="form-control" name="performance" [(ngModel)]="form.activity.performance" required [ngClass]="{'is-invalid': isInvalid(performance)}">
-
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="None">None</option>
-
-            </select>
-            <div class="invalid-feedback">This field is required</div>
-
-          </div>
-        </div>
-
-        <div class="row p-2">
-          <p><strong>LEARNING OBJECTIVES</strong></p>
-        </div>
-        <div class="form-group row p-2">
-          <button type="button" class="btn btn-success"  (click)="addLearningObjective()" [disabled]="loading">
-            <i class="fa fa-plus" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-            Add Learning Objective
-          </button>
-          </div>
-
-          <div class="form-group p-2">
-            <table *ngIf="form.activity.learning_objectives.length != 0" class="table table-bordered table-stripped table-responsive">
-              <thead class="thead-inverse">
-                <tr>
-                  <th>Knowledge Category</th>
-                  <th>Behaviour</th>
-                  <th>Subject Matter</th>
-                  <th>Conditions</th>
-                  <th>Degree</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let lo of form.activity.learning_objectives; let number = index">
-                <td>{{lo.knowledge_category}}</td>
-                <td>{{lo.behaviour}}</td>
-                <td>{{lo.subject_matter}}</td>
-                <td>{{lo.conditions}}</td>
-                <td>{{lo.degree}}</td>
-                <td>
-                  <button type="button" class="btn btn-primary" (click)="editLO(number)">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger" (click)="deleteLO(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        <div *ngIf="form.activity.learning_objectives.length == 0" class="form-group p-2 alert alert-info" role="alert">
-          You need to add at least one Learning Objective.
-        </div>
-
-
-        <div class="row p-2">
-          <p><strong>AFFECTIVE OBJECTIVES</strong></p>
-        </div>
-        <div class="form-group row p-2">
-          <div class="col">
-            <select #affectiveobj="ngModel" class="form-control" name="affectiveobj" [(ngModel)]="ao">
-                <option *ngFor="let item of affective" [ngValue]="item.verb">{{item.category}}: {{item.verb}}</option>
-            </select>
-          </div>
-          <div class="col">
-            <button type="button" class="btn btn-success"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add Affective Objective
-            </button>
-          </div>
-
-        </div>
-        <div class="form-group row p-2">
-          <table *ngIf="form.activity.affective_objectives.length != 0" class="table table-bordered  table-responsive">
-            <thead class="thead-inverse">
-              <tr>
-                <th>Affective Objective</th>
-                <th>Actions</th>
-              </tr>
-
-            </thead>
-
-            <tr *ngFor="let ao of form.activity.affective_objectives; let number = index">
-              <td>{{ao}}</td>
-              <td>
-                <button type="button" class="btn btn-danger" (click)="deleteAO(number)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-
-          </table>
-        </div>
-
-
-        <div class="row p-2">
-          <p><strong>SOCIAL OBJECTIVES</strong></p>
-        </div>
-        <div class="form-group row p-2">
-          <div class="col">
-            <select #socialobj="ngModel" class="form-control" name="socialobj" [(ngModel)]="so">
-                <option *ngFor="let item of social" [ngValue]="item.name">{{item.name}}</option>
-            </select>
-          </div>
-          <div class="col">
-            <button type="button" class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add Social Objective
-            </button>
-          </div>
-
-        </div>
-        <div class="form-group row p-2">
-          <table *ngIf="form.activity.social_objectives.length != 0" class="table table-bordered  table-responsive">
-            <thead class="thead-inverse">
-              <tr>
-                <th>Social Objective</th>
-                <th>Actions</th>
-              </tr>
-
-            </thead>
-
-            <tr *ngFor="let so of form.activity.social_objectives; let number = index">
-              <td>{{so}}</td>
-              <td>
-                <button type="button" class="btn btn-danger" (click)="deleteSO(number)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-
-          </table>
-        </div>
-
-
-
-
-
-        <button type="submit" class="btn btn-success float-right"  [disabled]="f.invalid">
-          <i class="fa fa-save" *ngIf="!loading"></i>
-          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-          Save
-        </button>
-
-
+  <!-- <div class="container"> -->
+  <mat-card class="form-card">
+    <div class="jumbotron">
+      <h1 class="display-4">Start new project</h1>
+      <p class="lead">Sample</p>
+    </div>
+    <mat-card-content>
+      <div class="form-group row p-4">
+        <!-- <label for="name" class="col-sm-2 col-form-label">Name</label> -->
+        <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+          <input matInput matinput matInput #name="ngModel" type="text" name="name"  placeholder="Project Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+        </mat-form-field>
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        <!-- </div> -->
       </div>
 
+      <div class="form-group row p-4">
+        <!-- <label for="goal" class="col-sm-2 col-form-label">Goal</label> -->
+        <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+          <input matInput #goal="ngModel" type="text"  name="goal" placeholder="Main goal of the project" [(ngModel)]="form.goal" required [ngClass]="{'is-invalid': isInvalid(goal)}">
+        </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        <!-- </div> -->
+      </div>
+
+      <div class="form-group row p-4">
+        <!-- <label for="description" class="col-sm-2 col-form-label">Description</label> -->
+        <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+          <input matInput #description="ngModel" type="text"  name="description" placeholder="Project Description" [(ngModel)]="form.activity.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+        </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        <!-- </div> -->
+      </div>
+
+      <div class="form-group row p-4">
+        <!-- <label for="subject" class="col-sm-2 col-form-label">Subject</label> -->
+        <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+          <input matInput #subject="ngModel" type="text"  name="subject" placeholder="Project's subject" [(ngModel)]="form.activity.subject" required [ngClass]="{'is-invalid': isInvalid(subject)}">
+        </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        <!-- </div> -->
+      </div>
+
+
+      <div class="form-group row p-4">
+        <!-- <label for="age" class="col-sm-2 col-form-label">Age group</label> -->
+        <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+          <mat-label>Age</mat-label>
+          <input matInput #age="ngModel" type="number"  name="age" min="5" value="5" [(ngModel)]="form.activity.age" required [ngClass]="{'is-invalid': isInvalid(age)}">
+        </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div>
+      </div> -->
     </div>
 
 
+    <div class="form-group row p-4">
+      <!-- <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label> -->
+      <!-- <div   class="col-sm-4" > -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Delivery Mode</mat-label>
+        <mat-select #delivery_mode="ngModel"  name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
+          <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!-- <div class="invalid-feedback">This field is required</div>
+
+    </div> -->
   </div>
+
+  <div class="form-group row p-4">
+    <!-- <label for="interaction" class="col-sm-2 col-form-label">Interaction</label> -->
+    <!-- <div class="col-sm-4"> -->
+    <mat-form-field class="form-full-width">
+      <mat-label>Interaction</mat-label>
+      <mat-select #interaction="ngModel"  name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
+        <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!-- <div class="invalid-feedback">This field is required</div>
+
+  </div> -->
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Resolution Scope</mat-label>
+    <mat-select #resolution_scope="ngModel"  name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
+      <mat-option  *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="feedback_use" class="col-sm-2 col-form-label">Feedback Use</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Feedback Use</mat-label>
+    <mat-select #feedback_use="ngModel"  name="feedback_use" [(ngModel)]="form.activity.feedback_use" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
+
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="None">None</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="row p-4">
+  <p><strong>EDUCATOR'S PERCEPTION</strong></p>
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="interrelationship" class="col-sm-2 col-form-label">Interrelationship</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Interrelationship</mat-label>
+    <mat-select #interrelationship="ngModel"  name="interrelationship" [(ngModel)]="form.activity.interrelationship" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
+
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="None">None</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="motivation" class="col-sm-2 col-form-label">Motivation</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Motivation</mat-label>
+    <mat-select #motivation="ngModel"  name="motivation" [(ngModel)]="form.activity.motivation" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
+
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="None">None</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="participation" class="col-sm-2 col-form-label">Participation</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Participation</mat-label>
+
+    <mat-select #participation="ngModel"  name="participation" [(ngModel)]="form.activity.participation" required [ngClass]="{'is-invalid': isInvalid(participation)}">
+
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="None">None</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="form-group row p-4">
+  <!-- <label for="performance" class="col-sm-2 col-form-label">Performance</label>
+  <div class="col-sm-4"> -->
+  <mat-form-field class="form-full-width">
+    <mat-label>Performance</mat-label>
+
+    <mat-select #performance="ngModel"  name="performance" [(ngModel)]="form.activity.performance" required [ngClass]="{'is-invalid': isInvalid(performance)}">
+
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="None">None</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+  <!-- <div class="invalid-feedback">This field is required</div>
+
+</div> -->
+</div>
+
+<div class="row p-4">
+  <p><strong>LEARNING OBJECTIVES</strong></p>
+</div>
+<div class="form-group row p-4">
+  <div class="col-sm-3">
+    <button type="button" class="btn btn-success btn-block"  (click)="addLearningObjective()" [disabled]="loading">
+      <i class="fa fa-plus " *ngIf="!loading"></i>
+      <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+      Add Learning Objective
+    </button>
+  </div>
+</div>
+
+<div class="form-group p-4">
+  <table *ngIf="form.activity.learning_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Knowledge Category</th>
+        <th>Behaviour</th>
+        <th>Subject Matter</th>
+        <th>Conditions</th>
+        <th>Degree</th>
+        <th>Actions</th>
+      </tr>
+
+    </thead>
+
+    <tr *ngFor="let lo of form.activity.learning_objectives; let number = index">
+      <td>{{lo.knowledge_category}}</td>
+      <td>{{lo.behaviour}}</td>
+      <td>{{lo.subject_matter}}</td>
+      <td>{{lo.conditions}}</td>
+      <td>{{lo.degree}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" (click)="editLO(number)">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteLO(number)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+<div *ngIf="form.activity.learning_objectives.length == 0" class="form-group p-4 alert alert-info" role="alert">
+  You need to add at least one Learning Objective.
+</div>
+
+
+<div class="row p-4">
+  <p><strong>AFFECTIVE OBJECTIVES</strong></p>
+</div>
+<div class="form-group row p-4">
+  <!-- <div class="col-sm-6"> -->
+  <mat-form-field class="form-full-width">
+    <mat-select #affectiveobj="ngModel"  name="affectiveobj" [(ngModel)]="ao">
+      <mat-option *ngFor="let item of affective" [value]="item.verb">{{item.category}}: {{item.verb}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- </div> -->
+  <div class="col-sm-3">
+    <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
+      <i class="fa fa-plus " *ngIf="!loading"></i>
+      <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+      Add Affective Objective
+    </button>
+  </div>
+
+</div>
+<div class="form-group row p-4">
+  <div class="col-sm-4">
+    <table *ngIf="form.activity.affective_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+      <thead>
+        <tr>
+          <th>Affective Objective</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tr *ngFor="let ao of form.activity.affective_objectives; let number = index">
+        <td>{{ao}}</td>
+        <td>
+          <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteAO(number)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+</div>
+
+
+<div class="row p-4">
+  <p><strong>SOCIAL OBJECTIVES</strong></p>
+</div>
+<div class="form-group row p-4">
+  <!-- <div class="col-sm-6"> -->
+  <mat-form-field class="form-full-width">
+    <mat-select #socialobj="ngModel"  name="socialobj" [(ngModel)]="so">
+      <mat-option *ngFor="let item of social" [value]="item.name">{{item.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- </div> -->
+  <div class="col-sm-3">
+    <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
+      <i class="fa fa-plus " *ngIf="!loading"></i>
+      <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+      Add Social Objective
+    </button>
+  </div>
+
+</div>
+<div class="form-group row p-4">
+  <div class="col-sm-4">
+    <table *ngIf="form.activity.social_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+      <thead>
+        <tr>
+          <th>Social Objective</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tr *ngFor="let so of form.activity.social_objectives; let number = index">
+        <td>{{so}}</td>
+        <td>
+          <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteSO(number)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+</div>
+
+</mat-card-content>
+
+<mat-card-actions align="end">
+  <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="f.invalid || form.activity.learning_objectives.length == 0">
+    <i class="fa fa-save" *ngIf="!loading"></i>
+    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+    Save
+  </button>
+</mat-card-actions>
+
+
+
+</mat-card>
+
+
+<!-- </div> -->
 </form>

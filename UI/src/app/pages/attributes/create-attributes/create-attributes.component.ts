@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CreateAttributesComponent implements OnInit {
 
-
+  loading        : boolean = false;
   form            : Partial<Attributes> = {
     delivery_mode         : [],
     interaction           : [],
@@ -37,7 +37,6 @@ export class CreateAttributesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private modalService: BsModalService,
     private router: Router
   ) {}
 
@@ -46,18 +45,21 @@ export class CreateAttributesComponent implements OnInit {
   }
 
   create() {
+
     this.http.post<Attributes>(`attributes`, this.form).subscribe(
       response => {
         this.toastr.success('Attributes successfully added.', 'Success');
       },
       err => this.handleError(err)
     );
+    this.router.navigate(['/']);
+
   }
 
   addDelivery() {
     let DeliveryMode = {name: this.delivery_mode};
     this.form.delivery_mode.push(DeliveryMode);
-    this.delivery_mode = "";
+    this.delivery_mode = "";  
   }
 
   addInteraction() {

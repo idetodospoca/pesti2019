@@ -1,0 +1,755 @@
+<form (ngSubmit)="create()" novalidate #f="ngForm">
+ <!-- <div class="container"> -->
+  <mat-card class="form-card">
+    <div class="jumbotron">
+      <h1 class="display-4">Define new technique</h1>
+      <p class="lead">Sample</p>
+    </div>
+    <mat-card-content>
+    <div class="form-group row p-4">
+      <!-- <label for="name" class="col-sm-2 col-form-label">Name</label> -->
+      <mat-form-field class="form-full-width">
+        <input matInput #name="ngModel" type="text" name="name" placeholder="Technique Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+      </mat-form-field>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="description" class="col-sm-2 col-form-label">Description</label> -->
+      <mat-form-field class="form-full-width">
+        <input matInput #description="ngModel" type="text"  name="description" placeholder="Technique Description" [(ngModel)]="form.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+      </mat-form-field>
+    </div>
+
+    <div class="form-group row p-4">
+        <mat-form-field class="form-full-width">
+        <input matInput #rules="ngModel" type="text"  name="rules" placeholder="Rules" [(ngModel)]="rule" required [ngClass]="{'is-invalid': isInvalid(rules)}">
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        </mat-form-field>
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(rules)" [disabled]="loading || rule == ''">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Rule
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.rules.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Rules</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.rules; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, rules)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label> -->
+      <!-- <div class="col-sm-4" > -->
+
+      <mat-form-field class="form-full-width">
+        <mat-label>Delivery Mode</mat-label>
+        <mat-select #delivery_mode="ngModel" name="delivery_mode" [(ngModel)]="delivery" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
+          <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
+        </mat-select>
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+      </mat-form-field>
+
+
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(delivery_mode)" [disabled]="loading || delivery == ''">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Delivery Mode
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.delivery_mode.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Delivery Mode</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.delivery_mode; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, delivery_mode)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="interaction" class="col-sm-2 col-form-label">Interaction</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Interaction</mat-label>
+        <mat-select #interaction="ngModel" name="interaction" [(ngModel)]="interact" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
+          <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(interaction)" [disabled]="loading || interact == ''">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Interaction
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.interaction.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Interaction</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.interaction; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, interaction)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label> -->
+      <!-- <div class="col-sm-4"> -->
+        <mat-form-field class="form-full-width">
+        <mat-label>Resolution Scope</mat-label>
+        <mat-select #resolution_scope="ngModel" name="resolution_scope" [(ngModel)]="scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
+          <mat-option *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
+        </mat-select>
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+        </mat-form-field>
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(resolution_scope)" [disabled]="loading || scope == ''">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Resolution Scope
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.resolution_scope.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Resolution Scope</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.resolution_scope; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, resolution_scope)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="feedback_use" class="col-sm-2 col-form-label">Feedback Use</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Feedback Use</mat-label>
+        <mat-select #feedback_use="ngModel"  name="feedback_use" [(ngModel)]="feedback" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
+
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="None">None</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block" (click)="addField(feedback_use)" [disabled]="loading || feedback == ''">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Feedback
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.feedback_use.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Feedback Use</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.feedback_use; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, feedback_use)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="age" class="col-sm-2 col-form-label">Target Audience</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Target Audience</mat-label>
+        <input matInput #target_audience="ngModel" type="number"  name="target_audience" min="5" [(ngModel)]="target" required [ngClass]="{'is-invalid': isInvalid(target_audience)}">
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(target_audience)" [disabled]="loading">
+          <i class="fa fa-plus" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          Add Target Audience
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.target_audience.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Target Audience</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.target_audience; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, target_audience)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="row p-4">
+      <p><strong>EDUCATOR'S PERCEPTION</strong></p>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="interrelationship" class="col-sm-2 col-form-label">Interrelationship</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Interrelationship</mat-label>
+        <mat-select #interrelationship="ngModel"  name="interrelationship" [(ngModel)]="interrelation" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
+
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="None">None</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(interrelationship)" [disabled]="loading || interrelation == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Interrelationship
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.interrelationship.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Interrelationship</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.interrelationship; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, interrelationship)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="motivation" class="col-sm-2 col-form-label">Motivation</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+      <mat-label>Motivation</mat-label>
+        <mat-select #motivation="ngModel"  name="motivation" [(ngModel)]="motiv" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
+
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="None">None</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(motivation)" [disabled]="loading || motiv == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Motivation
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.motivation.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Motivation</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.motivation; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, motivation)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="participation" class="col-sm-2 col-form-label">Participation</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+        <mat-label>Participation</mat-label>
+        <mat-select #participation="ngModel"  name="participation" [(ngModel)]="particip" required [ngClass]="{'is-invalid': isInvalid(participation)}">
+
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="None">None</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(participation)" [disabled]="loading || particip == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Participation
+        </button>
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.participation.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Participation</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.participation; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, participation)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <!-- <label for="performance" class="col-sm-2 col-form-label">Performance</label> -->
+      <!-- <div class="col-sm-4"> -->
+      <mat-form-field class="form-full-width">
+      <mat-label>Performace</mat-label>
+        <mat-select #performance="ngModel"  name="performance" [(ngModel)]="perform" required [ngClass]="{'is-invalid': isInvalid(performance)}">
+
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="None">None</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+        <!-- <div class="invalid-feedback">This field is required</div> -->
+
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(performance)" [disabled]="loading || perform == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Performace
+        </button>
+
+      </div>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.performance.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Performace</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let i of form.performance; let number = index">
+            <td>{{i}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, performance)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group row p-4">
+      <p><strong>LEARNING OBJECTIVES</strong></p>
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addLearningObjective()" [disabled]="loading">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Learning Objective
+        </button>
+      </div>
+    </div>
+
+
+    <div class="form-group p-4">
+      <table *ngIf="form.learning_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+        <thead  >
+          <tr>
+            <th>Knowledge Category</th>
+            <th>Behaviour</th>
+            <th>Subject Matter</th>
+            <th>Conditions</th>
+            <th>Degree</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tr *ngFor="let lo of form.learning_objectives; let number = index">
+          <td>{{lo.knowledge_category}}</td>
+          <td>{{lo.behaviour}}</td>
+          <td>{{lo.subject_matter}}</td>
+          <td>{{lo.conditions}}</td>
+          <td>{{lo.degree}}</td>
+          <td>
+            <button type="button" mat-raised-button class="btn btn-primary" (click)="editLO(number)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteLO(number)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div *ngIf="form.learning_objectives.length == 0" class="form-group p-4 alert alert-info" role="alert">
+      You need to add at least one Learning Objective.
+    </div>
+
+
+    <div class="form-group row p-4">
+      <p><strong>AFFECTIVE OBJECTIVES</strong></p>
+    </div>
+    <div class="form-group row p-4">
+      <!-- <div class="col-sm-6"> -->
+      <mat-form-field class="form-full-width">
+        <mat-select #affectiveobj="ngModel"  name="affectiveobj" [(ngModel)]="ao">
+          <mat-option *ngFor="let item of affective" [value]="item.verb">{{item.category}}: {{item.verb}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Affective Objective
+        </button>
+      </div>
+
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.affective_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead >
+            <tr>
+              <th>Affective Objective</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let ao of form.affective_objectives; let number = index">
+            <td>{{ao}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteAO(number)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="form-group row p-4">
+      <p><strong>SOCIAL OBJECTIVES</strong></p>
+    </div>
+    <div class="form-group row p-4">
+      <!-- <div class="col-sm-6"> -->
+      <mat-form-field class="form-full-width">
+        <mat-select #socialobj="ngModel"  name="socialobj" [(ngModel)]="so">
+          <mat-option *ngFor="let item of social" [value]="item.name">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- </div> -->
+      <div class="col-sm-3">
+        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Social Objective
+        </button>
+      </div>
+
+    </div>
+    <div class="form-group row p-4">
+      <div class="col-sm-4">
+        <table *ngIf="form.social_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+          <thead  >
+            <tr>
+              <th>Social Objective</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tr *ngFor="let so of form.social_objectives; let number = index">
+            <td>{{so}}</td>
+            <td>
+              <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteSO(number)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="form-group row p-4">
+      <p><strong>STRUCTURAL DEFINITION</strong></p>
+    </div>
+
+    <div class="form-group p-4 alert alert-info" role="alert">
+      At least one module must be defined to characterize this technique.
+    </div>
+    <div class="form-group p-4 alert alert-info" role="alert">
+      Each module is devided into a sequence of phases, with each one defining
+      a list of tasks to be carried out by participants.
+    </div>
+
+
+
+    <ng-form [formGroup]="techniqueStruct" (ngSubmit)="create()">
+      <div formArrayName="modules" class="form-group">
+        <div *ngFor="let X of techniqueStruct['controls'].modules['controls']; let imod=index"class="form-group">
+          <div formGroupName="{{imod}}" class="form-group">
+            <div class="form-group row">
+              <div class="col-sm-8">
+                <mat-form-field class="form-full-width">
+                  <input matInput type="text" placeholder="Module Name" formControlName="name" required>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div formArrayName="phases" class="form-group">
+              <div *ngFor="let Y of X['controls'].phases['controls']; let ipha=index" class="form-group">
+                <div formGroupName="{{ipha}}" class="form-group">
+                  <div class="form-group row">
+                    <div class="col-sm-8">
+                    <mat-form-field class="form-full-width">
+                      <input matInput type="text" placeholder="Phase Name" formControlName="name" required>
+                    </mat-form-field>
+                    </div>
+                  </div>
+                  <div formArrayName="tasks" class="form-group">
+                    <div *ngFor="let Z of Y['controls'].tasks['controls']; let itask=index" class="form-group">
+                      <div formGroupName="{{itask}}" class="form-group">
+                        <div class="form-group row">
+                          <div class="col-sm-6">
+                          <mat-form-field class="form-full-width">
+                            <input matInput type="text" placeholder="Task Type" formControlName="type" required>
+                          </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-6">
+                          <mat-form-field class="form-full-width">
+                            <input matInput type="text" placeholder="Task description" formControlName="description" required>
+                          </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-6">
+                          <mat-form-field class="form-full-width">
+                            <mat-select name="role" formControlName="role" required>
+                              <mat-option value="Student">Student</mat-option>
+                              <mat-option value="Staff">Staff</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-6">
+                            <mat-form-field class="form-full-width">
+                              <textarea matInput name="name" rows="5" cols="20"  formControlName="resources"></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <button type="button" mat-raised-button class="btn btn-success btn-block" (click)="addTask(imod,ipha)" >
+                          <i class="fa fa-plus " ></i>
+                          Add Task
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <button type="button" mat-raised-button class="btn btn-success btn-block" (click)="addPhase(imod)" >
+                    <i class="fa fa-plus " ></i>
+                    Add Phase
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <button type="button" mat-raised-button class="btn btn-success btn-block" (click)="addMod()" >
+              <i class="fa fa-plus " ></i>
+              Add Module
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </ng-form>
+
+
+
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+
+    <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="f.invalid || invalidForm()">
+      <i class="fa fa-save" *ngIf="!loading"></i>
+      <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+      Save
+    </button>
+
+  </mat-card-actions>
+
+</mat-card>
+
+
+<!-- </div> -->
+</form>

@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +43,6 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     CreateLearningobjectiveComponent
-
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,10 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
       positionClass: 'toast-top-right'
     }),
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+
   ],
   providers: [
     {

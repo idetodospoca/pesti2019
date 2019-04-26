@@ -36,6 +36,11 @@ const routes: Routes = [
         path: 'attributes',
         canActivateChild: [AuthGuard],
         loadChildren: './pages/attributes/attributes.module#AttributesModule'
+      },
+      {
+        path: 'techniques',
+        canActivateChild: [AuthGuard],
+        loadChildren: './pages/techniques/techniques.module#TechniquesModule'
       }
     ]
   },

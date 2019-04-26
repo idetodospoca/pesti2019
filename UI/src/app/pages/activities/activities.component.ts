@@ -28,23 +28,8 @@ export class ActivitiesComponent implements OnInit {
   ngOnInit() {
 
 
-    this.getActivities();
   }
 
-  getActivities() {
-    this.loading = true;
-    this.http.get<Activity[]>('atividades')
-    .subscribe(
-      response => {
-        this.activities = response;
-        this.loading = false;
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.loading = false;
-      }
-    );
-  }
 
   // showLearningObjectives(learningObjective: LearningObjective) {
   //   this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});

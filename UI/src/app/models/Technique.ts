@@ -13,7 +13,7 @@ export class Technique {
   motivation            : string[];
   participation         : string[];
   performance           : string[];
-  scope                 : string[];
+  resolution_scope      : string[];
   feedback_use          : string[];
   target_audience       : number[];
   learning_objectives   : LearningObjective[];

@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
+
+import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule } from '@angular/material';
+// import {} from '@angular/material/input';
+// import {} from '@angular/material/form-field';
+
 @NgModule({
   declarations: [],
   imports:      [
@@ -12,6 +17,13 @@ import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipM
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatTableModule
   ],
   exports:      [
     CommonModule,
@@ -20,7 +32,14 @@ import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipM
     BsDatepickerModule,
     TabsModule,
     ModalModule,
-    TooltipModule
+    TooltipModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatTableModule
   ]
 })
 export class SharedModule { }

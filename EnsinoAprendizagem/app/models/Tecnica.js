@@ -159,7 +159,7 @@ let TecnicaSchema     = new Schema({
     enum     : EVAL
   },
 
-  scope : {
+  resolution_scope : {
     type     : [String],
     required : true
   },

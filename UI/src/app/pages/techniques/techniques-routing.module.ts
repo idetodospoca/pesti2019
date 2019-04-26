@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AttributesComponent } from './attributes.component';
-import { CreateAttributesComponent } from './create-attributes/create-attributes.component';
+import { TechniquesComponent } from './techniques.component';
+import { CreateTechniqueComponent } from './create-technique/create-technique.component';
 
 import { AuthGuard } from '../../guards/auth.guard';
 
@@ -10,24 +10,24 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Attributes'
+      title: 'Techniques'
     },
     children: [{
       path: '',
-      component: AttributesComponent,
+      component: TechniquesComponent,
       pathMatch: 'full',
       data: {
         title: 'List',
-        requiredRole: ['psicologo_educacional']
+        requiredRole: ['psicologo_escolar']
       },
       canActivate: [AuthGuard]
     }, {
       path: 'create',
       data: {
-        title: 'New Attributes',
-        requiredRole: ['psicologo_educacional']
+        title: 'New Technique',
+        requiredRole: ['psicologo_escolar']
       },
-      component: CreateAttributesComponent,
+      component: CreateTechniqueComponent,
       canActivate: [AuthGuard]
     }
   ]
@@ -38,4 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AttributesRoutingModule { }
+export class TechniquesRoutingModule { }
