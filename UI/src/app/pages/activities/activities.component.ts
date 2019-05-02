@@ -53,8 +53,8 @@ export class ActivitiesComponent implements OnInit {
   }
 
 
-  deleteProject(id: number)/*: Observable<Project>*/ {
-    this.http.delete(`projects/${id}`).subscribe(
+  deleteProject(id: number) {
+     this.http.delete(`projects/${id}`).subscribe(
       response => {
         this.toastr.success('Project deleted.', 'Success');
       },
@@ -65,9 +65,11 @@ export class ActivitiesComponent implements OnInit {
     //
     // this.router.navigate(['/']);
     // return this.http.delete<Project>(`projects/${id}`).pipe(
-    //   tap(_ => this.toastr.success('Project deleted.', 'Success')),
-    //   catchError()
+    //   tap(_ => this.toastr.success('Project deleted.', 'Success'))
+    //
     // );
+
+    //return this.http.delete<Project>(`projects/${id}`);
   }
 
 

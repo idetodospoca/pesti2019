@@ -45,7 +45,7 @@ function remove(req, res) {
     if(projeto.project_manager.toString() != req.user._id.toString()) {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t delete this project.'});
     } else {
-      await Project.findByIdAndRemove(query);
+      await Projeto.findByIdAndRemove(query);
     }
 
 
