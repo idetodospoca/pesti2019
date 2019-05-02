@@ -8,7 +8,7 @@ Prof. Dulce Mota
 Local
 ISEP
 
-Objetivos
+Temas abordados
 Análise	e	discussão	sobre	o	tema	a	abordar,
 definição	 de	 ponto	 de	 partida	 para	 o
 desenvolvimento.
@@ -24,7 +24,7 @@ Prof. Dulce Mota
 Local
 ISEP
 
-Objetivos
+Temas abordados
 Discussão sobre o ponto de situação do desenvolvimento.
 Aprofundamento dos vários Casos de Uso de cada ator do sistema.
 
@@ -39,7 +39,7 @@ Prof. Dulce Mota
 Local
 ISEP
 
-Objetivos
+Temas abordados
 Esclarecimento de dúvidas.
 
 
@@ -53,6 +53,6 @@ Prof. Dulce Mota
 Local
 ISEP
 
-Objetivos
-Análise dos vários aspetos desenvolvidos desde a reunião transata.
-Discussão sobre aspetos a alterar/melhorar.
+Temas abordados
+Apresentação do protótipo inicial da aplicação.
+Discussão e análise dos vários aspetos a melhorar/alterar

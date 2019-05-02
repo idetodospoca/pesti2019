@@ -37,15 +37,19 @@ function remove(req, res) {
 
   Projeto.findByIdAndRemove(query)
   .then(projeto =>  {
+    
     if(!projeto) {
+
       return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
-    }
 
-    if(projeto.project_manager.toString() != req.user._id.toString()){
+    } else if(projeto.project_manager.toString() != req.user._id.toString()) {
+
       return res.status(403).json({error: 'forbidden', message: 'You can\'t delete this project.'});
+
+    } else {
+      return res.status(200).send("Project deleted.");
     }
 
-    res.status(200).send("Project deleted.");
   })
   .catch(utils.handleError(req, res));
 
