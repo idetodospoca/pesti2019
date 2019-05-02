@@ -7,14 +7,14 @@ import { AuthService } from '../../services/auth.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.scss']
 })
-export class ActivitiesComponent implements OnInit, AfterViewInit {
+export class ActivitiesComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -22,7 +22,8 @@ export class ActivitiesComponent implements OnInit, AfterViewInit {
   bsModalRef        : BsModalRef;
   loading           : boolean = false;
   displayedColumns  : string[] = ['name', 'goal', 'date', 'actions'];
-  dataSource;
+  dataSource        = new MatTableDataSource([]);
+
   constructor(
     private http          : HttpClient,
     private toastr        : ToastrService,
@@ -40,7 +41,8 @@ export class ActivitiesComponent implements OnInit, AfterViewInit {
     .subscribe(
       response => {
         this.projects = response;
-        this.dataSource = new MatTableDataSource(this.projects);
+        this.dataSource.data = this.projects;
+        this.dataSource.sort = this.sort;
         this.loading = false;
       },
       err => {
@@ -50,9 +52,6 @@ export class ActivitiesComponent implements OnInit, AfterViewInit {
     )
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
 
   deleteProject(id: number)/*: Observable<Project>*/ {
     this.http.delete(`projects/${id}`).subscribe(

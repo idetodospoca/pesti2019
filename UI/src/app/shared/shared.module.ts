@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
 
-import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule, MatSortModule } from '@angular/material';
 // import {} from '@angular/material/input';
 // import {} from '@angular/material/form-field';
 
@@ -23,7 +23,8 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatSelectModule,
     MatFormFieldModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   exports:      [
     CommonModule,
@@ -39,7 +40,8 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatSelectModule,
     MatFormFieldModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class SharedModule { }
