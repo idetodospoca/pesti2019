@@ -62,14 +62,6 @@ export class ActivitiesComponent implements OnInit {
         this.toastr.error(err.error.message, 'Error');
       }
     );
-    //
-    // this.router.navigate(['/']);
-    // return this.http.delete<Project>(`projects/${id}`).pipe(
-    //   tap(_ => this.toastr.success('Project deleted.', 'Success'))
-    //
-    // );
-
-    //return this.http.delete<Project>(`projects/${id}`);
   }
 
 

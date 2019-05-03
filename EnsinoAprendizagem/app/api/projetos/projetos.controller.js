@@ -46,11 +46,11 @@ function remove(req, res) {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t delete this project.'});
     } else {
       await Projeto.findByIdAndRemove(query);
+      res.json({ message: 'Project successfully deleted.' });
     }
 
 
-    res.status(200).send("Project deleted.");
-
+    //res.status(200).send({success: "Project deleted."});
 
   })
   .catch(utils.handleError(req, res));

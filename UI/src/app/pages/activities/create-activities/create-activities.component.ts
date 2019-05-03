@@ -88,7 +88,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       err => this.handleError(err)
     );
 
-    this.router.navigate(['/']);
+    this.router.navigate(['/projects']);
 
 
   }
@@ -156,7 +156,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       this.bsModalRef.content.form[property] = p[property];
     }
   }
-  
+
 
   addAffectiveObjective() {
     if  (this.form.activity.affective_objectives.includes(this.ao)) {
