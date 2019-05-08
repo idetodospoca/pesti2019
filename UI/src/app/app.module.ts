@@ -32,6 +32,8 @@ import { AuthGuard } from './guards/auth.guard';
 
 import { SharedModule } from './shared/shared.module';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
 
 @NgModule({
@@ -55,7 +57,12 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn'
+    })
   ],
   providers: [
     {

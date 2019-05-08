@@ -88,6 +88,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       err => this.handleError(err)
     );
 
+    this.router.navigate(['/']);
     this.router.navigate(['/projects']);
 
 

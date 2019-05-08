@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
+import { FormatDatePipe } from './pipes/format-date/format-date.pipe';
+import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
 
-import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule, MatSortModule } from '@angular/material';
-// import {} from '@angular/material/input';
-// import {} from '@angular/material/form-field';
+
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    FormatDatePipe
+  ],
   imports:      [
     CommonModule,
     FormsModule,
@@ -24,7 +26,8 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatFormFieldModule,
     MatCardModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   exports:      [
     CommonModule,
@@ -41,7 +44,9 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatFormFieldModule,
     MatCardModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatProgressSpinnerModule,
+    FormatDatePipe
   ]
 })
 export class SharedModule { }

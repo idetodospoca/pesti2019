@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatSort, MatTableDataSource } from '@angular/material';
+
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+
 import { Project, Activity, LearningObjective } from '../../models';
 import { AuthService } from '../../services/auth.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { catchError, map, tap, delay } from 'rxjs/operators';
+
+
+
 
 @Component({
   selector: 'app-activities',
@@ -28,7 +31,7 @@ export class ActivitiesComponent implements OnInit {
     private http          : HttpClient,
     private toastr        : ToastrService,
     public authService    : AuthService,
-    private router        : Router
+    private router        : Router,
   ) {}
 
   ngOnInit() {
@@ -62,6 +65,9 @@ export class ActivitiesComponent implements OnInit {
         this.toastr.error(err.error.message, 'Error');
       }
     );
+
+
+
   }
 
 

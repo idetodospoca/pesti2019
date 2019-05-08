@@ -1,30 +1,9 @@
-<!-- <div class="container">
-  <table class="table  table-responsive mt-2">
-    <thead >
-      <tr>
-        <th>Description</th>
-        <th>Subject</th>
-        <th>Subject Matter</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngIf="loading">
-        <td colspan="5" class="text-center">
-          <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
-        </td>
-      </tr>
-      <tr *ngFor="let project of projects">
-        <td>{{project.name}}</td>
-        <td>{{project.date}}</td>
-        <td>{{project.goal}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
-
-
-
 <div class="example-container mat-elevation-z8">
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
@@ -39,26 +18,37 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.date | formatDate: 'DD/MM/YYYY HH:mm'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
         <div class="button-row">
-          <button  mat-raised-button color="primary" [disabled]="loading ">
-              <i class="fa fa-edit " *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-            </button>
-          <button mat-raised-button color="primary" (click)="deleteProject(element._id)" [disabled]="loading">
-              <i class="fa fa-trash " *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-            </button>
-        </div>
-        </td>
-    </ng-container>
+          <button  mat-raised-button color="primary" [disabled]="loading">
+            <i class="fa fa-edit " *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          </button>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+          <button mat-raised-button [swal]="{ title: 'Are you sure?',
+          text: 'You won\'t be able to revert this!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true }"
+          (confirm)="deleteProject(element._id)"
+           color="primary"  [disabled]="loading">
+          <i class="fa fa-trash " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+        </button>
+
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
 </div>
