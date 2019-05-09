@@ -242,7 +242,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     }
 
     this.toastr.error(err.error.message, 'Erro');
-  }  }
+  }  
 
 
 }
