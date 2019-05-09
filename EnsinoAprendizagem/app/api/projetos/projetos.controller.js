@@ -84,43 +84,13 @@ function edit(req, res) {
     if(projeto.project_manager.toString() != req.user._id.toString()) {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
     } else {
-      for (let attr in req.body) {
-        projeto[attr] = req.body[attr];
-      }
-
-      projeto.save()
-      .then(p => {
-        res.status(200).json(p);
-      })
-      .catch(utils.handleError(req, res));
+      await Projeto.findByIdAndUpdate(query, req.body, {new: true});
+      res.json({ message: 'Project successfully edited.'});
     }
 
   })
   .catch(utils.handleError(req, res));
 
-  // Projeto.findById(query)
-  // .then(projeto =>  {
-  //   if(!projeto) {
-  //     return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
-  //   }
-  //
-  //   if((projeto.project_manager.toString() != req.user._id.toString()) && (!projeto.teachers.find(req.user._id.toString()))){
-  //     return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
-  //   }
-  //
-  //
-  //   for (let attr in req.body) {
-  //     projeto[attr] = req.body[attr];
-  //   }
-  //
-  //   projeto.save()
-  //   .then(p => {
-  //     res.status(200).json(p);
-  //   })
-  //   .catch(utils.handleError(req, res));
-  //
-  // })
-  // .catch(utils.handleError(req, res));
 }
 
 module.exports = {

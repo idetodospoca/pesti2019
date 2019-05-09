@@ -87,7 +87,12 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
   create() {
 
-
+    this.http.put<Project>(`projects/${this.id}`, this.form).subscribe(
+      response => {
+        this.toastr.success('Project successfully added.', 'Success');
+      },
+      err => this.handleError(err)
+    );
 
     this.router.navigate(['/']);
 
@@ -242,7 +247,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     }
 
     this.toastr.error(err.error.message, 'Erro');
-  }  
+  }
 
 
 }
