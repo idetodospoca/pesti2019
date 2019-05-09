@@ -1,9 +1,6 @@
+
 <div class="example-container mat-elevation-z8">
 
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
-  
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
@@ -25,12 +22,12 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
         <div class="button-row">
-          <button  mat-raised-button color="primary" [disabled]="loading">
-            <i class="fa fa-edit " *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+
+          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" *ngIf="authService.hasRole('professor')">
+            <i class="fa fa-edit"></i>
           </button>
 
-          <button mat-raised-button [swal]="{ title: 'Are you sure?',
+          <button mat-raised-button title="Delete Project" [swal]="{ title: 'Are you sure?',
           text: 'You won\'t be able to revert this!',
           type: 'warning',
           showCancelButton: true,
@@ -38,7 +35,7 @@
           cancelButtonText: 'No, cancel!',
           reverseButtons: true }"
           (confirm)="deleteProject(element._id)"
-           color="primary"  [disabled]="loading">
+          color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor')">
           <i class="fa fa-trash " *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
         </button>
@@ -50,5 +47,13 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<div align="center" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div align="center" class="form-group p-4 alert alert-info" role="alert" *ngIf="projects && projects.length == 0">
+  No projects were found
+</div>
 
 </div>

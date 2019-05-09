@@ -49,9 +49,6 @@ function remove(req, res) {
       res.json({ message: 'Project successfully deleted.' });
     }
 
-
-    //res.status(200).send({success: "Project deleted."});
-
   })
   .catch(utils.handleError(req, res));
 }
@@ -63,32 +60,57 @@ function edit(req, res) {
   };
 
   Projeto.findById(query)
-  .then(projeto =>  {
+  .then(async (projeto) =>  {
+
     if(!projeto) {
       return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
     }
 
-    if((projeto.project_manager.toString() != req.user._id.toString()) && (!projeto.teachers.find(req.user._id.toString()))){
+    if(projeto.project_manager.toString() != req.user._id.toString()) {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
+    } else {
+      for (let attr in req.body) {
+        projeto[attr] = req.body[attr];
+      }
+
+      projeto.save()
+      .then(p => {
+        res.status(200).json(p);
+      })
+      .catch(utils.handleError(req, res));
     }
-
-
-    for (let attr in req.body) {
-      projeto[attr] = req.body[attr];
-    }
-
-    projeto.save()
-    .then(p => {
-      res.status(200).json(p);
-    })
-    .catch(utils.handleError(req, res));
 
   })
   .catch(utils.handleError(req, res));
+
+  // Projeto.findById(query)
+  // .then(projeto =>  {
+  //   if(!projeto) {
+  //     return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
+  //   }
+  //
+  //   if((projeto.project_manager.toString() != req.user._id.toString()) && (!projeto.teachers.find(req.user._id.toString()))){
+  //     return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
+  //   }
+  //
+  //
+  //   for (let attr in req.body) {
+  //     projeto[attr] = req.body[attr];
+  //   }
+  //
+  //   projeto.save()
+  //   .then(p => {
+  //     res.status(200).json(p);
+  //   })
+  //   .catch(utils.handleError(req, res));
+  //
+  // })
+  // .catch(utils.handleError(req, res));
 }
 
 module.exports = {
   index   : index,
+  show    : show,
   create  : create,
   remove  : remove,
   edit    : edit

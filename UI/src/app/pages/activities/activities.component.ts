@@ -60,6 +60,7 @@ export class ActivitiesComponent implements OnInit {
      this.http.delete(`projects/${id}`).subscribe(
       response => {
         this.toastr.success('Project deleted.', 'Success');
+        this.getProjects();
       },
       err => {
         this.toastr.error(err.error.message, 'Error');

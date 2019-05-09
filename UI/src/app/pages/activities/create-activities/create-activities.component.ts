@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Project, Activity, LearningObjective, Attributes } from '../../../models';
+import { Project, Attributes } from '../../../models';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-create-activities',
@@ -89,7 +87,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     );
 
     this.router.navigate(['/']);
-    this.router.navigate(['/projects']);
 
 
   }
@@ -125,7 +122,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
         this.social = response.map(response => response['social_objectives']);
         this.social = ([].concat.apply([], this.social)).sort();
-        //console.log(this.affective);
+
         this.loading = false;
 
       },
