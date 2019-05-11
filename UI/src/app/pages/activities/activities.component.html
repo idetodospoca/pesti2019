@@ -23,7 +23,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="button-row">
 
-          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" *ngIf="authService.hasRole('professor')">
+          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" *ngIf="authService.hasRole('professor') && (authService.isOwner(element.project_manager) || authService.isCollab(element.teachers))">
             <i class="fa fa-edit"></i>
           </button>
 
@@ -35,7 +35,7 @@
           cancelButtonText: 'No, cancel!',
           reverseButtons: true }"
           (confirm)="deleteProject(element._id)"
-          color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor')">
+          color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor') && authService.isOwner(element.project_manager)">
           <i class="fa fa-trash " *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
         </button>

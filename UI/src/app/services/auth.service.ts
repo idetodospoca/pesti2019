@@ -7,7 +7,8 @@ import { User } from '../models/User';
 export class AuthService {
 
   tokenName = 'token';
-  constructor() { }
+  constructor(
+  ) { }
 
   public getToken(): string {
     return localStorage.getItem(this.tokenName);
@@ -51,4 +52,24 @@ export class AuthService {
     // console.log(role, userRole);
     return role.indexOf(userRole) !== -1;
   }
+
+  public isOwner(docOwner: string): boolean {
+
+    let userId = this.getUser().id;
+
+    return (docOwner == userId);
+  }
+
+  public isCollab(collabs: string[] | string): boolean {
+
+    let userId = this.getUser().id;
+
+    if (typeof collabs === 'string') {
+      collabs = [collabs];
+    }
+
+    return collabs.indexOf(userId) !== -1;
+  }
+
+
 }

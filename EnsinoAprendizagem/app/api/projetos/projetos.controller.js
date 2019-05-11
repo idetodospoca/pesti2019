@@ -44,6 +44,7 @@ function create(req, res) {
 }
 
 
+
 function remove(req, res) {
 
   let query = {
@@ -81,7 +82,7 @@ function edit(req, res) {
       return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
     }
 
-    if(projeto.project_manager.toString() != req.user._id.toString()) {
+    if((projeto.project_manager.toString() != req.user._id.toString() && (projeto.teachers.indexOf(req.user._id.toString()) > -1))) {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
     } else {
       await Projeto.findByIdAndUpdate(query, req.body, {new: true});

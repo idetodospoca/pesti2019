@@ -89,7 +89,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
     this.http.put<Project>(`projects/${this.id}`, this.form).subscribe(
       response => {
-        this.toastr.success('Project successfully added.', 'Success');
+        this.toastr.success('Project successfully edited.', 'Success');
       },
       err => this.handleError(err)
     );
