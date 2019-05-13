@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { FormatDatePipe } from './pipes/format-date/format-date.pipe';
-import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatCardModule, MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatSelectModule,
+  MatInputModule, MatFormFieldModule, MatCardModule,
+  MatTableModule, MatSortModule, MatProgressSpinnerModule,
+  MatTooltipModule, MatExpansionModule, MatDialogModule,
+MatListModule } from '@angular/material';
 
 
 
@@ -27,7 +31,11 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatCardModule,
     MatTableModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatListModule
   ],
   exports:      [
     CommonModule,
@@ -46,6 +54,10 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatInputModule, Ma
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatListModule,
     FormatDatePipe
   ]
 })

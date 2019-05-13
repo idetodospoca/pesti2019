@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Attributes } from '../../../models';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { CreateAttributesHelpComponent } from '../../../dialogs/create-attributes-help/create-attributes-help.component';
 
 @Component({
   selector: 'app-create-attributes',
@@ -37,7 +38,8 @@ export class CreateAttributesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -56,45 +58,84 @@ export class CreateAttributesComponent implements OnInit {
 
   }
 
+  showHelp() {
+    let dialog = this.dialog.open(CreateAttributesHelpComponent);
+  }
+
   addDelivery() {
-    let DeliveryMode = {name: this.delivery_mode};
-    this.form.delivery_mode.push(DeliveryMode);
-    this.delivery_mode = "";  
+    if (this.form.delivery_mode.filter(dm => dm.name === this.delivery_mode).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let DeliveryMode = {name: this.delivery_mode};
+      this.form.delivery_mode.push(DeliveryMode);
+    }
+
+    this.delivery_mode = "";
   }
 
   addInteraction() {
-    let Interaction = {name: this.interaction};
-    this.form.interaction.push(Interaction);
+    if (this.form.interaction.filter(it => it.name === this.interaction).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let Interaction = {name: this.interaction};
+      this.form.interaction.push(Interaction);
+    }
+
     this.interaction = "";
   }
 
   addResolution() {
-    let Resolution = {name: this.resolution_scope};
-    this.form.resolution_scope.push(Resolution);
+    if (this.form.resolution_scope.filter(rs => rs.name === this.resolution_scope).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let Resolution = {name: this.resolution_scope};
+      this.form.resolution_scope.push(Resolution);
+    }
+
     this.resolution_scope = "";
   }
 
   addSocial() {
-    let SocialObjective = {name: this.social_objectives};
-    this.form.social_objectives.push(SocialObjective);
+    if (this.form.social_objectives.filter(so => so.name === this.social_objectives).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let SocialObjective = {name: this.social_objectives};
+      this.form.social_objectives.push(SocialObjective);
+    }
+
     this.social_objectives = "";
   }
 
   addBehaviour() {
-    let Behaviour = {category: this.behaviour_category, verb: this.behaviour_verb};
-    this.form.behaviour.push(Behaviour);
+    if (this.form.behaviour.filter(bh => bh.category === this.behaviour_category && bh.verb === this.behaviour_verb).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let Behaviour = {category: this.behaviour_category, verb: this.behaviour_verb};
+      this.form.behaviour.push(Behaviour);
+    }
+
     this.behaviour_verb = "";
   }
 
   addAffective() {
-    let AffectiveObjective = {category: this.affective_category, verb: this.affective_verb};
-    this.form.affective_objectives.push(AffectiveObjective);
+    if (this.form.affective_objectives.filter(af => af.category === this.affective_category && af.verb === this.affective_verb).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let AffectiveObjective = {category: this.affective_category, verb: this.affective_verb};
+      this.form.affective_objectives.push(AffectiveObjective);
+    }
+
     this.affective_verb = "";
   }
 
   addTask() {
-    let TaskType = {category: this.task_category, verb: this.task_verb};
-    this.form.task_types.push(TaskType);
+    if (this.form.task_types.filter(tt => tt.category === this.task_category && tt.verb === this.task_verb).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      let TaskType = {category: this.task_category, verb: this.task_verb};
+      this.form.task_types.push(TaskType);
+    }
+
     this.task_category = "";
     this.task_verb = "";
   }

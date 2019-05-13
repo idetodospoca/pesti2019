@@ -1,7 +1,29 @@
 .form-full-width {
-  width: 70%;
+  width: 60%;
+  margin-right: 8px;
 }
 
 mat-form-field.mat-form-field {
   font-size: 17px;
+  margin-right: 8px;
+}
+
+.table {
+  width: 60%;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }

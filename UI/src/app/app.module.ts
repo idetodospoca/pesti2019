@@ -35,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
+import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/create-attributes-help.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    CreateLearningobjectiveComponent
+    CreateLearningobjectiveComponent,
+    CreateAttributesHelpComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
     AuthGuard
   ],
   entryComponents: [
-    CreateLearningobjectiveComponent
+    CreateLearningobjectiveComponent,
+    CreateAttributesHelpComponent
 
   ],
   bootstrap: [AppComponent]

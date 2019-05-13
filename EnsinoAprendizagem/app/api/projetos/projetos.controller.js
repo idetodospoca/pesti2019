@@ -80,14 +80,16 @@ function edit(req, res) {
 
     if(!projeto) {
       return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
+    }
+
+    if ( projeto.project_manager.toString() != req.user._id.toString() && (projeto.teachers.indexOf(req.user._id) === -1) )  {
+      return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
     } else {
       await Projeto.findOneAndUpdate(query, req.body, {new: true});
       res.json({ message: 'Project successfully edited.'});
     }
 
-    // if((projeto.project_manager != req.user._id && (!projeto.teachers.includes(req.user._id)))) {
-    //   return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
-    // }
+
 
   })
   .catch(utils.handleError(req, res));

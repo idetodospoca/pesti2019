@@ -1,179 +1,232 @@
-<!-- <div class="app flex-row align-items-center"> -->
-<mat-card class="form-card">
-  <div class="jumbotron">
-    <h1 class="display-4">Define new attributes</h1>
-    <p class="lead">In this section you can define new attributes. These attributes will determine the possible options for each new project and learning technique.
-      Any number of definitions can be proviced for each attribute.</p>
 
-    </div>
-    <mat-card-content>
-      <form (ngSubmit)="create()">
-        <div class="form-group row p-4">
 
+<div class="example-container">
+
+  <form (ngSubmit)="create()">
+
+    <mat-accordion multi="true">
+      <div class="row p-2">
+        <div class="col-sm">
+          <button  type="button" mat-raised-button class="btn btn-primary float-right" (click)="showHelp()">
+          <i class="fas fa-question"></i>
+          Help
+          </button>
+        </div>
+
+      </div>
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Delivery Mode
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new delivery modes
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="form-group p-4">
           <mat-form-field class="form-full-width">
             <input matInput type="text" name="delivery" placeholder="Delivery Mode" #delivery="ngModel" [(ngModel)]="delivery_mode" >
           </mat-form-field>
-          <div class="col-sm-1">
-            <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="delivery_mode == '' || loading" (click)="addDelivery()">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add
-            </button>
-          </div>
+          <button type="button" mat-raised-button matTooltip="Add new Delivery Mode" class="btn btn-success " [disabled]="delivery_mode == '' || loading" (click)="addDelivery()">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add
+          </button>
+
+
+          <table *ngIf="form.delivery_mode.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.delivery_mode; let number = index">
+              <td>{{dm.name}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteDM(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
 
         </div>
+      </mat-expansion-panel>
 
+
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Interaction
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new interaction types
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="form-group p-4">
-          <div class="col-sm-4">
-            <table *ngIf="form.delivery_mode.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead>
-                <tr>
-                  <th>Delivery Mode</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.delivery_mode; let number = index">
-                <td>{{dm.name}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteDM(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        </div>
-
-        <div class="form-group row p-4">
           <mat-form-field class="form-full-width">
             <input matInput type="text" name="delivery" placeholder="Interaction" #interact="ngModel" [(ngModel)]="interaction" >
           </mat-form-field>
-          <div class="col-sm-1">
-            <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="interaction == '' || loading" (click)="addInteraction()">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add
-            </button>
-          </div>
+          <button type="button" mat-raised-button class="btn btn-success" [disabled]="interaction == '' || loading" (click)="addInteraction()">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add
+          </button>
+          <table *ngIf="form.interaction.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.interaction; let number = index">
+              <td>{{dm.name}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteINT(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
 
         </div>
+      </mat-expansion-panel>
 
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Resolution Scope
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new resoltion scopes
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="form-group p-4">
-          <div class="col-sm-4">
-            <table *ngIf="form.interaction.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Interaction</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.interaction; let number = index">
-                <td>{{dm.name}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteINT(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        </div>
-
-        <div class="form-group row p-4">
           <mat-form-field class="form-full-width">
             <input matInput type="text" name="resolution_scope" placeholder="Resolution Scope" #resolution="ngModel" [(ngModel)]="resolution_scope" >
           </mat-form-field>
-          <div class="col-sm-1">
-            <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="resolution_scope == '' || loading" (click)="addResolution()">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add
-            </button>
-          </div>
+          <button type="button" mat-raised-button class="btn btn-success" [disabled]="resolution_scope == '' || loading" (click)="addResolution()">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add
+          </button>
 
+          <table *ngIf="form.resolution_scope.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.resolution_scope; let number = index">
+              <td>{{dm.name}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteRS(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
         </div>
 
+      </mat-expansion-panel>
+
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Social Objective
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new social objectives
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="form-group p-4">
-          <div class="col-sm-4">
-            <table *ngIf="form.resolution_scope.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Resolution Scope</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.resolution_scope; let number = index">
-                <td>{{dm.name}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteRS(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        </div>
-
-        <div class="form-group row p-4">
 
           <mat-form-field class="form-full-width">
-
             <input matInput type="text" name="social_objectives" placeholder="Social Objective" #social="ngModel" [(ngModel)]="social_objectives" >
           </mat-form-field>
 
 
-          <div class="col-sm-1">
-            <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="social_objectives == '' || loading" (click)="addSocial()">
-              <i class="fa fa-plus" *ngIf="!loading"></i>
-              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-              Add
-            </button>
-          </div>
+          <button type="button" mat-raised-button class="btn btn-success  " [disabled]="social_objectives == '' || loading" (click)="addSocial()">
+            <i class="fa fa-plus" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            Add
+          </button>
 
+          <table *ngIf="form.social_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.social_objectives; let number = index">
+              <td>{{dm.name}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteSO(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
 
         </div>
 
-        <div class="form-group p-4">
-          <div class="col-sm-4">
+      </mat-expansion-panel>
 
-            <table *ngIf="form.social_objectives.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Social Objectives</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.social_objectives; let number = index">
-                <td>{{dm.name}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteSO(number)">
-                    <i class="fa fa-trash"></i>
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Affective Objective
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new affective objectives
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="form-group p-2">
+          <div class="col">
+            <div class="form-group row">
+              <div class="col">
+                <mat-form-field class="form-full-width">
+                  <mat-select #affective_cat="ngModel" placeholder="Category" name="affective_cat" [(ngModel)]="affective_category">
+                    <mat-option value="Internalizing Values">Internalizing Values</mat-option>
+                    <mat-option value="Organization">Organization</mat-option>
+                    <mat-option value="Receiving Phenomena">Receiving Phenomena</mat-option>
+                    <mat-option value="Responding to Phenomena">Responding to Phenomena</mat-option>
+                    <mat-option value="Valuing">Valuing</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <mat-form-field class="form-full-width">
+                    <input matInput type="text" placeholder="Verb" #affective="ngModel" name="affective_verb"  [(ngModel)]="affective_verb">
+                  </mat-form-field>
+                  <button type="button" mat-raised-button class="btn btn-success" [disabled]="affective_verb == '' || affective_category == '' || loading" (click)="addAffective()">
+                    <i class="fa fa-plus" *ngIf="!loading"></i>
+                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    Add
                   </button>
-                </td>
-              </tr>
+                </div>
 
-            </table>
+              </div>
+            </div>
           </div>
+          <table *ngIf="form.affective_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+            <tr *ngFor="let dm of form.affective_objectives; let number = index">
+              <td>{{dm.category}}</td>
+              <td>{{dm.verb}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteAO(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
         </div>
 
-        <div class="form-group row p-2">
+      </mat-expansion-panel>
+
+      <mat-expansion-panel   hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Behaviour
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new behaviour types
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="form-group p-2">
 
           <div class="col">
-            <h4><mat-label>Behaviour</mat-label></h4>
             <div class="form-group row">
               <div class="col">
                 <mat-form-field class="form-full-width">
@@ -190,188 +243,103 @@
 
 
               <div class="col">
-                <div class="form-group row">
+                <div class="form-group">
                   <mat-form-field class="form-full-width">
                     <input matInput type="text" #behaviour="ngModel" placeholder="Verb" name="behaviour_verb"  [(ngModel)]="behaviour_verb">
                   </mat-form-field>
-                  <div class="col-sm-2">
-                    <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="behaviour_verb == '' || loading" (click)="addBehaviour()">
-                      <i class="fa fa-plus" *ngIf="!loading"></i>
-                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                      Add
-                    </button>
-                  </div>
+                  <button type="button" mat-raised-button class="btn btn-success  " [disabled]="behaviour_verb == '' || behaviour_category == '' || loading" (click)="addBehaviour()">
+                    <i class="fa fa-plus" *ngIf="!loading"></i>
+                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    Add
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+          <table *ngIf="form.behaviour.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.behaviour; let number = index">
+              <td>{{dm.category}}</td>
+              <td>{{dm.verb}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteBH(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
 
         </div>
 
+      </mat-expansion-panel>
+
+      <mat-expansion-panel  hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Task type
+          </mat-panel-title>
+          <mat-panel-description>
+            Add new task types
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="form-group p-4">
-          <div class="col-sm-4">
-            <table *ngIf="form.behaviour.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Category</th>
-                  <th>Verb</th>
-                  <th>Actions</th>
-                </tr>
+          <div class="form-group row">
+            <div class="col-sm-5">
+              <mat-form-field class="form-full-width">
+                <input matInput type="text" placeholder="Category" #category="ngModel" name="task_category"  [(ngModel)]="task_category">
+              </mat-form-field>
 
-              </thead>
-
-              <tr *ngFor="let dm of form.behaviour; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteBH(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        </div>
-
-        <div class="form-group row p-2">
-          <div class="col">
-            <h4><label>Affective Objectives</label></h4>
-            <div class="form-group row">
-              <div class="col">
-                <mat-form-field class="form-full-width">
-                  <mat-select #affective_cat="ngModel" placeholder="Category" name="affective_cat" [(ngModel)]="affective_category">
-                    <mat-option value="Internalizing Values">Internalizing Values</mat-option>
-                    <mat-option value="Organization">Organization</mat-option>
-                    <mat-option value="Receiving Phenomena">Receiving Phenomena</mat-option>
-                    <mat-option value="Responding to Phenomena">Responding to Phenomena</mat-option>
-                    <mat-option value="Valuing">Valuing</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col">
-                <div class="form-group row">
-                  <mat-form-field class="form-full-width">
-                    <input matInput type="text" placeholder="Verb" #affective="ngModel" name="affective_verb"  [(ngModel)]="affective_verb">
-                  </mat-form-field>
-                  <div class="col-sm-2">
-                    <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="affective_verb == '' || loading" (click)="addAffective()">
-                      <i class="fa fa-plus" *ngIf="!loading"></i>
-                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                      Add
-                    </button>
-                  </div>
-                </div>
-
-              </div>
             </div>
-          </div>
+            <div class="col-sm-5">
+              <mat-form-field class="form-full-width">
+                <input matInput type="text" placeholder="Verb" #verb="ngModel" name="task_verb"  [(ngModel)]="task_verb">
+              </mat-form-field>
 
-        </div>
+              <button type="button" mat-raised-button class="btn btn-success" [disabled]="task_category == '' || task_verb == '' || laoding" (click)="addTask()">
+                <i class="fa fa-plus" *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                Add
+              </button>
 
-        <div class="form-group p-4">
-          <div class="col-sm-4">
-
-            <table *ngIf="form.affective_objectives.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Category</th>
-                  <th>Verb</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.affective_objectives; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteAO(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-        </div>
-
-        <div class="form-group row p-2">
-
-          <div class="col">
-            <h4><label>Task types</label></h4>
-            <div class="form-group row">
-              <div class="col">
-                <mat-form-field class="form-full-width">
-
-                  <input matInput type="text" placeholder="Category" #category="ngModel" name="task_category"  [(ngModel)]="task_category">
-                </mat-form-field>
-
-              </div>
-              <div class="col">
-                <div class="form-group row">
-                  <mat-form-field class="form-full-width">
-
-                    <input matInput type="text" placeholder="Verb" #verb="ngModel" name="task_verb"  [(ngModel)]="task_verb">
-                  </mat-form-field>
-
-                  <div class="col-sm-2">
-                    <button type="button" mat-raised-button class="btn btn-success btn-block" [disabled]="task_category == '' || task_verb == ''" (click)="addTask()">
-                      <i class="fa fa-plus" *ngIf="!loading"></i>
-                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                      Add
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
 
             </div>
 
           </div>
+
+          <table *ngIf="form.task_types.length != 0" class="table table-borderless table-hover table-responsive">
+
+            <tr *ngFor="let dm of form.task_types; let number = index">
+              <td>{{dm.category}}</td>
+              <td>{{dm.verb}}</td>
+              <td>
+                <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteTT(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
         </div>
 
-        <div class="form-group p-4">
-          <div class="col-sm-4">
-            <table *ngIf="form.task_types.length != 0" class="table table-borderless table-hover table-responsive">
-              <thead >
-                <tr>
-                  <th>Category</th>
-                  <th>Verb</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tr *ngFor="let dm of form.task_types; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
-                <td>
-                  <button type="button" mat-raised-button class="btn btn-danger" (click)="deleteTT(number)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-        </div>
-
-        <mat-card-actions align="end">
-          <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="loading || (form.delivery_mode.length == [] && form.interaction.length == [] && form.resolution_scope.length == [] && form.social_objectives.length == [] && form.behaviour.length == [] && form.affective_objectives.length == [] && form.task_types.length == [])">
-            <i class="fa fa-save" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-            Save
-          </button>
-        </mat-card-actions>
+      </mat-expansion-panel>
 
 
 
-      </form>
-    </mat-card-content>
-  </mat-card>
 
-  <!-- </div> -->
+
+    </mat-accordion>
+
+    <div class="button-container">
+      <button type="submit" mat-raised-button class="btn btn-success" [disabled]="loading || (form.delivery_mode.length == [] && form.interaction.length == [] && form.resolution_scope.length == [] && form.social_objectives.length == [] && form.behaviour.length == [] && form.affective_objectives.length == [] && form.task_types.length == [])">
+        <i class="fa fa-save" *ngIf="!loading"></i>
+        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        Save
+      </button>
+    </div>
+
+
+  </form>
+
+
+</div>
