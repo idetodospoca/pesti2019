@@ -9,6 +9,7 @@ import { CreateActivitiesComponent } from './create-activities/create-activities
 import { SharedModule } from '../../shared/shared.module';
 import { EditActivitiesComponent } from './edit-activities/edit-activities.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ActivitiesComponent, CreateActivitiesComponent, EditActivitiesComponent],
@@ -16,7 +17,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     CommonModule,
     ActivitiesRoutingModule,
     SharedModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ActivitiesModule { }

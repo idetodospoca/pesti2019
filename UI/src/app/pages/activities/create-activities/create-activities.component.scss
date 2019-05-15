@@ -5,3 +5,25 @@
 mat-form-field.mat-form-field {
   font-size: 17px;
 }
+
+mat-card {
+  text-align: center;
+}
+
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+
+.mat-card-header{
+  justify-content: flex-end
+}
+
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

@@ -1,11 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { Project, Attributes } from '../../../models';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+
+import { MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
+
+import { Project, Attributes } from '../../../models';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
+import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
+
+
+
+
 
 @Component({
   selector: 'app-create-activities',
@@ -49,7 +58,8 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       learning_objectives   : [],
       affective_objectives  : [],
       social_objectives     : []
-    }
+    },
+    canCopy: true
   };
 
   ao : string = "";
@@ -61,7 +71,8 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -70,6 +81,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
 
     this.getAttributes();
+
 
   }
 
@@ -92,7 +104,9 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   }
 
 
-
+  showHelp() {
+    let dialog = this.dialog.open(CreateProjectHelpComponent);
+  }
 
 
 

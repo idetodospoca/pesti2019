@@ -7,22 +7,35 @@
             <div class="card-body">
               <form (ngSubmit)="login()">
                 <h1>Sign in</h1>
-                <p class="text-muted">Sign in to your account</p>
-                <div class="input-group mb-3">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="email">
+                <p class="text-muted">to your account</p>
+
+              <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Email" [formControl]="emailFormControl"
+                [errorStateMatcher]="matcher">
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl"
+                [errorStateMatcher]="matcher">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                  Password is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <div class="row">
+                <div class="col-6">
+                  <button mat-raised-button type="submit" color="primary" class="btn px-4" (click)="login()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required') || passwordFormControl.hasError('required')">
+                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    <span *ngIf="!loading">Sign in</span>
+                  </button>
                 </div>
-                <div class="input-group mb-4">
-                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                  <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
-                </div>
-                <div class="row">
-                  <div class="col-6">
-                    <button type="submit" class="btn btn-primary px-4" (click)="login()" [disabled]="loading">
-                      <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                      <span *ngIf="!loading">Sign in</span>
-                    </button>
-                  </div>
               </div>
             </form>
           </div>
@@ -32,29 +45,29 @@
           <div class="card-body text-center">
             <div>
               <h3>Don't have an account?
-              Sign up now.</h3>
-              <p>Fill out a simple form and start using the app and all it's features.</p>
-              <a class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</a>
+                Sign up now.</h3>
+                <p>Fill out a simple form and start using the app and all it's features.</p>
+                <button mat-button type="submit" class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- This row is only visible when device is large or superior -->
+    <div class="row justify-content-center d-lg-none">
+      <div class="col-md-8">
+        <div class="card text-white bg-primary py-5">
+          <div class="card-body text-center">
+            <div>
+              <h3>Don't have an account?
+                Sign up now.</h3>
+                <p>Fill out a simple form and start using the app and all it's features.</p>
+                <button mat-button type="submit" class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- This row is only visible when device is large or superior -->
-  <div class="row justify-content-center d-lg-none">
-    <div class="col-md-8">
-      <div class="card text-white bg-primary py-5">
-        <div class="card-body text-center">
-          <div>
-            <h3>Don't have an account?
-            Sign up now.</h3>
-            <p>Fill out a simple form and start using the app and all it's features.</p>
-            <a class="btn btn-primary active mt-3" routerLink="/auth/register">Create account</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>

@@ -6,46 +6,82 @@
 					<div class="card-body p-4">
 						<h1>Sign up now</h1>
 						<p class="text-muted">Create your account</p>
-						<div class="input-group mb-3">
-							<span class="input-group-addon">
-								<i class="far fa-envelope-open"></i>
-							</span>
-							<input type="email" class="form-control" placeholder="E-mail" name="email" [(ngModel)]="email">
-								<div class="invalid-feedback">
-          				Please provide a valid e-mail.
-        				</div>
+						<div class="row">
+							<div class="col-sm">
+								<mat-form-field appearance="outline">
+									<mat-label>Name</mat-label>
+									<input matInput placeholder="Email" [formControl]="nameFormControl"
+									[errorStateMatcher]="matcher">
+									<mat-error *ngIf="nameFormControl.hasError('required')">
+										Name is <strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+							<div class="col-sm">
+								<mat-form-field appearance="outline">
+									<mat-label>E-mail</mat-label>
+									<input matInput placeholder="Email" [formControl]="emailFormControl"
+									[errorStateMatcher]="matcher">
+									<mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+										Please enter a valid email address
+									</mat-error>
+									<mat-error *ngIf="emailFormControl.hasError('required')">
+										Email is <strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
 						</div>
 
-						<div class="input-group mb-3">
-							<span class="input-group-addon">
-								<i class="far fa-user"></i>
-							</span>
-							<input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="name">
+						<div class="row">
+							<div class="col-sm">
+
+								<mat-form-field appearance="outline">
+									<mat-label>Password</mat-label>
+									<input matInput type="password" placeholder="Password" [formControl]="passwordFormControl"
+									[errorStateMatcher]="matcher">
+									<mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+										Password must be at least 8 characters long.
+									</mat-error>
+									<mat-error *ngIf="passwordFormControl.hasError('required')">
+										Password is <strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+
+							<div class="col-sm">
+
+								<mat-form-field appearance="outline">
+									<mat-label>Repeat Password</mat-label>
+									<input matInput type="password" placeholder="Password" [formControl]="confirmPasswordFormControl"
+									[errorStateMatcher]="matcher">
+									<mat-error *ngIf="passwordFormControl.hasError('required')">
+										Password must be repeated.
+									</mat-error>
+								</mat-form-field>
+
+							</div>
+
 						</div>
 
-						<div class="input-group mb-3">
-							<span class="input-group-addon">
-								<i class="fa fa-lock"></i>
-							</span>
-							<input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
+
+						<div class="row mt-3">
+							<div class="col-sm">
+								<button mat-button type="button" color="primary" routerLink="/auth/login">
+									<i class="fa fa-external-link" aria-hidden="true"></i>
+									Sign in instead
+								</button>
+							</div>
+							<div class="col-sm">
+								<button mat-raised-button type="submit" color="primary" (click)="register()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required')">
+									<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+									<i class="" *ngIf="!loading"></i>
+									<span *ngIf="!loading"> Create your account</span>
+								</button>
+							</div>
+
 						</div>
 
-						<div class="input-group mb-4">
-							<span class="input-group-addon">
-								<i class="fa fa-lock"></i>
-							</span>
-							<input type="password" class="form-control" placeholder="Repeat Password" name="password2" [(ngModel)]="passwordConfirmation">
-						</div>
 
-						<button type="submit" class="btn btn-block btn-success mb-3" (click)="register()" [disabled]="loading">
-							<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-							<i class="" *ngIf="!loading"></i>
-							<span *ngIf="!loading"> Create your account</span>
-						</button>
-						<a class="btn btn-primary btn-block" routerLink="/auth/login">
-							<i class="fa fa-external-link" aria-hidden="true"></i>
-							Sign in instead
-						</a>
 
 						<div *ngIf="errors.length">
 							<h2>Error</h2>

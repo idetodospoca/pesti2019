@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TabsModule, ModalModule, BsDropdownModule, BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { FormatDatePipe } from './pipes/format-date/format-date.pipe';
 import { MatButtonModule, MatCheckboxModule, MatSelectModule,
   MatInputModule, MatFormFieldModule, MatCardModule,
   MatTableModule, MatSortModule, MatProgressSpinnerModule,
   MatTooltipModule, MatExpansionModule, MatDialogModule,
-MatListModule } from '@angular/material';
+  MatListModule, MatStepperModule, MatIconModule,
+  MatRadioModule } from '@angular/material';
 
 
 
@@ -18,6 +19,7 @@ MatListModule } from '@angular/material';
   imports:      [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
@@ -35,7 +37,10 @@ MatListModule } from '@angular/material';
     MatTooltipModule,
     MatExpansionModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatStepperModule,
+    MatIconModule,
+    MatRadioModule
   ],
   exports:      [
     CommonModule,
@@ -58,6 +63,9 @@ MatListModule } from '@angular/material';
     MatExpansionModule,
     MatDialogModule,
     MatListModule,
+    MatStepperModule,
+    MatIconModule,
+    MatRadioModule,
     FormatDatePipe
   ]
 })

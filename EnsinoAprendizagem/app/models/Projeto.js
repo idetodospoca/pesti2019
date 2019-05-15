@@ -160,6 +160,18 @@ let ProjetoSchema = new Schema({
   teachers : {
     type      : [mongoose.Schema.Types.ObjectId],
     ref       : 'User',
+  },
+
+  status: {
+    type      : String,
+    required  : true,
+    enum      : ['In Development', 'Being Presented', 'Done'],
+    default   : 'In Development'
+  },
+
+  canCopy: {
+    type      : Boolean,
+    required  : true
   }
 
 });

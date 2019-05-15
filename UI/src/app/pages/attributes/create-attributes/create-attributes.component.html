@@ -296,7 +296,7 @@
                 <input matInput type="text" placeholder="Verb" #verb="ngModel" name="task_verb"  [(ngModel)]="task_verb">
               </mat-form-field>
 
-              <button type="button" mat-raised-button class="btn btn-success" [disabled]="task_category == '' || task_verb == '' || laoding" (click)="addTask()">
+              <button type="button" mat-raised-button class="btn btn-success" [disabled]="task_category == '' || task_verb == '' || loading" (click)="addTask()">
                 <i class="fa fa-plus" *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
                 Add

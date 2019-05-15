@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
@@ -36,6 +35,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
   behaviour_cat     : Array<any> = [];
   affective         : Array<any> = [];
   social            : Array<any> = [];
+  task_types        : Array<any> = [];
 
   form  : Partial<Technique> = {
     name                  : "",
@@ -200,6 +200,9 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
         this.social = response.map(response => response['social_objectives']);
         this.social = ([].concat.apply([], this.social)).sort();
+
+        this.task_types = response.map(response => response['task_types']);
+        this.task_types = ([].concat.apply([], this.task_types)).sort();
 
         this.loading = false;
 

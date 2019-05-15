@@ -10,4 +10,5 @@ export class Project {
   date            : Date;
   project_manager : User;
   teachers        : User[];
+  canCopy         : boolean;
 }

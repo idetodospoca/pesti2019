@@ -1,78 +1,74 @@
+
+
 <form (ngSubmit)="create()" novalidate #f="ngForm">
- <!-- <div class="container"> -->
   <mat-card class="form-card">
-    <div class="jumbotron">
-      <h1 class="display-4">Define new technique</h1>
-      <p class="lead">Sample</p>
-    </div>
+
     <mat-card-content>
-    <div class="form-group row p-4">
-      <!-- <label for="name" class="col-sm-2 col-form-label">Name</label> -->
-      <mat-form-field class="form-full-width">
-        <input matInput #name="ngModel" type="text" name="name" placeholder="Technique Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-      </mat-form-field>
-    </div>
 
-    <div class="form-group row p-4">
-      <!-- <label for="description" class="col-sm-2 col-form-label">Description</label> -->
-      <mat-form-field class="form-full-width">
-        <input matInput #description="ngModel" type="text"  name="description" placeholder="Technique Description" [(ngModel)]="form.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-      </mat-form-field>
-    </div>
 
-    <div class="form-group row p-4">
-        <mat-form-field class="form-full-width">
-        <input matInput #rules="ngModel" type="text"  name="rules" placeholder="Rules" [(ngModel)]="rule" required [ngClass]="{'is-invalid': isInvalid(rules)}">
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-        </mat-form-field>
-      <div class="col-sm-3">
-        <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(rules)" [disabled]="loading || rule == ''">
-          <i class="fa fa-plus" *ngIf="!loading"></i>
-          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-          Add Rule
-        </button>
-      </div>
-    </div>
-    <div class="form-group row p-4">
-      <div class="col-sm-4">
-        <table *ngIf="form.rules.length != 0" class="table table-borderless table-hover table-responsive">
-          <thead>
-            <tr>
-              <th>Rules</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+            <div class="form-group row p-4">
+              <mat-form-field class="form-full-width">
+                <input matInput #name="ngModel" type="text" name="name" placeholder="Technique Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+              </mat-form-field>
+            </div>
 
-          <tr *ngFor="let i of form.rules; let number = index">
-            <td>{{i}}</td>
-            <td>
-              <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, rules)">
-                <i class="fas fa-trash"></i>
+            <div class="form-group row p-4">
+              <mat-form-field class="form-full-width">
+                <input matInput #description="ngModel" type="text"  name="description" placeholder="Technique Description" [(ngModel)]="form.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+              </mat-form-field>
+            </div>
+
+
+          <div class="form-group row p-4">
+              <mat-form-field class="form-full-width">
+              <input matInput #rules="ngModel" type="text"  name="rules" placeholder="Rules" [(ngModel)]="rule" required [ngClass]="{'is-invalid': isInvalid(rules)}">
+              </mat-form-field>
+            <div class="col-sm-3">
+              <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(rules)" [disabled]="loading || rule == ''">
+                <i class="fa fa-plus" *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                Add Rule
               </button>
-            </td>
-          </tr>
+            </div>
+          </div>
+          <div class="form-group row p-4">
+            <div class="col-sm-4">
+              <table *ngIf="form.rules.length != 0" class="table table-borderless table-hover table-responsive">
+                <thead>
+                  <tr>
+                    <th>Rules</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
 
-        </table>
-      </div>
-    </div>
+                <tr *ngFor="let i of form.rules; let number = index">
+                  <td>{{i}}</td>
+                  <td>
+                    <button type="button" mat-raised-button class="btn btn-danger" (click)="removeField(number, rules)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+          </div>
+
+
+
 
     <div class="form-group row p-4">
-      <!-- <label for="delivery_mode" class="col-sm-2 col-form-label">Delivery Mode</label> -->
-      <!-- <div class="col-sm-4" > -->
+
 
       <mat-form-field class="form-full-width">
         <mat-label>Delivery Mode</mat-label>
         <mat-select #delivery_mode="ngModel" name="delivery_mode" [(ngModel)]="delivery" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
           <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
         </mat-select>
-        <!-- <div class="invalid-feedback">This field is required</div> -->
       </mat-form-field>
 
 
 
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(delivery_mode)" [disabled]="loading || delivery == ''">
           <i class="fa fa-plus" *ngIf="!loading"></i>
@@ -105,17 +101,14 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="interaction" class="col-sm-2 col-form-label">Interaction</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
         <mat-label>Interaction</mat-label>
         <mat-select #interaction="ngModel" name="interaction" [(ngModel)]="interact" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
           <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
-        <!-- <div class="invalid-feedback">This field is required</div> -->
 
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(interaction)" [disabled]="loading || interact == ''">
           <i class="fa fa-plus" *ngIf="!loading"></i>
@@ -148,17 +141,14 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="resolution_scope" class="col-sm-2 col-form-label">Resolution Scope</label> -->
-      <!-- <div class="col-sm-4"> -->
+
         <mat-form-field class="form-full-width">
         <mat-label>Resolution Scope</mat-label>
         <mat-select #resolution_scope="ngModel" name="resolution_scope" [(ngModel)]="scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
           <mat-option *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
         </mat-select>
-        <!-- <div class="invalid-feedback">This field is required</div> -->
         </mat-form-field>
 
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(resolution_scope)" [disabled]="loading || scope == ''">
           <i class="fa fa-plus" *ngIf="!loading"></i>
@@ -191,8 +181,6 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="feedback_use" class="col-sm-2 col-form-label">Feedback Use</label> -->
-      <!-- <div class="col-sm-4"> -->
       <mat-form-field class="form-full-width">
         <mat-label>Feedback Use</mat-label>
         <mat-select #feedback_use="ngModel"  name="feedback_use" [(ngModel)]="feedback" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
@@ -205,9 +193,7 @@
         </mat-select>
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
 
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block" (click)="addField(feedback_use)" [disabled]="loading || feedback == ''">
           <i class="fa fa-plus" *ngIf="!loading"></i>
@@ -241,15 +227,13 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="age" class="col-sm-2 col-form-label">Target Audience</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
         <mat-label>Target Audience</mat-label>
         <input matInput #target_audience="ngModel" type="number"  name="target_audience" min="5" [(ngModel)]="target" required [ngClass]="{'is-invalid': isInvalid(target_audience)}">
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-      <!-- </div> -->
+
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(target_audience)" [disabled]="loading">
           <i class="fa fa-plus" *ngIf="!loading"></i>
@@ -286,8 +270,7 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="interrelationship" class="col-sm-2 col-form-label">Interrelationship</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
         <mat-label>Interrelationship</mat-label>
         <mat-select #interrelationship="ngModel"  name="interrelationship" [(ngModel)]="interrelation" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
@@ -300,9 +283,6 @@
         </mat-select>
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(interrelationship)" [disabled]="loading || interrelation == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -335,8 +315,7 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="motivation" class="col-sm-2 col-form-label">Motivation</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
       <mat-label>Motivation</mat-label>
         <mat-select #motivation="ngModel"  name="motivation" [(ngModel)]="motiv" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
@@ -349,9 +328,6 @@
         </mat-select>
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(motivation)" [disabled]="loading || motiv == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -384,8 +360,7 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="participation" class="col-sm-2 col-form-label">Participation</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
         <mat-label>Participation</mat-label>
         <mat-select #participation="ngModel"  name="participation" [(ngModel)]="particip" required [ngClass]="{'is-invalid': isInvalid(participation)}">
@@ -398,9 +373,7 @@
         </mat-select>
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
 
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(participation)" [disabled]="loading || particip == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -433,8 +406,7 @@
     </div>
 
     <div class="form-group row p-4">
-      <!-- <label for="performance" class="col-sm-2 col-form-label">Performance</label> -->
-      <!-- <div class="col-sm-4"> -->
+
       <mat-form-field class="form-full-width">
       <mat-label>Performace</mat-label>
         <mat-select #performance="ngModel"  name="performance" [(ngModel)]="perform" required [ngClass]="{'is-invalid': isInvalid(performance)}">
@@ -447,9 +419,6 @@
         </mat-select>
       </mat-form-field>
 
-        <!-- <div class="invalid-feedback">This field is required</div> -->
-
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addField(performance)" [disabled]="loading || perform == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -538,13 +507,11 @@
       <p><strong>AFFECTIVE OBJECTIVES</strong></p>
     </div>
     <div class="form-group row p-4">
-      <!-- <div class="col-sm-6"> -->
       <mat-form-field class="form-full-width">
         <mat-select #affectiveobj="ngModel"  name="affectiveobj" [(ngModel)]="ao">
           <mat-option *ngFor="let item of affective" [value]="item.verb">{{item.category}}: {{item.verb}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -581,13 +548,11 @@
       <p><strong>SOCIAL OBJECTIVES</strong></p>
     </div>
     <div class="form-group row p-4">
-      <!-- <div class="col-sm-6"> -->
       <mat-form-field class="form-full-width">
         <mat-select #socialobj="ngModel"  name="socialobj" [(ngModel)]="so">
           <mat-option *ngFor="let item of social" [value]="item.name">{{item.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <!-- </div> -->
       <div class="col-sm-3">
         <button type="button" mat-raised-button class="btn btn-success btn-block"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
           <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -663,7 +628,9 @@
                         <div class="form-group row">
                           <div class="col-sm-6">
                           <mat-form-field class="form-full-width">
-                            <input matInput type="text" placeholder="Task Type" formControlName="type" required>
+                            <mat-select name="task_type" formControlName="type" placeholder="Task Type" required>
+                              <mat-option *ngFor="let item of task_types" [value]="item">{{item.category}}: {{item.verb}}</mat-option>
+                            </mat-select>
                           </mat-form-field>
                           </div>
                         </div>
@@ -677,7 +644,7 @@
                         <div class="form-group row">
                           <div class="col-sm-6">
                           <mat-form-field class="form-full-width">
-                            <mat-select name="role" formControlName="role" required>
+                            <mat-select name="role" formControlName="role" placeholder="Role" required>
                               <mat-option value="Student">Student</mat-option>
                               <mat-option value="Staff">Staff</mat-option>
                             </mat-select>
@@ -687,7 +654,7 @@
                         <div class="form-group row">
                           <div class="col-sm-6">
                             <mat-form-field class="form-full-width">
-                              <textarea matInput name="name" rows="5" cols="20"  formControlName="resources"></textarea>
+                              <textarea matInput name="name" rows="5" cols="20" placeholder="Task Resources" formControlName="resources"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -751,5 +718,4 @@
 </mat-card>
 
 
-<!-- </div> -->
 </form>

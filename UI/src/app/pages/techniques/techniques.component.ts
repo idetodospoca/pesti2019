@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatSort, MatTableDataSource } from '@angular/material';
+
+import { ToastrService } from 'ngx-toastr';
+
+import { Technique } from '../../models';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-techniques',
@@ -7,9 +15,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TechniquesComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(MatSort) sort: MatSort;
+
+  techniques          : Array<Technique>;
+  loading           : boolean = false;
+  displayedColumns  : string[] = ['name', 'description', 'actions'];
+  dataSource        = new MatTableDataSource([]);
+
+  constructor(
+    private http          : HttpClient,
+    private toastr        : ToastrService,
+    public authService    : AuthService,
+    private router        : Router,
+  ) { }
 
   ngOnInit() {
+    this.getTechniques();
   }
 
+  getTechniques() {
+    this.loading = true;
+    this.http.get<Technique[]>('techniques')
+    .subscribe(
+      response => {
+        this.techniques = response;
+        this.dataSource.data = this.techniques;
+        this.dataSource.sort = this.sort;
+        this.loading = false;
+      },
+      err => {
+        this.toastr.error(err.error.message, 'Error');
+        this.loading = false;
+      }
+    )
+  }
 }

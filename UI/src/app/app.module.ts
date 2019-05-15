@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -36,6 +35,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
 import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/create-attributes-help.component';
+import { CreateProjectHelpComponent } from './dialogs/create-project-help/create-project-help.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     CreateLearningobjectiveComponent,
-    CreateAttributesHelpComponent
+    CreateAttributesHelpComponent,
+    CreateProjectHelpComponent
   ],
   imports: [
     BrowserModule,
@@ -56,9 +57,9 @@ import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/
       positionClass: 'toast-top-right'
     }),
     BrowserAnimationsModule,
-    SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     SweetAlert2Module.forRoot({
       buttonsStyling: false,
       customClass: 'modal-content',
@@ -77,8 +78,8 @@ import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/
   ],
   entryComponents: [
     CreateLearningobjectiveComponent,
-    CreateAttributesHelpComponent
-
+    CreateAttributesHelpComponent,
+    CreateProjectHelpComponent
   ],
   bootstrap: [AppComponent]
 })
