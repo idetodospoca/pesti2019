@@ -1,11 +1,30 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { Project, Attributes } from '../../../models';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+
+import { MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
+
+import { Project, Attributes, User } from '../../../models';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
+import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
+
+import { AuthService } from '../../../services/auth.service';
+
+
+import { ErrorStateMatcher } from '@angular/material/core';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-edit-activities',
@@ -22,6 +41,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
   sub             : Subscription;       // The route subscription object to handle params received in the url
   id              : string;             // Id received in the url
 
+  pm              : User; //check project manager
 
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
@@ -51,20 +71,31 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
       learning_objectives   : [],
       affective_objectives  : [],
       social_objectives     : []
-    }
+    },
+    teachers: [],
+    canCopy: true
   };
 
   ao : string = "";
   so : string = "";
+  utilizador: User;
+
+
+
+  emailFormControl = new FormControl('', [
+    Validators.email
+  ]);
 
 
 
   constructor(
-    private http: HttpClient,
-    private activeRoute: ActivatedRoute,
-    private toastr: ToastrService,
-    private modalService: BsModalService,
-    private router: Router
+    private http          : HttpClient,
+    private activeRoute   : ActivatedRoute,
+    private toastr        : ToastrService,
+    public authService    : AuthService,
+    private modalService  : BsModalService,
+    private router        : Router,
+    public dialog         : MatDialog
   ) { }
 
   ngOnInit() {
@@ -98,6 +129,27 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
 
   }
+
+  showHelp() {
+   this.dialog.open(CreateProjectHelpComponent);
+  }
+
+  invite (email: string) {
+    this.loading = true;
+    this.http.get<User>(`users/${email}`).subscribe(
+     response => {
+       this.form.teachers.push(response);
+       this.loading = false;
+       this.toastr.success('New collaborator added.', 'Success');
+     },
+     err => {
+       this.toastr.error(err.error.message, 'Error');
+       this.loading = false;
+     }
+   );
+
+  }
+
 
 
   getAttributes() {
@@ -231,6 +283,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.http.get<Project>(`projects/${this.id}`)
     .subscribe(data => {
       this.form = data;
+      this.pm = data.project_manager;
       this.loading = false;
     }, err => this.handleError(err));
   }

@@ -12,6 +12,22 @@ function index(req, res){
   .catch(utils.handleError(req, res));
 }
 
+function show(req, res){
+  let query = {
+    email: req.params.id
+  };
+
+  User.findOne(query)
+  .then(user => {
+    if(!user){
+      return res.status(404).json({error: 'not_found', message: 'User not found.'});
+    }
+    res.status(200).json(user);
+  })
+  .catch(utils.handleError(req, res));
+}
+
 module.exports = {
-  index : index
+  index : index,
+  show  : show
 };

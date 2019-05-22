@@ -10,9 +10,10 @@ import { SharedModule } from '../../shared/shared.module';
 import { EditActivitiesComponent } from './edit-activities/edit-activities.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CopyActivitiesComponent } from './copy-activities/copy-activities.component';
 
 @NgModule({
-  declarations: [ActivitiesComponent, CreateActivitiesComponent, EditActivitiesComponent],
+  declarations: [ActivitiesComponent, CreateActivitiesComponent, EditActivitiesComponent, CopyActivitiesComponent],
   imports: [
     CommonModule,
     ActivitiesRoutingModule,

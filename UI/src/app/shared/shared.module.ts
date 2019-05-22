@@ -14,7 +14,7 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule,
 
 @NgModule({
   declarations: [
-    FormatDatePipe
+    FormatDatePipe,
   ],
   imports:      [
     CommonModule,

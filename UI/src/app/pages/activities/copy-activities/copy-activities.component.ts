@@ -1,41 +1,31 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 
-import { Project, Attributes, User } from '../../../models';
+import { Project, Attributes } from '../../../models';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
 
-import { ErrorStateMatcher } from '@angular/material/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
 @Component({
-  selector: 'app-create-activities',
-  templateUrl: './create-activities.component.html',
-  styleUrls: ['./create-activities.component.scss']
+  selector: 'app-copy-activities',
+  templateUrl: './copy-activities.component.html',
+  styleUrls: ['./copy-activities.component.scss']
 })
-
-
-export class CreateActivitiesComponent implements OnInit, OnDestroy {
+export class CopyActivitiesComponent implements OnInit {
 
   loading         : boolean = false;
   currentEditing  : number = -1;
   bsModalRef      : BsModalRef;
-  modalSub        : Subscription;
+  modalSub        : Subscription;       // The modal subscription object
+  sub             : Subscription;       // The route subscription object to handle params received in the url
+  id              : string;             // Id received in the url
+
 
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
@@ -66,37 +56,38 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       affective_objectives  : [],
       social_objectives     : []
     },
-    teachers: [],
     canCopy: true
   };
 
   ao : string = "";
   so : string = "";
 
-  emailFormControl = new FormControl('', [
-    Validators.email
-  ]);
 
 
   constructor(
     private http: HttpClient,
+    private activeRoute: ActivatedRoute,
     private toastr: ToastrService,
     private modalService: BsModalService,
     private router: Router,
-    public dialog: MatDialog
+    public  dialog: MatDialog
   ) { }
 
   ngOnInit() {
 
     this.createHandler();
 
-
     this.getAttributes();
 
+    this.sub = this.activeRoute.params.subscribe(params => {
+      this.id = params['id'];
+      this.populateForm();
+    });
 
   }
 
   ngOnDestroy() {
+    this.sub.unsubscribe();
     this.destroyHandler();
   }
 
@@ -104,35 +95,18 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
     this.http.post<Project>(`projects`, this.form).subscribe(
       response => {
-        this.toastr.success('Project successfully added.', 'Success');
+        this.toastr.success('Project successfully copied.', 'Success');
       },
       err => this.handleError(err)
     );
 
     this.router.navigate(['/']);
-
+    console.log(this.form);
 
   }
-
 
   showHelp() {
-    this.dialog.open(CreateProjectHelpComponent);
-  }
-
-  invite (email: string) {
-    this.loading = true;
-    this.http.get<User>(`users/${email}`).subscribe(
-     response => {
-       this.form.teachers.push(response);
-       this.loading = false;
-       this.toastr.success('New collaborator added.', 'Success');
-     },
-     err => {
-       this.toastr.error(err.error.message, 'Error');
-       this.loading = false;
-     }
-   );
-
+    let dialog = this.dialog.open(CreateProjectHelpComponent);
   }
 
 
@@ -175,7 +149,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   }
 
   addLearningObjective() {
-
+    this.currentEditing = -1;
     this.bsModalRef = this.setupModal();
   }
 
@@ -263,8 +237,42 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     return data;
   }
 
-
-  private handleError(err) {
-    this.toastr.error(err.error.message, 'Error');
+  private populateForm() {
+    this.loading = true;
+    this.http.get<Project>(`projects/${this.id}`)
+    .subscribe(data => {
+      //delete data.id && data.project_manager && data.date;
+      this.sanitize(data);
+      console.log(data);
+      this.form = data;
+      console.log(this.form);
+      this.loading = false;
+    }, err => this.handleError(err));
   }
+
+  private handleError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      this.toastr.error("The specified project doesn\'t exist.", "Error");
+      this.router.navigate(['/projects']);
+      return;
+    }
+
+    if (this.loading) {
+      this.loading = false;
+    }
+
+    this.toastr.error(err.error.message, 'Erro');
+  }
+
+  private sanitize(data) {
+    delete data._id;
+    delete data.project_manager;
+    delete data.date;
+    delete data.activity._id;
+    delete data.activity.learning_objectives._id;
+    delete data.__v;
+    return data;
+  }
+
+
 }

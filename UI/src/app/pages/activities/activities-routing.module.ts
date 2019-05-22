@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ActivitiesComponent } from './activities.component';
 import { CreateActivitiesComponent } from './create-activities/create-activities.component';
 import { EditActivitiesComponent } from './edit-activities/edit-activities.component';
+import { CopyActivitiesComponent } from './copy-activities/copy-activities.component';
 
 import { AuthGuard } from '../../guards/auth.guard';
 
@@ -37,7 +38,16 @@ const routes: Routes = [
      },
      component: EditActivitiesComponent,
      canActivate: [AuthGuard]
-   }
+   },
+   {
+    path: ':id/copy',
+    data: {
+      title: 'Copy Project',
+      requiredRole: ['professor']
+    },
+    component: CopyActivitiesComponent,
+    canActivate: [AuthGuard]
+  }
   ]
 }
 ];
