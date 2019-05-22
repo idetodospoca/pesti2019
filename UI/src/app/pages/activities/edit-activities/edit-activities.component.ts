@@ -40,9 +40,8 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
   modalSub        : Subscription;       // The modal subscription object
   sub             : Subscription;       // The route subscription object to handle params received in the url
   id              : string;             // Id received in the url
-
-  pm              : User; //check project manager
-
+  projeto         : Project = new Project();
+  pm              : string = "";
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
   reso_scopes       : Array<any> = [];
@@ -78,13 +77,13 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
   ao : string = "";
   so : string = "";
-  utilizador: User;
 
 
 
   emailFormControl = new FormControl('', [
     Validators.email
   ]);
+  matcher = new MyErrorStateMatcher();
 
 
 
@@ -108,6 +107,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       this.populateForm();
     });
+
 
   }
 
@@ -282,10 +282,13 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.http.get<Project>(`projects/${this.id}`)
     .subscribe(data => {
+      this.projeto = data;
+      this.pm = data.project_manager.toString();
       this.form = data;
-      this.pm = data.project_manager;
       this.loading = false;
-    }, err => this.handleError(err));
+    },
+    err => this.handleError(err));
+
   }
 
   private handleError(err: HttpErrorResponse) {

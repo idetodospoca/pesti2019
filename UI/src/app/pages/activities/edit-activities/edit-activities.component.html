@@ -342,7 +342,7 @@
     </div>
   </mat-step>
 
-  <mat-step label="Project settings">
+  <mat-step label="Project settings" *ngIf="projeto && authService.isOwner(pm)">
     <mat-label>Would you like to allow other users to make a copy of this project?</mat-label>
     <div class="container mt-3">
       <mat-radio-group aria-label="Select an option" name="copy" [(ngModel)]="form.canCopy">
@@ -351,7 +351,7 @@
       </mat-radio-group>
     </div>
 
-    <div class="container mt-5" *ngIf="authService.isOwner(pm)">
+    <div class="container mt-5" >
       <mat-form-field appearance="outline" class="form-full-width">
         <mat-label>Invite a user to collaborate on the project</mat-label>
         <input matInput placeholder="User's Email" [formControl]="emailFormControl"
@@ -361,7 +361,7 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="container mt-2" *ngIf="authService.isOwner(pm)">
+    <div class="container mt-2">
       <button type="button" mat-raised-button class="btn" color="primary" [disabled]="emailFormControl.value == '' || emailFormControl.hasError('email')" (click)="invite(emailFormControl.value)">Invite</button>
     </div>
 

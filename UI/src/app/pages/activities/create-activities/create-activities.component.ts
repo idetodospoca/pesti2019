@@ -76,6 +76,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   emailFormControl = new FormControl('', [
     Validators.email
   ]);
+  matcher = new MyErrorStateMatcher();
 
 
   constructor(

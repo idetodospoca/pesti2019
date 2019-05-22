@@ -24,7 +24,7 @@ export class ActivitiesComponent implements OnInit {
   projects          : Array<Project>;
   bsModalRef        : BsModalRef;
   loading           : boolean = false;
-  displayedColumns  : string[] = ['name', 'goal', 'date', 'actions'];
+  displayedColumns  : string[] = ['name', 'goal', 'date', 'status', 'actions'];
   dataSource        = new MatTableDataSource([]);
 
   constructor(
