@@ -49,4 +49,16 @@ export class TechniquesComponent implements OnInit {
       }
     )
   }
+
+  deleteTechnique(id: number) {
+    this.http.delete(`techniques/${id}`).subscribe(
+      response => {
+        this.toastr.success('Technique deleted.', 'Success');
+        this.getTechniques();
+      },
+      err => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    );
+  }
 }

@@ -27,27 +27,32 @@ function create(req, res) {
 
 }
 
+
 function remove(req, res) {
 
   let query = {
     _id : req.params.id
   };
 
-  Tecnica.findByIdAndRemove(query)
-  .then(tecnica =>  {
+  Tecnica.findById(query)
+  .then(async (tecnica) =>  {
+
     if(!tecnica) {
-      return res.status(404).json({error: 'not_found', message: 'This project doesn\'t exist.'});
+      return res.status(404).json({error: 'not_found', message: 'This technique doesn\'t exist.'});
     }
 
-    if(tecnica.psychologist.toString() != req.user._id.toString()){
-      return res.status(403).json({error: 'forbidden', message: 'You can\'t delete this project.'});
+    if(tecnica.psychologist.toString() != req.user._id.toString()) {
+      return res.status(403).json({error: 'forbidden', message: 'You can\'t delete this technique.'});
+    } else {
+      await Tecnica.findByIdAndRemove(query);
+      res.json({ message: 'Technique successfully deleted.' });
     }
 
-    res.status(200).send("Technique deleted.");
   })
   .catch(utils.handleError(req, res));
-
 }
+
+
 
 function edit(req, res) {
 
@@ -55,29 +60,23 @@ function edit(req, res) {
     _id : req.params.id
   };
 
-  Projeto.findById(query)
-  .then(tecnica =>  {
+  Tecnica.findById(query)
+  .then(async (tecnica) =>  {
+
     if(!tecnica) {
       return res.status(404).json({error: 'not_found', message: 'This technique doesn\'t exist.'});
     }
 
     if(tecnica.psychologist.toString() != req.user._id.toString()){
       return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this technique.'});
+    } else {
+      await Tecnica.findOneAndUpdate(query, req.body, {new: true});
+      res.json({ message: 'Technique successfully edited.'});
     }
-
-
-    for (let attr in req.body) {
-      tecnica[attr] = req.body[attr];
-    }
-
-    tecnica.save()
-    .then(t => {
-      res.status(200).json(t);
-    })
-    .catch(utils.handleError(req, res));
 
   })
   .catch(utils.handleError(req, res));
+
 }
 
 

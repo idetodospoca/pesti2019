@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TechniquesComponent } from './techniques.component';
 import { CreateTechniqueComponent } from './create-technique/create-technique.component';
+import { EditTechniquesComponent } from './edit-techniques/edit-techniques.component';
 
 import { AuthGuard } from '../../guards/auth.guard';
 
@@ -29,7 +30,16 @@ const routes: Routes = [
       },
       component: CreateTechniqueComponent,
       canActivate: [AuthGuard]
-    }
+    },
+    {
+     path: ':id/edit',
+     data: {
+       title: 'Edit Technique',
+       requiredRole: ['psicologo_escolar']
+     },
+     component: EditTechniquesComponent,
+     canActivate: [AuthGuard]
+   },
   ]
 }
 ];
