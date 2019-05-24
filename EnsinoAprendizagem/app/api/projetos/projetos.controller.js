@@ -7,6 +7,9 @@ function index(req, res) {
   let query = {};
 
   Projeto.find(query)
+  .populate('project_manager')
+  .populate('teachers')
+  .populate('techniques')
   .then(projetos => {
     return res.status(200).json(projetos);
   })
@@ -19,6 +22,9 @@ function show(req, res){
   };
 
   Projeto.findOne(query)
+  .populate('project_manager')
+  .populate('teachers')
+  .populate('techniques')
   .then(projeto => {
     if(!projeto){
       return res.status(404).json({error: 'not_found', message: 'Project not found.'});

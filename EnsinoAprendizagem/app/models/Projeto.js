@@ -129,24 +129,24 @@ let AtividadeSchema   = new Schema({
 
 let ProjetoSchema = new Schema({
 
-  name  : {
-    type     : String,
-    required : true
+  name            : {
+    type      : String,
+    required  : true
   },
 
-  goal  : {
-    type     : String,
-    required : true
+  goal            : {
+    type      : String,
+    required  : true
   },
 
-  activity :  {
+  activity        :  {
     type      : AtividadeSchema,
     required  : true
   },
 
-  date : {
-    type: Date,
-    default: Date.now
+  date            : {
+    type      : Date,
+    default   : Date.now
   },
 
   //  Teacher that initiates the activity
@@ -157,22 +157,27 @@ let ProjetoSchema = new Schema({
   },
 
   //  Teachers invited to collaborate
-  teachers : {
-    type      : [mongoose.Schema.Types.ObjectId],
+  teachers        : [{
+    type      : mongoose.Schema.Types.ObjectId,
     ref       : 'User',
-  },
+  }],
 
-  status: {
+  status          : {
     type      : String,
     required  : true,
     enum      : ['In Development', 'Being Presented', 'Done'],
     default   : 'In Development'
   },
 
-  canCopy: {
+  canCopy         : {
     type      : Boolean,
     required  : true
-  }
+  },
+
+  techniques      : [{
+    type      : mongoose.Schema.Types.ObjectId,
+    ref       : 'Tecnica'
+  }]
 
 });
 

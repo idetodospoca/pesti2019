@@ -21,7 +21,8 @@
         <div class="button-row">
 
           <button mat-raised-button color="primary" title="Edit Technique" [routerLink]="['/techniques', element._id, 'edit']" *ngIf="authService.hasRole('psicologo_escolar') && (authService.isOwner(element.psychologist))">
-            <i class="fa fa-edit"></i>
+            <i class="fa fa-edit" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
           </button>
 
           <button mat-raised-button title="Delete Technique" [swal]="{ title: 'Are you sure?',
@@ -33,7 +34,7 @@
           reverseButtons: true }"
           (confirm)="deleteTechnique(element._id)"
           color="primary" [disabled]="loading" *ngIf="authService.hasRole('psicologo_escolar') && authService.isOwner(element.psychologist)">
-          <i class="fa fa-trash " *ngIf="!loading"></i>
+          <i class="fa fa-trash" *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
         </button>
 

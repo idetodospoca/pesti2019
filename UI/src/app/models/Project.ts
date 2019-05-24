@@ -1,5 +1,6 @@
 import { User } from "./User";
 import { Activity } from "./Activity";
+import { Technique } from "./Technique";
 
 
 export class Project {
@@ -12,4 +13,5 @@ export class Project {
   teachers        : User[];
   canCopy         : boolean;
   status          : string;
+  techniques      : Technique[];
 }

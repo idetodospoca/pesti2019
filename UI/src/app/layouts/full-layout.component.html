@@ -32,57 +32,37 @@
             <i class="fas fa-home"></i> Home
           </a>
         </li>
-        <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngIf="(!authService.isAuthenticated()) || authService.hasRole('professor')">
-          <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/projects" *ngIf="(!authService.isAuthenticated()) || authService.hasRole('professor')" [routerLinkActiveOptions]="{exact: true}">
             <i class="fas fa-book"></i> Projects
           </a>
-          <ul class="nav-dropdown-items">
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/projects" [routerLinkActiveOptions]="{exact: true}">
-                <i class="fas fa-list"></i> List of Projects
-              </a>
-            </li>
-            <li class="nav-item" *ngIf="authService.hasRole('professor')">
-              <a class="nav-link" routerLinkActive="active" routerLink="/projects/create">
-                <i class="fa fa-plus"></i> New Project
-              </a>
-            </li>
-          </ul>
         </li>
-        <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngIf="authService.hasRole('psicologo_educacional')">
-          <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
-            <i class="fas fa-chalkboard-teacher"></i> Attributes
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('professor')" routerLink="/projects/create" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-plus"></i> New Project
           </a>
-          <ul class="nav-dropdown-items">
-            <li class="nav-item" *ngIf="authService.hasRole('psicologo_educacional')">
-              <a class="nav-link" routerLinkActive="active" routerLink="/attributes" [routerLinkActiveOptions]="{exact: true}">
-                <i class="fas fa-list"></i> Available Attributes
-              </a>
-            </li>
-            <li class="nav-item" *ngIf="authService.hasRole('psicologo_educacional')">
-              <a class="nav-link" routerLinkActive="active" routerLink="/attributes/create">
-                <i class="fa fa-plus"></i> New Attributes
-              </a>
-            </li>
-          </ul>
         </li>
-        <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngIf="authService.hasRole('psicologo_escolar')">
-          <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques" [routerLinkActiveOptions]="{exact: true}">
             <i class="fas fa-pencil-alt"></i> Techniques
           </a>
-          <ul class="nav-dropdown-items">
-            <li class="nav-item" *ngIf="authService.hasRole('psicologo_escolar')">
-              <a class="nav-link" routerLinkActive="active" routerLink="/techniques" [routerLinkActiveOptions]="{exact: true}">
-                <i class="fas fa-list"></i> List of Techniques
-              </a>
-            </li>
-            <li class="nav-item" *ngIf="authService.hasRole('psicologo_escolar')">
-              <a class="nav-link" routerLinkActive="active" routerLink="/techniques/create">
-                <i class="fa fa-plus"></i> New Technique
-              </a>
-            </li>
-          </ul>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques/create" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-plus"></i> New Technique
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-chalkboard-teacher"></i> Attributes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes/create" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-plus"></i> New Attributes
+          </a>
+        </li>
+
       </ul>
     </nav>
   </div>
