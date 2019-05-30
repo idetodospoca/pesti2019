@@ -60,15 +60,16 @@ export class AuthService {
     return (docOwner == userId);
   }
 
-  public isCollab(collabs: string[] | string): boolean {
+  public isCollab(collabs: any[]): boolean {
 
     let userId = this.getUser().id;
 
-    if (typeof collabs === 'string') {
-      collabs = [collabs];
+    for (let user of collabs) {
+      if (user._id == userId) {
+          return true;
+      }
     }
 
-    return collabs.indexOf(userId) !== -1;
   }
 
 

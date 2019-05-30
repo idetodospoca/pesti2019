@@ -11,7 +11,6 @@
 
       <div class="col-md-6 col-sm-12">
         <div class="form-group">
-          <!-- <label for="knowledge_category">Knowledge Category</label> -->
           <mat-form-field class="form-full-width">
             <mat-label>Knowledge Category</mat-label>
           <select matNativeControl #knowledge_category="ngModel" name="knowledge_category"  [(ngModel)]="form.knowledge_category" required [ngClass]="{'is-invalid': isInvalid(knowledge_category)}">
@@ -21,7 +20,6 @@
             <option value="Metacognitive">Metacognitive</option>
           </select>
           </mat-form-field>
-          <!-- <div class="invalid-feedback">This field is required</div> -->
         </div>
       </div>
 
@@ -31,7 +29,7 @@
           <mat-form-field class="form-full-width">
             <mat-label>Behaviour</mat-label>
           <select matNativeControl #behaviour="ngModel" name="behaviour"  [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
-              <option *ngFor="let item of behaviour_cat" [value]="item">{{item}}</option>
+              <option *ngFor="let item of behaviour_cat" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</option>
           </select>
           </mat-form-field>
           <!-- <div class="invalid-feedback">This field is required</div> -->

@@ -101,12 +101,11 @@ export class CopyActivitiesComponent implements OnInit {
     );
 
     this.router.navigate(['/']);
-    console.log(this.form);
 
   }
 
   showHelp() {
-    let dialog = this.dialog.open(CreateProjectHelpComponent);
+    this.dialog.open(CreateProjectHelpComponent);
   }
 
 
@@ -129,7 +128,7 @@ export class CopyActivitiesComponent implements OnInit {
         this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
         this.social_obvj    = [].concat.apply([], this.social_obvj);
 
-        this.behaviour_cat = response.map(response => response['behaviour'].map(res => res.verb));
+        this.behaviour_cat = response.map(response => response['behaviour']);
         this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
 
         this.affective = response.map(response => response['affective_objectives']);
@@ -241,11 +240,8 @@ export class CopyActivitiesComponent implements OnInit {
     this.loading = true;
     this.http.get<Project>(`projects/${this.id}`)
     .subscribe(data => {
-      //delete data.id && data.project_manager && data.date;
       this.sanitize(data);
-      console.log(data);
       this.form = data;
-      console.log(this.form);
       this.loading = false;
     }, err => this.handleError(err));
   }

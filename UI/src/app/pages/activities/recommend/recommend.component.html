@@ -1,0 +1,101 @@
+<div class="container" align="center" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <!-- <mat-progress-bar mode="query"></mat-progress-bar> -->
+</div>
+
+<div class="example-container mat-elevation-z8" *ngIf="table_recs.length != 0 && !loading">
+
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- <ng-container matColumnDef="project">
+      <th mat-header-cell *matHeaderCellDef > Project </th>
+      <td mat-cell *matCellDef="let item"> {{item[0].name}} </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="technique">
+      <th mat-header-cell *matHeaderCellDef > Technique(s) </th>
+      <td mat-cell *matCellDef="let item">
+        <div class="button-row">
+          <button mat-raised-button color="primary" title="View Technique(s)" (click)="showTechniques(item[1])">
+            <i class="fa fa-eye" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="similarity">
+      <th mat-header-cell *matHeaderCellDef > Similarity Score</th>
+      <td mat-cell *matCellDef="let item"> {{item[2]}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let item">
+        <div class="button-row">
+          <button mat-raised-button title="Choose Recomendation"
+            [swal]="{
+              title: 'Confirm recommendation',
+              text: 'Are you sure?',
+              type: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'No, cancel.',
+              cancelButtonColor: '3085d6',
+              reverseButtons: true
+            }"
+            (confirm)="confirmRec.show()"
+            color="primary" [disabled]="loading">
+            <i class="fas fa-check-circle" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          </button>
+
+          <swal
+            #confirmRec
+            title="Done."
+            text="Your choice has been saved."
+            type="success">
+          </swal>
+        </div>
+      </td>
+    </ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div align="center" class="form-group p-4 alert alert-info" role="alert" *ngIf="table_recs && table_recs.length == 0">
+  No recomendations could be made
+</div>
+
+</div>
+
+
+
+
+<div class="example-container mat-elevation-z8" *ngIf="los_transactions.length != 0 && !loading">
+
+  <table class="table table-borderless table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Mined</th>
+        <th>Support</th>
+
+
+      </tr>
+
+    </thead>
+
+    <tr *ngFor="let obj of mined_itemsets">
+      <ng-container *ngFor="let item of obj.items"><td>{{item | json}}</td></ng-container>
+      <td>{{obj.support}}</td>
+
+
+
+    </tr>
+
+  </table>
+
+
+</div>

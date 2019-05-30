@@ -121,9 +121,7 @@
 
           </mat-step>
 
-          <!-- <div class="row p-4">
-          <p><strong>EDUCATOR'S PERCEPTION</strong></p>
-        </div> -->
+
         <mat-step label="Educator's Perception">
 
           <div class="form-group row">
@@ -253,9 +251,7 @@
       </mat-step>
 
 
-      <!-- <div class="row p-4">
-      <p><strong>AFFECTIVE OBJECTIVES</strong></p>
-    </div> -->
+
     <mat-step label="Affective Objectives" optional>
       <div class="button-container">
         <button type="button" mat-raised-button class="btn btn-success"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
@@ -300,9 +296,7 @@
     </mat-step>
 
 
-    <!-- <div class="row p-4">
-    <p><strong>SOCIAL OBJECTIVES</strong></p>
-  </div> -->
+
   <mat-step label="Social Objectives" optional>
     <div class="button-container">
       <button type="button" mat-raised-button class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
@@ -351,7 +345,7 @@
       </mat-radio-group>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5" >
       <mat-form-field appearance="outline" class="form-full-width">
         <mat-label>Invite a user to collaborate on the project</mat-label>
         <input matInput placeholder="User's Email" [formControl]="emailFormControl"
@@ -361,8 +355,27 @@
         </mat-error>
       </mat-form-field>
     </div>
+
     <div class="container mt-2">
       <button type="button" mat-raised-button class="btn" color="primary" [disabled]="emailFormControl.value == '' || emailFormControl.hasError('email')" (click)="invite(emailFormControl.value)">Invite</button>
+    </div>
+    <div class="container mt-4">
+      <mat-label>Currently Invited Users</mat-label>
+
+          <table *ngIf="form.teachers.length != 0" class="table table-borderless table-hover table-responsive">
+            <tr *ngFor="let t of form.teachers; let number = index">
+              <td>{{t.name}}</td>
+              <td>{{t.email}}</td>
+              <td>
+                <button type="button" name="Remove Collaborator" mat-raised-button class="btn btn-danger float-right" (click)="deleteTeacher(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
+
+
     </div>
 
 

@@ -122,18 +122,25 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   invite (email: string) {
     this.loading = true;
-    this.http.get<User>(`users/${email}`).subscribe(
-     response => {
-       this.form.teachers.push(response);
-       this.loading = false;
-       this.toastr.success('New collaborator added.', 'Success');
-     },
-     err => {
-       this.toastr.error(err.error.message, 'Error');
-       this.loading = false;
-     }
-   );
+    if (this.form.teachers.filter(t => t.email === email).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      this.http.get<User>(`users/${email}`).subscribe(
+       response => {
+         this.form.teachers.push(response);
+         this.loading = false;
+         this.toastr.success('New collaborator added.', 'Success');
+       },
+       err => {
+         this.toastr.error(err.error.message, 'Error');
+         this.loading = false;
+       }
+     );
+    }
+  }
 
+  deleteTeacher(number: number) {
+    this.form.teachers.splice(number, 1);
   }
 
 
@@ -156,7 +163,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
         this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
         this.social_obvj    = [].concat.apply([], this.social_obvj);
 
-        this.behaviour_cat = response.map(response => response['behaviour'].map(res => res.verb));
+        this.behaviour_cat = response.map(response => response['behaviour']);
         this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
 
         this.affective = response.map(response => response['affective_objectives']);
@@ -164,6 +171,7 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
         this.social = response.map(response => response['social_objectives']);
         this.social = ([].concat.apply([], this.social)).sort();
+
 
         this.loading = false;
 

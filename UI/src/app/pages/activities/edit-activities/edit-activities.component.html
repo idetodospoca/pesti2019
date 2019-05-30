@@ -300,9 +300,7 @@
     </mat-step>
 
 
-    <!-- <div class="row p-4">
-    <p><strong>SOCIAL OBJECTIVES</strong></p>
-  </div> -->
+
   <mat-step label="Social Objectives" optional>
     <div class="button-container">
       <button type="button" mat-raised-button class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
@@ -342,13 +340,26 @@
     </div>
   </mat-step>
 
-  <mat-step label="Project settings" *ngIf="projeto && authService.isOwner(pm)">
+  <mat-step label="Project settings" *ngIf="projeto && authService.isOwner(pm._id)">
     <mat-label>Would you like to allow other users to make a copy of this project?</mat-label>
     <div class="container mt-3">
       <mat-radio-group aria-label="Select an option" name="copy" [(ngModel)]="form.canCopy">
         <mat-radio-button [value]="true">Yes</mat-radio-button>
         <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
+    </div>
+
+    <div class="container mt-5">
+      <mat-form-field appearance="outline" class="form-full-width">
+        <mat-label>Project Status</mat-label>
+        <mat-select #status="ngModel"  name="status" [(ngModel)]="form.status" [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
+
+          <mat-option value="In Development">In Development</mat-option>
+          <mat-option value="Being Presented">Being Presented</mat-option>
+          <mat-option value="Done">Done</mat-option>
+
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <div class="container mt-5" >
@@ -361,9 +372,30 @@
         </mat-error>
       </mat-form-field>
     </div>
+
     <div class="container mt-2">
       <button type="button" mat-raised-button class="btn" color="primary" [disabled]="emailFormControl.value == '' || emailFormControl.hasError('email')" (click)="invite(emailFormControl.value)">Invite</button>
     </div>
+    <div class="container mt-4">
+      <mat-label>Currently Invited Users</mat-label>
+
+          <table *ngIf="form.teachers.length != 0" class="table table-borderless table-hover table-responsive">
+            <tr *ngFor="let t of form.teachers; let number = index">
+              <td>{{t.name}}</td>
+              <td>{{t.email}}</td>
+              <td>
+                <button type="button" name="Remove Collaborator" mat-raised-button class="btn btn-danger float-right" (click)="deleteTeacher(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
+
+
+    </div>
+
+
 
 
     <div class="mt-3">

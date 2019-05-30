@@ -36,6 +36,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjective/create-learningobjective.component';
 import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/create-attributes-help.component';
 import { CreateProjectHelpComponent } from './dialogs/create-project-help/create-project-help.component';
+import { TechniqueDetailsComponent } from './dialogs/technique-details/technique-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CreateProjectHelpComponent } from './dialogs/create-project-help/create
     SIDEBAR_TOGGLE_DIRECTIVES,
     CreateLearningobjectiveComponent,
     CreateAttributesHelpComponent,
-    CreateProjectHelpComponent
+    CreateProjectHelpComponent,
+    TechniqueDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ import { CreateProjectHelpComponent } from './dialogs/create-project-help/create
   entryComponents: [
     CreateLearningobjectiveComponent,
     CreateAttributesHelpComponent,
-    CreateProjectHelpComponent
+    CreateProjectHelpComponent,
+    TechniqueDetailsComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -20,7 +20,7 @@ export class CreateLearningobjectiveComponent implements OnInit {
     degree              : ""
   };
   canceled : boolean = false;
-  behaviour_cat : Array<string> = [];
+  behaviour_cat : Array<any> = [];
 
   constructor(
     public bsModalRef: BsModalRef,

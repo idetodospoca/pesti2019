@@ -28,32 +28,46 @@
       <td mat-cell *matCellDef="let element">
         <div class="button-row">
 
-          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" [disabled]="loading" *ngIf="authService.hasRole('professor') && (authService.isOwner(element.project_manager) || authService.isCollab(element.teachers))">
+          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" [disabled]="loading" *ngIf="authService.hasRole('professor') && (authService.isOwner(element.project_manager._id) || authService.isCollab(element.teachers))">
             <i class="fa fa-edit" *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
           </button>
 
-          <button mat-raised-button color="primary" title="Copy Project" [routerLink]="['/projects', element._id, 'copy']" [disabled]="loading" *ngIf="authService.hasRole('professor') && element.canCopy">
-            <i class="fa fa-copy" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-          </button>
-
           <button mat-raised-button title="Delete Project" [swal]="{ title: 'Are you sure?',
-          text: 'You won\'t be able to revert this!',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'No, cancel!',
-          reverseButtons: true }"
-          (confirm)="deleteProject(element._id)"
-          color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor') && authService.isOwner(element.project_manager)">
-          <i class="fa fa-trash " *ngIf="!loading"></i>
-          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-        </button>
+            text: 'You won\'t be able to revert this!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true }"
+            (confirm)="deleteProject(element._id)"
+            color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor') && authService.isOwner(element.project_manager._id)">
+            <i class="fa fa-trash " *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          </button>
 
       </div>
     </td>
   </ng-container>
+
+  <ng-container matColumnDef="actions_extra">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <div class="button-row">
+
+        <button mat-raised-button color="primary" title="Copy Project" [routerLink]="['/projects', element._id, 'copy']" [disabled]="loading" *ngIf="authService.hasRole('professor') && element.canCopy">
+          <i class="fa fa-copy" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        </button>
+
+        <button mat-raised-button color="primary" title="Get Recommendations" [disabled]="loading" [routerLink]="['/projects', element._id, 'recommend']">
+          <i class="fas fa-award" *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        </button>
+
+    </div>
+  </td>
+</ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

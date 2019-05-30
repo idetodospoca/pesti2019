@@ -11,9 +11,10 @@ import { EditActivitiesComponent } from './edit-activities/edit-activities.compo
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CopyActivitiesComponent } from './copy-activities/copy-activities.component';
+import { RecommendComponent } from './recommend/recommend.component';
 
 @NgModule({
-  declarations: [ActivitiesComponent, CreateActivitiesComponent, EditActivitiesComponent, CopyActivitiesComponent],
+  declarations: [ActivitiesComponent, CreateActivitiesComponent, EditActivitiesComponent, CopyActivitiesComponent, RecommendComponent],
   imports: [
     CommonModule,
     ActivitiesRoutingModule,

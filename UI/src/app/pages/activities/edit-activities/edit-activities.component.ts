@@ -41,7 +41,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
   sub             : Subscription;       // The route subscription object to handle params received in the url
   id              : string;             // Id received in the url
   projeto         : Project = new Project();
-  pm              : string = "";
+  pm              : User = new User();
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
   reso_scopes       : Array<any> = [];
@@ -71,8 +71,9 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
       affective_objectives  : [],
       social_objectives     : []
     },
-    teachers: [],
-    canCopy: true
+    teachers  : [],
+    canCopy   : true,
+    status    : ""
   };
 
   ao : string = "";
@@ -136,18 +137,21 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
   invite (email: string) {
     this.loading = true;
-    this.http.get<User>(`users/${email}`).subscribe(
-     response => {
-       this.form.teachers.push(response);
-       this.loading = false;
-       this.toastr.success('New collaborator added.', 'Success');
-     },
-     err => {
-       this.toastr.error(err.error.message, 'Error');
-       this.loading = false;
-     }
-   );
-
+    if (this.form.teachers.filter(t => t.email === email).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      this.http.get<User>(`users/${email}`).subscribe(
+       response => {
+         this.form.teachers.push(response);
+         this.loading = false;
+         this.toastr.success('New collaborator added.', 'Success');
+       },
+       err => {
+         this.toastr.error(err.error.message, 'Error');
+         this.loading = false;
+       }
+     );
+    }
   }
 
 
@@ -170,7 +174,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
         this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
         this.social_obvj    = [].concat.apply([], this.social_obvj);
 
-        this.behaviour_cat = response.map(response => response['behaviour'].map(res => res.verb));
+        this.behaviour_cat = response.map(response => response['behaviour']);
         this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
 
         this.affective = response.map(response => response['affective_objectives']);
@@ -242,6 +246,10 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.form.activity.social_objectives.splice(number, 1);
   }
 
+  deleteTeacher(number: number) {
+    this.form.teachers.splice(number, 1);
+  }
+
   private destroyHandler() {
     this.modalSub.unsubscribe();
   }
@@ -283,7 +291,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.http.get<Project>(`projects/${this.id}`)
     .subscribe(data => {
       this.projeto = data;
-      this.pm = data.project_manager.toString();
+      this.pm = data.project_manager;
       this.form = data;
       this.loading = false;
     },

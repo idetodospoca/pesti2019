@@ -192,7 +192,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
         this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
         this.social_obvj    = [].concat.apply([], this.social_obvj);
 
-        this.behaviour_cat = response.map(response => response['behaviour'].map(res => res.verb));
+        this.behaviour_cat = response.map(response => response['behaviour']);
         this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
 
         this.affective = response.map(response => response['affective_objectives']);

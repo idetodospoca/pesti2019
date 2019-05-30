@@ -6,8 +6,11 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
-import { Project, Activity, LearningObjective } from '../../models';
+import { Project, Activity, LearningObjective, Technique } from '../../models';
 import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
+
 
 
 
@@ -21,11 +24,14 @@ export class ActivitiesComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  projects          : Array<Project>;
   bsModalRef        : BsModalRef;
   loading           : boolean = false;
-  displayedColumns  : string[] = ['name', 'goal', 'date', 'status', 'actions'];
+
+  //Data Table display
+  projects          : Array<Project>;
+  displayedColumns  : string[] = ['name', 'goal', 'date', 'status', 'actions', 'actions_extra'];
   dataSource        = new MatTableDataSource([]);
+
 
   constructor(
     private http          : HttpClient,
@@ -57,7 +63,7 @@ export class ActivitiesComponent implements OnInit {
 
 
   deleteProject(id: number) {
-     this.http.delete(`projects/${id}`).subscribe(
+    this.http.delete(`projects/${id}`).subscribe(
       response => {
         this.toastr.success('Project deleted.', 'Success');
         this.getProjects();
@@ -66,21 +72,14 @@ export class ActivitiesComponent implements OnInit {
         this.toastr.error(err.error.message, 'Error');
       }
     );
-
-
-
   }
 
-
-
-
-
-  // showLearningObjectives(learningObjective: LearningObjective) {
-  //   this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
-  //   this.bsModalRef.content.learning_objectives = learningObjective;
-  // }
-
-
-
-
 }
+
+
+
+
+// showLearningObjectives(learningObjective: LearningObjective) {
+//   this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
+//   this.bsModalRef.content.learning_objectives = learningObjective;
+// }

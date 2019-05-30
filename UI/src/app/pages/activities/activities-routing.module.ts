@@ -5,6 +5,7 @@ import { ActivitiesComponent } from './activities.component';
 import { CreateActivitiesComponent } from './create-activities/create-activities.component';
 import { EditActivitiesComponent } from './edit-activities/edit-activities.component';
 import { CopyActivitiesComponent } from './copy-activities/copy-activities.component';
+import { RecommendComponent } from './recommend/recommend.component';
 
 import { AuthGuard } from '../../guards/auth.guard';
 
@@ -31,23 +32,32 @@ const routes: Routes = [
       canActivate: [AuthGuard]
     },
     {
-     path: ':id/edit',
-     data: {
-       title: 'Edit Project',
-       requiredRole: ['professor']
-     },
-     component: EditActivitiesComponent,
-     canActivate: [AuthGuard]
-   },
-   {
-    path: ':id/copy',
-    data: {
-      title: 'Copy Project',
-      requiredRole: ['professor']
+      path: ':id/edit',
+      data: {
+        title: 'Edit Project',
+        requiredRole: ['professor']
+      },
+      component: EditActivitiesComponent,
+      canActivate: [AuthGuard]
     },
-    component: CopyActivitiesComponent,
-    canActivate: [AuthGuard]
-  }
+    {
+      path: ':id/copy',
+      data: {
+        title: 'Copy Project',
+        requiredRole: ['professor']
+      },
+      component: CopyActivitiesComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: ':id/recommend',
+      data: {
+        title: 'Recommend Techniques',
+        requiredRole: ['professor']
+      },
+      component: RecommendComponent,
+      canActivate: [AuthGuard]
+    }
   ]
 }
 ];
