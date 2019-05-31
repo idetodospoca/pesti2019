@@ -8,7 +8,7 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule,
   MatTableModule, MatSortModule, MatProgressSpinnerModule,
   MatTooltipModule, MatExpansionModule, MatDialogModule,
   MatListModule, MatStepperModule, MatIconModule,
-  MatRadioModule, MatProgressBarModule } from '@angular/material';
+  MatRadioModule, MatProgressBarModule, MatDividerModule } from '@angular/material';
 
 
 
@@ -41,7 +41,8 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule,
     MatStepperModule,
     MatIconModule,
     MatRadioModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDividerModule
   ],
   exports:      [
     CommonModule,
@@ -68,6 +69,7 @@ import { MatButtonModule, MatCheckboxModule, MatSelectModule,
     MatIconModule,
     MatRadioModule,
     MatProgressBarModule,
+    MatDividerModule,
     FormatDatePipe
   ]
 })

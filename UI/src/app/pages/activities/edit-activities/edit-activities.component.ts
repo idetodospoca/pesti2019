@@ -41,7 +41,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
   sub             : Subscription;       // The route subscription object to handle params received in the url
   id              : string;             // Id received in the url
   projeto         : Project = new Project();
-  pm              : User = new User();
+  pm              : string;
   delivery_modes    : Array<any> = [];
   interactions      : Array<any> = [];
   reso_scopes       : Array<any> = [];
@@ -291,7 +291,7 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.http.get<Project>(`projects/${this.id}`)
     .subscribe(data => {
       this.projeto = data;
-      this.pm = data.project_manager;
+      this.pm = data.project_manager.email;
       this.form = data;
       this.loading = false;
     },

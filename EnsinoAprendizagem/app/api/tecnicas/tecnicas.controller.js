@@ -13,6 +13,22 @@ function index(req, res) {
   .catch(utils.handleError(req, res));
 }
 
+function show(req, res){
+  let query = {
+    _id: req.params.id
+  };
+
+  Tecnica.findOne(query)
+  .populate('psychologist')
+  .then(tecnica => {
+    if(!tecnica){
+      return res.status(404).json({error: 'not_found', message: 'Technique not found.'});
+    }
+    res.status(200).json(tecnica);
+  })
+  .catch(utils.handleError(req, res));
+}
+
 function create(req, res) {
 
   let tecnica                   = new Tecnica();

@@ -340,7 +340,7 @@
     </div>
   </mat-step>
 
-  <mat-step label="Project settings" *ngIf="projeto && authService.isOwner(pm._id)">
+  <mat-step label="Project settings" *ngIf="projeto && authService.isOwner(pm)">
     <mat-label>Would you like to allow other users to make a copy of this project?</mat-label>
     <div class="container mt-3">
       <mat-radio-group aria-label="Select an option" name="copy" [(ngModel)]="form.canCopy">

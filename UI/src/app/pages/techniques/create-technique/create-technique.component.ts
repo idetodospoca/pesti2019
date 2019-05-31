@@ -36,6 +36,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
   affective         : Array<any> = [];
   social            : Array<any> = [];
   task_types        : Array<any> = [];
+  assess            : Array<any> = ["High", "Medium", "Low", "None"];
 
   form  : Partial<Technique> = {
     name                  : "",
@@ -110,6 +111,74 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
     this.destroyHandler();
   }
 
+
+
+
+  delivery_mode(event) {
+    if(event.checked) {
+      this.form.delivery_mode.push(event.source.value)
+    } else {
+      this.form.delivery_mode = this.form.delivery_mode.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  interaction(event) {
+    if(event.checked) {
+      this.form.interaction.push(event.source.value)
+    } else {
+      this.form.interaction = this.form.interaction.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  interrelationship(event) {
+    if(event.checked) {
+      this.form.interrelationship.push(event.source.value)
+    } else {
+      this.form.interrelationship = this.form.interrelationship.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  motivation(event) {
+    if(event.checked) {
+      this.form.motivation.push(event.source.value)
+    } else {
+      this.form.motivation = this.form.motivation.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  participation(event) {
+    if(event.checked) {
+      this.form.participation.push(event.source.value)
+    } else {
+      this.form.participation = this.form.participation.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  performance(event) {
+    if(event.checked) {
+      this.form.performance.push(event.source.value)
+    } else {
+      this.form.performance = this.form.performance.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  resolution_scope(event) {
+    if(event.checked) {
+      this.form.resolution_scope.push(event.source.value)
+    } else {
+      this.form.resolution_scope = this.form.resolution_scope.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+  feedback_use(event) {
+    if(event.checked) {
+      this.form.feedback_use.push(event.source.value)
+    } else {
+      this.form.feedback_use = this.form.feedback_use.filter(item => item.valueOf() !== event.source.value);
+    }
+  }
+
+
   initMod() {
     return this.fb.group({
       'name': ['', [Validators.required]],
@@ -151,6 +220,21 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
   addTask(imod, ipha) {
     const control = ((<FormArray>this.techniqueStruct.controls['modules']).at(imod).get('phases') as FormArray).at(ipha).get('tasks') as FormArray;
     control.push(this.initTask());
+  }
+
+  deleteMod(index) {
+    let control = <FormArray>this.techniqueStruct.controls['modules'];
+    control.removeAt(index)
+  }
+
+  deletePhase(imod, ipha) {
+    const control = (<FormArray>this.techniqueStruct.controls['modules']).at(imod).get('phases') as FormArray;
+    control.removeAt(ipha);
+  }
+
+  deleteTask(imod, ipha, itask) {
+    const control = ((<FormArray>this.techniqueStruct.controls['modules']).at(imod).get('phases') as FormArray).at(ipha).get('tasks') as FormArray;
+    control.removeAt(itask);
   }
 
 
@@ -261,10 +345,10 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
   }
 
-
   deleteAO(number: number) {
     this.form.affective_objectives.splice(number, 1);
   }
+
 
   addSocialObjective() {
     if  (this.form.social_objectives.includes(this.so)) {
@@ -273,9 +357,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
       this.form.social_objectives.push(this.so);
       this.so = "";
     }
-
   }
-
 
   deleteSO(number: number) {
     this.form.social_objectives.splice(number, 1);

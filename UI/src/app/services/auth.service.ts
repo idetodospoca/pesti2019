@@ -55,7 +55,7 @@ export class AuthService {
 
   public isOwner(docOwner: string): boolean {
 
-    let userId = this.getUser().id;
+    let userId = this.getUser().email;
 
     return (docOwner == userId);
   }

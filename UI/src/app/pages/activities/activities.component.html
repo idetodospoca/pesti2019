@@ -28,7 +28,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="button-row">
 
-          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" [disabled]="loading" *ngIf="authService.hasRole('professor') && (authService.isOwner(element.project_manager._id) || authService.isCollab(element.teachers))">
+          <button mat-raised-button color="primary" title="Edit Project" [routerLink]="['/projects', element._id, 'edit']" [disabled]="loading" *ngIf="authService.hasRole('professor') && (authService.isOwner(element.project_manager.email) || authService.isCollab(element.teachers))">
             <i class="fa fa-edit" *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
           </button>
@@ -41,7 +41,7 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true }"
             (confirm)="deleteProject(element._id)"
-            color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor') && authService.isOwner(element.project_manager._id)">
+            color="primary" [disabled]="loading" *ngIf="authService.hasRole('professor') && authService.isOwner(element.project_manager.email)">
             <i class="fa fa-trash " *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
           </button>
