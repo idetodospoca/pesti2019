@@ -54,15 +54,7 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
     learning_objectives   : [],
     affective_objectives  : [],
     social_objectives     : [],
-    structure             : {
-      modules: [{
-        name: "",
-        phases: [{
-          name: "",
-          tasks: []
-        }]
-      }]
-    }
+    structure             : null
   };
 
   techniqueStruct : FormGroup;
@@ -414,8 +406,25 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.http.get<Technique>(`techniques/${this.id}`)
     .subscribe(data => {
-      //this.tecnica = data;
       this.form = data;
+      for (let mod of this.form.structure.modules) {
+        this.sanitize(mod);
+        for (let pha of mod.phases) {
+          this.sanitize(pha);
+          for (let task of pha.tasks) {
+              this.sanitize(task);
+          }
+        }
+      }
+      // for (let mod of this.form.structure.modules) {
+      //   this.techniqueStruct.controls['modules'].patchValue({
+      //     name: mod.name,
+      //     phases: mod.phases
+      //   });
+      //
+      // }
+      this.techniqueStruct.patchValue(this.form.structure);
+      console.log(this.form);
       this.loading = false;
     },
     err => this.handleError(err));
@@ -434,8 +443,13 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
       {
         return true;
       }
+  }
 
-    }
+  private sanitize(data) {
+    delete data._id;
+    delete data.__v;
+    return data;
+  }
 
 
 

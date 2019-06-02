@@ -88,45 +88,40 @@
           <div class="form-group row">
             <div class="col">
               <mat-label><h4>Delivery Mode</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let delivery of delivery_modes">
-                  <mat-checkbox class="example-margin"
-                   (change)="delivery_mode($event)" [value]="delivery">{{delivery}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="dm "#dm [(ngModel)]="form.delivery_mode">
+                <mat-list-option [value]="delivery" *ngFor="let delivery of delivery_modes">
+                  {{delivery}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
 
             <div class="col">
               <mat-label><h4>Resolution Scope</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let reso of reso_scopes">
-                  <mat-checkbox class="example-margin"
-                   (change)="resolution_scope($event)" [value]="reso">{{reso}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="rs "#rs [(ngModel)]="form.resolution_scope">
+                <mat-list-option [value]="reso" *ngFor="let reso of reso_scopes">
+                  {{reso}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
           </div>
 
           <div class="form-group row">
             <div class="col">
               <mat-label><h4>Interaction</h4></mat-label>
-              <mat-list>
-              <mat-list-item *ngFor="let int of interactions">
-                  <mat-checkbox class="example-margin"
-                   (change)="interaction($event)" [value]="int">{{int}}</mat-checkbox>
-              </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="inte" #inte [(ngModel)]="form.interaction">
+                <mat-list-option [value]="int" *ngFor="let int of interactions">
+                  {{int}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
 
             <div class="col">
               <mat-label><h4>Feedback Use</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let item of assess">
-                  <mat-checkbox class="example-margin"
-                   (change)="feedback_use($event)" [value]="item">{{item}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
-
+              <mat-selection-list name="fbuse" #fbuse [(ngModel)]="form.feedback_use">
+                <mat-list-option [value]="item" *ngFor="let item of assess">
+                  {{item}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
           </div>
 
@@ -136,49 +131,43 @@
           <div class="form-group row">
             <div class="col">
               <mat-label><h4>Interrelationship</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let item of assess">
-                  <mat-checkbox class="example-margin"
-                   (change)="interrelationship($event)" [value]="item">{{item}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="inter" #inter [(ngModel)]="form.interrelationship">
+                <mat-list-option [value]="item" *ngFor="let item of assess">
+                  {{item}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
 
             <div class="col">
               <mat-label><h4>Motivation</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let item of assess">
-                  <mat-checkbox class="example-margin"
-                   (change)="motivation($event)" [value]="item">{{item}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="motiv" #motiv [(ngModel)]="form.motivation">
+                <mat-list-option [value]="item" *ngFor="let item of assess">
+                  {{item}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
           </div>
 
           <div class="form-group row">
             <div class="col">
               <mat-label><h4>Participation</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let item of assess">
-                  <mat-checkbox class="example-margin"
-                   (change)="participation($event)" [value]="item">{{item}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
+              <mat-selection-list name="part" #part [(ngModel)]="form.participation">
+                <mat-list-option [value]="item" *ngFor="let item of assess">
+                  {{item}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
 
             <div class="col">
               <mat-label><h4>Performace</h4></mat-label>
-              <mat-list>
-                <mat-list-item *ngFor="let item of assess">
-                  <mat-checkbox class="example-margin"
-                   (change)="performance($event)" [value]="item">{{item}}</mat-checkbox>
-                </mat-list-item>
-              </mat-list>
-
+              <mat-selection-list name="perf" #perf [(ngModel)]="form.performance">
+                <mat-list-option [value]="item" *ngFor="let item of assess">
+                  {{item}}
+                </mat-list-option>
+              </mat-selection-list>
             </div>
           </div>
         </mat-step>
-
 
         <mat-step label="Learning Objectives">
           <div class="button-container">
@@ -386,7 +375,7 @@
                               <mat-form-field appearance="outline" class="form-full-width">
                                 <mat-label>Task Type</mat-label>
                                 <mat-select name="task_type" formControlName="type" placeholder="Task Type" required>
-                                  <mat-option *ngFor="let item of task_types" [value]="item">{{item.category}}: {{item.verb}}</mat-option>
+                                  <mat-option *ngFor="let item of task_types" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</mat-option>
                                 </mat-select>
                               </mat-form-field>
                               </div>

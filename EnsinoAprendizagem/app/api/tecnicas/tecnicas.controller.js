@@ -7,6 +7,7 @@ function index(req, res) {
   let query = {};
 
   Tecnica.find(query)
+  .populate('psychologist')
   .then(tecnicas => {
     return res.status(200).json(tecnicas);
   })
@@ -98,7 +99,7 @@ function edit(req, res) {
 
 module.exports = {
   index   : index,
-  show    : show, 
+  show    : show,
   create  : create,
   remove  : remove,
   edit    : edit

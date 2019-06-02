@@ -54,15 +54,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
     learning_objectives   : [],
     affective_objectives  : [],
     social_objectives     : [],
-    structure             : {
-      modules: [{
-        name: "",
-        phases: [{
-          name: "",
-          tasks: []
-        }]
-      }]
-    }
+    structure             : null
   };
 
   techniqueStruct : FormGroup;
@@ -97,7 +89,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
     this.getAttributes();
 
-    this.form.structure.modules.splice(0, 1);
+    //this.form.structure.modules.splice(0, 1);
 
     this.techniqueStruct = this.fb.group({
       'modules': this.fb.array([
