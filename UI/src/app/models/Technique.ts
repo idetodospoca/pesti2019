@@ -3,7 +3,7 @@ import { LearningObjective } from "./LearningObjective";
 import { Structure } from "./Structure";
 
 export class Technique {
-  id                    : string;
+  _id                   : string;
   name                  : string;
   description           : string;
   rules                 : string[];

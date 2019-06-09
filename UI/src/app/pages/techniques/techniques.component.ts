@@ -18,9 +18,9 @@ export class TechniquesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   techniques          : Array<Technique>;
-  loading           : boolean = false;
-  displayedColumns  : string[] = ['name', 'description', 'actions'];
-  dataSource        = new MatTableDataSource([]);
+  loading             : boolean = false;
+  displayedColumns    : string[] = ['name', 'description', 'edit', 'delete'];
+  dataSource          = new MatTableDataSource([]);
 
   constructor(
     private http          : HttpClient,

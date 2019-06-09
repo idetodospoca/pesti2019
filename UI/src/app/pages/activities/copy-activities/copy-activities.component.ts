@@ -267,6 +267,9 @@ export class CopyActivitiesComponent implements OnInit {
     delete data.activity._id;
     delete data.activity.learning_objectives._id;
     delete data.__v;
+    delete data.techniques;
+    delete data.status;
+    delete data.teachers;
     return data;
   }
 

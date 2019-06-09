@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription, Observable } from 'rxjs';
 
 import { Project, Technique, LearningObjective } from 'src/app/models';
-import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { TechniqueDetailsComponent } from '../../../dialogs/technique-details/technique-details.component';
 
 import { FPGrowth, Itemset } from 'node-fpgrowth';
@@ -19,9 +19,20 @@ import { FPGrowth, Itemset } from 'node-fpgrowth';
 export class RecommendComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns  : string[] = [/*'project',*/ 'technique', 'similarity', 'actions'];
-  dataSource        = new MatTableDataSource([]);
+
+  dataSource                      = new MatTableDataSource([]);
+  displayedColumns                : string[] = ['technique', 'details', 'similarity', 'actions'];
+
+  dataSource_past_projects        = new MatTableDataSource([]);
+  displayedColumns_projects       : string[] = ['project', 'technique', 'details', 'similarity', 'actions'];
+
+  dataSource_mined                = new MatTableDataSource([]);
+  displayedColumns_mined          : string[] = ['rules', 'details', 'support', 'choose'];
+
+  dataSource_chosen                = new MatTableDataSource([]);
+  displayedColumns_chosen          : string[] = ['technique', 'details', 'remove'];
 
   loading         : boolean = false;
   sub             : Subscription;       // The route subscription object to handle params received in the url
@@ -30,13 +41,15 @@ export class RecommendComponent implements OnInit {
   //Recommendation Process
   project_rc        : Project = new Project();  // Project looking for recommendations
 
-  past_projects     : Array<Project> = [];      // Candidate past projects recommend
+  past_projects     : Array<Project> = [];      // Candidate past projects to recommend
   techniques_rc     : Array<Technique> = [];    // Candidate techniques to recommend
 
-  table_recs        : any[][] = [];             // Table of recomendations
+  table_recs_techs                : any[][] = [];             // Table of recomendations for available techniques
+  table_recs_past_projects        : any[][] = [];             // Table of recomendations for past projects
 
-  los_transactions  : LearningObjective[][] = [];
-  mined_itemsets    : Itemset<LearningObjective>[] = [];
+  transactions    : Technique[][] = [];
+  mined_itemsets  : any[][] = [];
+
   constructor(
     private http: HttpClient,
     private activeRoute: ActivatedRoute,
@@ -51,7 +64,6 @@ export class RecommendComponent implements OnInit {
       this.id = params['id'];
       this.populateData();
     });
-
   }
 
   populateData() {
@@ -66,23 +78,22 @@ export class RecommendComponent implements OnInit {
       this.techniques_rc = response[1];
       this.past_projects = response[2];
       this.filterData();
-      // console.log("Projeto:", this.project_rc);
-      // console.log("Tecnicas:", this.techniques_rc);
-      // console.log("Projetos:", this.past_projects);
       for (let prj of this.past_projects) {
         this.similarityProject(this.project_rc, prj);
-        this.los_transactions.push(prj.activity.learning_objectives);
+        this.transactions.push(prj.techniques);
       }
       for (let tech of this.techniques_rc) {
         this.similarityTechnique(this.project_rc, tech);
-        this.los_transactions.push(tech.learning_objectives);
+        this.transactions.push(this.techniques_rc);
       }
-      this.dataSource.data = this.table_recs;
-      this.dataSource.sort = this.sort;
-      console.log("Table Recs:", this.table_recs);
-      console.log("Transactions:", this.los_transactions);
+      this.dataSource.data = this.table_recs_techs;
+      this.dataSource_past_projects.data = this.table_recs_past_projects;
       this.mineItemsets();
-      console.log("Mined:", this.mined_itemsets);
+      setTimeout(() => this.dataSource_mined.data = this.mined_itemsets);
+      setTimeout(() => this.dataSource_mined.paginator = this.paginator);
+
+      setTimeout(() => this.dataSource_chosen.data = this.project_rc.techniques);
+
       this.loading = false;
     }, err => this.handleError(err));
   }
@@ -103,7 +114,7 @@ export class RecommendComponent implements OnInit {
     );
 
     // Remove current project and projects in development
-    this.past_projects = this.past_projects.filter(project => project._id !== this.id /*&& project.status !== 'In Development'*/);
+    this.past_projects = this.past_projects.filter(project => project._id !== this.id && project.status !== 'In Development');
 
     // Filter past projects that have the same context attributes
     this.past_projects = this.past_projects.filter(project =>
@@ -116,7 +127,6 @@ export class RecommendComponent implements OnInit {
       project.activity.scope == this.project_rc.activity.scope &&
       project.activity.feedback_use == this.project_rc.activity.feedback_use &&
       project.activity.age == this.project_rc.activity.age);
-
   }
 
   // Similarity calculation between current project and a matching past project
@@ -155,7 +165,7 @@ export class RecommendComponent implements OnInit {
     }
     // console.log("Vars:", a, b, c)
 
-    this.table_recs.push([candidate, recommender.techniques, (a + (a/(a+b+c))).toFixed(2)]);
+    this.table_recs_past_projects.push([candidate, recommender.techniques, (a + (a/(a+b+c))).toFixed(2)]);
   }
 
   // Similarity calculation between current project and a matching technique
@@ -194,8 +204,8 @@ export class RecommendComponent implements OnInit {
     }
     // console.log("Vars:", a, b, c)
 
-    this.table_recs.push([candidate, [recommender], (a + (a/(a+b+c))).toFixed(2)]);
-    this.table_recs.sort(function(a, b) {
+    this.table_recs_techs.push([candidate, [recommender], (a + (a/(a+b+c))).toFixed(2)]);
+    this.table_recs_techs.sort(function(a, b) {
       return b[2] - a[2];
     });
   }
@@ -207,48 +217,60 @@ export class RecommendComponent implements OnInit {
     });
   }
 
+  addRecommendation (techniques: Technique[]) {
+    for (let technique of techniques) {
+      if (this.project_rc.techniques.filter(tech => tech._id === technique._id).length > 0) {
+        this.toastr.error('has already been added.', technique.name);
+      } else {
+        this.project_rc.techniques.push(technique);
+        setTimeout(() => this.dataSource_chosen.data = this.project_rc.techniques);
+        this.toastr.success('successfully added.', technique.name);
+      }
+    }
 
-  chooseRecommendation(technique: Technique) {
-    this.project_rc.techniques.push(technique);
-    this.project_rc.status == 'Being Presented';
+  }
+
+  removeRecommendation (number: number) {
+    this.project_rc.techniques.splice(number, 1);
+    setTimeout(() => this.dataSource_chosen.data = this.project_rc.techniques);
+  }
+
+  saveRecommendation() {
+    this.project_rc.status = "Being Presented";
+
     this.http.put<Project>(`projects/${this.id}`, this.project_rc).subscribe(
       response => {
         this.toastr.success('Recommendation saved.', 'Success');
+        this.router.navigate(['/']);
       },
       err => this.handleError(err)
     );
 
-    this.router.navigate(['/']);
   }
 
 
   mineItemsets() {
-//     let transactions: number[][] = [
-//     [1,3,4],
-//     [2,3,5],
-//     [1,2,3,5],
-//     [2,5],
-//     [1,2,3,5]
-// ];
+    // Execute FPGrowth with a minimum support of 40%. Algorithm is generic.
+    let fpgrowth: FPGrowth<Technique> = new FPGrowth<Technique>(.8);
 
-  // Execute FPGrowth with a minimum support of 40%. Algorithm is generic.
-  let fpgrowth: FPGrowth<LearningObjective> = new FPGrowth<LearningObjective>(.2);
+    //Returns itemsets 'as soon as possible' through events.
+    fpgrowth.on('data', (itemset: Itemset<LearningObjective>) => {
+        // Do something with the frequent itemset.
+        let support: number = itemset.support;
+        let items: LearningObjective[] = itemset.items;
+    });
 
-  //Returns itemsets 'as soon as possible' through events.
-  fpgrowth.on('data', (itemset: Itemset<LearningObjective>) => {
-      // Do something with the frequent itemset.
-      let support: number = itemset.support;
-      let items: LearningObjective[] = itemset.items;
-  });
-
-  // Execute FPGrowth on a given set of transactions.
-  fpgrowth.exec(this.los_transactions)
-      .then( (itemsets: Itemset<LearningObjective>[]) => {
+    // Execute FPGrowth on a given set of transactions.
+    fpgrowth.exec(this.transactions)
+      .then( (itemsets: Itemset<Technique>[]) => {
         // Returns an array representing the frequent itemsets.
         //console.log("Itemsets:", itemsets);
         for (let item of itemsets) {
-            this.mined_itemsets.push(item);
+          this.mined_itemsets.push([item.items, item.support]);
         }
+        this.mined_itemsets.sort(function(a, b) {
+          return b[1] - a[1];
+        });
       });
   }
 

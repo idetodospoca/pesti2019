@@ -90,8 +90,6 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
 
     this.getAttributes();
 
-    //this.form.structure.modules.splice(0, 1);
-
     this.techniqueStruct = this.fb.group({
       'modules': this.fb.array([
         this.initMod()
@@ -103,77 +101,11 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
       this.populateForm();
     });
 
+
   }
 
   ngOnDestroy() {
     this.destroyHandler();
-  }
-
-
-
-
-  delivery_mode(event) {
-    if(event.checked) {
-      this.form.delivery_mode.push(event.source.value)
-    } else {
-      this.form.delivery_mode = this.form.delivery_mode.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  interaction(event) {
-    if(event.checked) {
-      this.form.interaction.push(event.source.value)
-    } else {
-      this.form.interaction = this.form.interaction.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  interrelationship(event) {
-    if(event.checked) {
-      this.form.interrelationship.push(event.source.value)
-    } else {
-      this.form.interrelationship = this.form.interrelationship.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  motivation(event) {
-    if(event.checked) {
-      this.form.motivation.push(event.source.value)
-    } else {
-      this.form.motivation = this.form.motivation.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  participation(event) {
-    if(event.checked) {
-      this.form.participation.push(event.source.value)
-    } else {
-      this.form.participation = this.form.participation.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  performance(event) {
-    if(event.checked) {
-      this.form.performance.push(event.source.value)
-    } else {
-      this.form.performance = this.form.performance.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  resolution_scope(event) {
-    if(event.checked) {
-      this.form.resolution_scope.push(event.source.value)
-    } else {
-      this.form.resolution_scope = this.form.resolution_scope.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  feedback_use(event) {
-    if(event.checked) {
-      this.form.feedback_use.push(event.source.value)
-    } else {
-      this.form.feedback_use = this.form.feedback_use.filter(item => item.valueOf() !== event.source.value);
-    }
   }
 
 
@@ -407,6 +339,8 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
     this.http.get<Technique>(`techniques/${this.id}`)
     .subscribe(data => {
       this.form = data;
+
+      //Sanitize structure
       for (let mod of this.form.structure.modules) {
         this.sanitize(mod);
         for (let pha of mod.phases) {
@@ -416,15 +350,34 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
           }
         }
       }
-      // for (let mod of this.form.structure.modules) {
-      //   this.techniqueStruct.controls['modules'].patchValue({
-      //     name: mod.name,
-      //     phases: mod.phases
-      //   });
-      //
-      // }
+
+      // Populate form structure
+      // Add extra modules
+      for (let imod = 0; imod < (this.form.structure.modules.length)-1; imod++) {
+        this.addMod();
+      }
+
+      // For every module, check for extra phases, for each phase, check for extra tasks
+      for (let imod = 0; imod < this.form.structure.modules.length; imod++) {
+        if (this.form.structure.modules[imod].phases.length > 1) {
+          for (let ipha = 0; ipha < (this.form.structure.modules[imod].phases.length) -1; ipha++) {
+              this.addPhase(imod);
+              if (this.form.structure.modules[imod].phases[ipha].tasks.length > 1) {
+                for (let itask = 0; itask < (this.form.structure.modules[imod].phases[ipha].tasks.length) -1; itask++) {
+                    this.addTask(imod, ipha);
+                }
+              }
+          }
+        } else { // Special case when having 1 mod, 1 pha but multiple tasks
+          for (let ipha = 0; ipha < this.form.structure.modules[imod].phases.length; ipha++) {
+            if (this.form.structure.modules[imod].phases[ipha].tasks.length > 1) {
+                this.addTask(imod, ipha);
+            }
+          }
+        }
+      }
       this.techniqueStruct.patchValue(this.form.structure);
-      console.log(this.form);
+
       this.loading = false;
     },
     err => this.handleError(err));
@@ -450,9 +403,5 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
     delete data.__v;
     return data;
   }
-
-
-
-
 
 }

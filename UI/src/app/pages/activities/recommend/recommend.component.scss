@@ -10,3 +10,11 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+
+.button-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px;
+}

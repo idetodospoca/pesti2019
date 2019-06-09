@@ -4,7 +4,7 @@ import { Technique } from "./Technique";
 
 
 export class Project {
-  _id              : string;
+  _id             : string;
   name            : string;
   goal            : string;
   activity        : Activity;

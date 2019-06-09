@@ -29,7 +29,7 @@ export class ActivitiesComponent implements OnInit {
 
   //Data Table display
   projects          : Array<Project>;
-  displayedColumns  : string[] = ['name', 'goal', 'date', 'status', 'actions', 'actions_extra'];
+  displayedColumns  : string[] = ['name', 'goal', 'date', 'status', 'edit', 'copy', 'delete', 'recomendations'];
   dataSource        = new MatTableDataSource([]);
 
 

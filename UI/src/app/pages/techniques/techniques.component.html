@@ -13,34 +13,34 @@
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
-
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
       <td mat-cell *matCellDef="let element">
-        <div class="button-row">
-
-          <button mat-raised-button color="primary" title="Edit Technique" [routerLink]="['/techniques', element._id, 'edit']" *ngIf="authService.hasRole('psicologo_escolar') && authService.isOwner(element.psychologist.email)">
-            <i class="fa fa-edit" *ngIf="!loading"></i>
-            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-          </button>
-
-          <button mat-raised-button title="Delete Technique" [swal]="{ title: 'Are you sure?',
-          text: 'You won\'t be able to revert this!',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'No, cancel!',
-          reverseButtons: true }"
-          (confirm)="deleteTechnique(element._id)"
-          color="primary" [disabled]="loading" *ngIf="authService.hasRole('psicologo_escolar') && authService.isOwner(element.psychologist.email)">
-          <i class="fa fa-trash" *ngIf="!loading"></i>
+        <button mat-raised-button color="primary" title="Edit Technique" [routerLink]="['/techniques', element._id, 'edit']" *ngIf="authService.hasRole('psicologo_escolar') && authService.isOwner(element.psychologist.email)">
+          <i class="fa fa-edit" *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
         </button>
+      </td>
+    </ng-container>
 
-      </div>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button title="Delete Technique" [swal]="{ title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true }"
+        (confirm)="deleteTechnique(element._id)"
+        color="primary" [disabled]="loading" *ngIf="authService.hasRole('psicologo_escolar') && authService.isOwner(element.psychologist.email)">
+        <i class="fa fa-trash" *ngIf="!loading"></i>
+        <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+      </button>
+      </td>
+    </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
