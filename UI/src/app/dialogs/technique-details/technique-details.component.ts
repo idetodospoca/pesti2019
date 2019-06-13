@@ -13,7 +13,6 @@ export class TechniqueDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
 }

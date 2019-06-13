@@ -29,39 +29,7 @@ function create(req, res) {
 }
 
 
-function edit(req, res) {
-
-  let query = {
-    _id : req.params.id
-  };
-
-  Atributos.findById(query)
-  .then(atributos =>  {
-    if(!atributos) {
-      return res.status(404).json({error: 'not_found', message: 'Not found.'});
-    }
-
-    if(atributos.psychologist.toString() != req.user._id.toString()){
-      return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this.'});
-    }
-
-
-    for (let attr in req.body) {
-      atributos[attr] = req.body[attr];
-    }
-
-    atributos.save()
-    .then(a => {
-      res.status(200).json(a);
-    })
-    .catch(utils.handleError(req, res));
-
-  })
-  .catch(utils.handleError(req, res));
-}
-
 module.exports = {
   index   : index,
-  create  : create,
-  edit    : edit
+  create  : create
 };

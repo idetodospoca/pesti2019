@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, Observable } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
 
 import { Project, Technique, LearningObjective } from 'src/app/models';
 import { MatSort, MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
@@ -77,7 +78,9 @@ export class RecommendComponent implements OnInit {
       this.project_rc = response[0];
       this.techniques_rc = response[1];
       this.past_projects = response[2];
+
       this.filterData();
+
       for (let prj of this.past_projects) {
         this.similarityProject(this.project_rc, prj);
         this.transactions.push(prj.techniques);
@@ -86,8 +89,10 @@ export class RecommendComponent implements OnInit {
         this.similarityTechnique(this.project_rc, tech);
         this.transactions.push(this.techniques_rc);
       }
+
       this.dataSource.data = this.table_recs_techs;
       this.dataSource_past_projects.data = this.table_recs_past_projects;
+
       this.mineItemsets();
       setTimeout(() => this.dataSource_mined.data = this.mined_itemsets);
       setTimeout(() => this.dataSource_mined.paginator = this.paginator);
@@ -136,7 +141,6 @@ export class RecommendComponent implements OnInit {
     let b = 0;                    // total nr of LOs of candidate that don't match recommender
     let c = 0;                    // total nr of LOs of recommender that don't match candidate
 
-    // console.log("Vars:", a, b, c)
     for (let c_lo of candidate.activity.learning_objectives) {
       if (recommender.activity.learning_objectives.some(lo =>
         lo.knowledge_category === c_lo.knowledge_category
@@ -163,7 +167,6 @@ export class RecommendComponent implements OnInit {
           c++;
         }
     }
-    // console.log("Vars:", a, b, c)
 
     this.table_recs_past_projects.push([candidate, recommender.techniques, (a + (a/(a+b+c))).toFixed(2)]);
   }
@@ -175,7 +178,6 @@ export class RecommendComponent implements OnInit {
     let b = 0;                    // total nr of LOs of candidate that don't match recommender
     let c = 0;                    // total nr of LOs of recommender that don't match candidate
 
-    // console.log("Vars:", a, b, c)
     for (let c_lo of candidate.activity.learning_objectives) {
       if (recommender.learning_objectives.some(lo =>
         lo.knowledge_category === c_lo.knowledge_category
@@ -202,7 +204,6 @@ export class RecommendComponent implements OnInit {
           c++;
         }
     }
-    // console.log("Vars:", a, b, c)
 
     this.table_recs_techs.push([candidate, [recommender], (a + (a/(a+b+c))).toFixed(2)]);
     this.table_recs_techs.sort(function(a, b) {
@@ -227,7 +228,6 @@ export class RecommendComponent implements OnInit {
         this.toastr.success('successfully added.', technique.name);
       }
     }
-
   }
 
   removeRecommendation (number: number) {
@@ -236,8 +236,6 @@ export class RecommendComponent implements OnInit {
   }
 
   saveRecommendation() {
-    this.project_rc.status = "Being Presented";
-
     this.http.put<Project>(`projects/${this.id}`, this.project_rc).subscribe(
       response => {
         this.toastr.success('Recommendation saved.', 'Success');
@@ -245,12 +243,12 @@ export class RecommendComponent implements OnInit {
       },
       err => this.handleError(err)
     );
-
   }
 
 
   mineItemsets() {
-    // Execute FPGrowth with a minimum support of 40%. Algorithm is generic.
+
+    // Execute FPGrowth with a minimum support chosen. Algorithm is generic.
     let fpgrowth: FPGrowth<Technique> = new FPGrowth<Technique>(.8);
 
     //Returns itemsets 'as soon as possible' through events.
@@ -264,7 +262,6 @@ export class RecommendComponent implements OnInit {
     fpgrowth.exec(this.transactions)
       .then( (itemsets: Itemset<Technique>[]) => {
         // Returns an array representing the frequent itemsets.
-        //console.log("Itemsets:", itemsets);
         for (let item of itemsets) {
           this.mined_itemsets.push([item.items, item.support]);
         }

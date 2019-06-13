@@ -10,6 +10,9 @@ mat-form-field.mat-form-field {
 
 .table {
   width: 60%;
+  align-items: center;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .example-container {
@@ -26,4 +29,9 @@ mat-form-field.mat-form-field {
   align-items: center;
   justify-content: center;
   padding: 10px;
+}
+
+.example-form {
+  text-align: center;
+  align-items: center;
 }

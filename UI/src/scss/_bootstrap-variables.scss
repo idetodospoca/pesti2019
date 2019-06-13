@@ -44,8 +44,8 @@ $colors: (
 );
 
 $theme-colors: (
-  primary:                        $gray-600,
-  secondary:                      $gray-300,
+  primary:                        $gray-800,
+  secondary:                      $gray-800,
   success:                        $green,
   info:                           $cyan,
   warning:                        $yellow,
@@ -65,7 +65,7 @@ $enable-rounded:                  true;
 //
 // Settings for the `<body>` element.
 
-$body-bg:                         #e4e5e6;
+$body-bg:                         #f2f4f3;
 
 // Typography
 //

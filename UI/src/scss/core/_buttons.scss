@@ -141,11 +141,6 @@ button {
   $color: $linkedin;
 
   background: $color;
-  &::before {
-    content: "\f0e1";
-    background: darken($color, 5%);
-
-  }
 
   &:hover {
     background: darken($color, 5%);

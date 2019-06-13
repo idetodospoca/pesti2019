@@ -10,7 +10,7 @@ import {
   MatTooltipModule, MatExpansionModule, MatDialogModule,
   MatListModule, MatStepperModule, MatIconModule,
   MatRadioModule, MatProgressBarModule, MatDividerModule,
-  MatPaginatorModule } from '@angular/material';
+  MatPaginatorModule, MatTabsModule, MatToolbarModule } from '@angular/material';
 
 
 
@@ -45,7 +45,9 @@ import {
     MatRadioModule,
     MatProgressBarModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule,
+    MatToolbarModule
   ],
   exports:      [
     CommonModule,
@@ -74,6 +76,8 @@ import {
     MatProgressBarModule,
     MatDividerModule,
     MatPaginatorModule,
+    MatTabsModule,
+    MatToolbarModule,
     FormatDatePipe
   ]
 })

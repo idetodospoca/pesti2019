@@ -1,41 +1,103 @@
-<h1 mat-dialog-title>Technique(s)</h1>
-<div mat-dialog-content>
-  <div class="form-group row">
-    <mat-card class="example-card" *ngFor="let item of data">
-    <mat-card-header>
-      <mat-card-title>{{item.name}}</mat-card-title>
-      <mat-card-subtitle>{{item.description}}<br/></mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-divider></mat-divider>
-      <mat-label><b>Rules:</b></mat-label>
-      {{item.rules}}<br/>
 
-      <mat-label><b>Delivery Mode:</b></mat-label>
-      {{item.delivery_mode}}<br/>
+<section class="mat-typography">
+  <h1 mat-dialog-title class="mat-h1">Technique(s)</h1>
+  <div mat-dialog-content>
+    <mat-tab-group>
+      <ng-container *ngFor="let item of data">
+        <mat-tab label="{{item.name}}">
 
-      <mat-label><b>Interaction:</b></mat-label>
-      {{item.interaction}}<br/>
+          <mat-card class="example-card" >
+            <mat-card-header>
+              <!-- <mat-card-title class="mat-body-strong">{{item.name}}</mat-card-title> -->
+              <mat-card-subtitle class="mat-body-2">{{item.description}}<br/></mat-card-subtitle>
+            </mat-card-header>
 
-      <mat-label><b>Interrelationship:</b></mat-label>
-      {{item.interrelationship}}<br/>
+            <mat-card-content>
+              <mat-divider></mat-divider>
 
-      <mat-list>
-      <mat-label><b>Learning Objectives</b></mat-label><br/>
+              <br/><mat-label><b>Structure:</b></mat-label><br/>
+              <mat-tab-group>
+                <ng-container *ngFor="let mod of item.structure.modules">
+                <mat-tab label="{{mod.name}}">
+                  <mat-tab-group>
+                  <ng-container *ngFor="let pha of mod.phases">
+                      <mat-tab label="{{pha.name}}">
+                        <ng-container *ngFor="let tsk of pha.tasks">
+                          <br/>{{tsk.type}}
+                          <br/>{{tsk.description}}
+                          <br/>{{tsk.role}}
+                          <br/>{{tsk.resources}}
+                        </ng-container>
+                      </mat-tab>                
+                  </ng-container>
+                </mat-tab-group>
 
-      <mat-list-item *ngFor="let lo of item.learning_objectives">{{lo.knowledge_category}}  {{lo.behaviour}}</mat-list-item>
-      </mat-list>
+                </mat-tab>
+                </ng-container>
+              </mat-tab-group>
+
+              <br/><mat-label><b>Rules:</b></mat-label>
+              <ng-container *ngFor="let i of item.rules">
+                {{i}}<br/>
+              </ng-container>
+
+              <mat-label><b>Target Audience:</b></mat-label>
+              <ng-container *ngFor="let i of item.target_audience">
+                {{i}}<br/>
+              </ng-container>
+
+              <mat-label><b>Resolution Scope:</b></mat-label>
+              <ng-container *ngFor="let i of item.resolution_scope">
+                {{i}}<br/>
+              </ng-container>
+
+              <mat-label><b>Delivery Mode:</b></mat-label>
+              <ng-container *ngFor="let i of item.delivery_mode">
+                {{i}}<br/>
+              </ng-container>
+
+              <mat-label><b>Interaction:</b></mat-label>
+              <ng-container *ngFor="let i of item.interaction">
+                {{i}}<br/>
+              </ng-container>
 
 
 
+              <mat-list>
+              <mat-label><b>Learning Objectives:</b></mat-label><br/>
+              <mat-list-item *ngFor="let lo of item.learning_objectives">
+                {{lo.knowledge_category}} =>  {{lo.behaviour}}
+              </mat-list-item>
+              </mat-list>
 
-    </mat-card-content>
-  </mat-card>
+              <ng-container *ngIf="item.affective_objectives.length > 0">
+                <mat-list>
+                <mat-label><b>Affective Objectives:</b></mat-label><br/>
+                <mat-list-item *ngFor="let i of item.affective_objectives">
+                  {{i}}
+                </mat-list-item>
+                </mat-list>
+              </ng-container>
+
+              <ng-container *ngIf="item.social_objectives.length > 0">
+                <mat-list>
+                <mat-label><b>Social Objectives:</b></mat-label><br/>
+                <mat-list-item *ngFor="let i of item.social_objectives">
+                  {{i}}
+                </mat-list-item>
+                </mat-list>
+              </ng-container>
+
+            </mat-card-content>
+
+          </mat-card>
+
+        </mat-tab>
+      </ng-container>
+
+    </mat-tab-group>
+
+
+
   </div>
-
-
-
-
-
-
-</div>
+</section>

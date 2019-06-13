@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { Technique } from '../../models';
 import { AuthService } from '../../services/auth.service';
+import { TechniqueDetailsComponent } from 'src/app/dialogs/technique-details/technique-details.component';
 
 @Component({
   selector: 'app-techniques',
@@ -19,7 +20,7 @@ export class TechniquesComponent implements OnInit {
 
   techniques          : Array<Technique>;
   loading             : boolean = false;
-  displayedColumns    : string[] = ['name', 'description', 'edit', 'delete'];
+  displayedColumns    : string[] = ['name', 'details', 'edit', 'delete'];
   dataSource          = new MatTableDataSource([]);
 
   constructor(
@@ -27,6 +28,7 @@ export class TechniquesComponent implements OnInit {
     private toastr        : ToastrService,
     public authService    : AuthService,
     private router        : Router,
+    public dialog         : MatDialog
   ) { }
 
   ngOnInit() {
@@ -60,5 +62,11 @@ export class TechniquesComponent implements OnInit {
         this.toastr.error(err.error.message, 'Error');
       }
     );
+  }
+
+  showTechniques(techniques: Technique[]) {
+    this.dialog.open(TechniqueDetailsComponent, {
+      data: techniques
+    });
   }
 }

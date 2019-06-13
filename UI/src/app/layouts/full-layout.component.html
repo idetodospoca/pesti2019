@@ -1,82 +1,85 @@
-<header class="app-header navbar">
-  <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
-  <a class="navbar-brand" routerLink=""></a>
-  <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
-  <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item dropdown mr-4" dropdown (onToggle)="toggled($event)">
-      <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
-        <img src="assets/img/avatars/default.png" class="img-avatar" [alt]="user.email">
-        <span class="d-md-down-none">{{user.name}}</span>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <div *ngIf="authService.isAuthenticated()">
-          <button type="button" class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i>Sign out</button>
+<section class="mat-typography">
+  <header class="app-header navbar">
+    <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+    <a class="navbar-brand" routerLink=""></a>
+    <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item dropdown mr-4" dropdown (onToggle)="toggled($event)">
+        <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
+          <img src="assets/img/avatars/default.png" class="img-avatar" [alt]="user.email">
+          <span class="d-md-down-none">{{user.name}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+          <div *ngIf="authService.isAuthenticated()">
+            <button type="button" class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Sign out</button>
+          </div>
+          <div *ngIf="!authService.isAuthenticated()">
+            <a routerLink="/auth/login" class="dropdown-item"><i class="fas fa-door-open"></i>Log in</a>
+          </div>
+          <div *ngIf="!authService.isAuthenticated()">
+            <a routerLink="/auth/register" class="dropdown-item"><i class="fas fa-user-plus"></i>Sign up</a>
+          </div>
         </div>
-        <div *ngIf="!authService.isAuthenticated()">
-          <a routerLink="/auth/login" class="dropdown-item"><i class="fa fa-sign-in"></i>Log in</a>
-        </div>
-        <div *ngIf="!authService.isAuthenticated()">
-          <a routerLink="/auth/register" class="dropdown-item"><i class="fa fa-sign-in"></i>Sign up</a>
-        </div>
+      </li>
+    </ul>
+  </header>
+
+  <div class="app-body">
+    <div class="sidebar">
+      <nav class="sidebar-nav">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/home">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/projects" *ngIf="(!authService.isAuthenticated()) || authService.hasRole('professor')" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fas fa-book"></i> Projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('professor')" routerLink="/projects/create" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fa fa-plus"></i> New Project
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fas fa-pencil-alt"></i> Techniques
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques/create" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fa fa-plus"></i> New Technique
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fas fa-chalkboard-teacher"></i> Attributes
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes/create" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fa fa-plus"></i> New Attributes
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <main class="main">
+
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <app-breadcrumbs></app-breadcrumbs>
+      </ol>
+
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
       </div>
-    </li>
-  </ul>
-</header>
-
-<div class="app-body">
-  <div class="sidebar">
-    <nav class="sidebar-nav">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/home">
-            <i class="fas fa-home"></i> Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/projects" *ngIf="(!authService.isAuthenticated()) || authService.hasRole('professor')" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-book"></i> Projects
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('professor')" routerLink="/projects/create" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-plus"></i> New Project
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-pencil-alt"></i> Techniques
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_escolar')" routerLink="/techniques/create" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-plus"></i> New Technique
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-chalkboard-teacher"></i> Attributes
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="authService.hasRole('psicologo_educacional')" routerLink="/attributes/create" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-plus"></i> New Attributes
-          </a>
-        </li>
-
-      </ul>
-    </nav>
+    </main>
   </div>
 
-  <!-- Main content -->
-  <main class="main">
-
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <app-breadcrumbs></app-breadcrumbs>
-    </ol>
-
-    <div class="container-fluid">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
-</div>
+</section>

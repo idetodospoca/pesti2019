@@ -1,18 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 
-import { Project, Activity, LearningObjective, Technique } from '../../models';
+import { Project } from '../../models';
 import { AuthService } from '../../services/auth.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
-
-
-
 
 
 @Component({
@@ -36,8 +30,7 @@ export class ActivitiesComponent implements OnInit {
   constructor(
     private http          : HttpClient,
     private toastr        : ToastrService,
-    public authService    : AuthService,
-    private router        : Router,
+    public authService    : AuthService
   ) {}
 
   ngOnInit() {
@@ -75,11 +68,3 @@ export class ActivitiesComponent implements OnInit {
   }
 
 }
-
-
-
-
-// showLearningObjectives(learningObjective: LearningObjective) {
-//   this.bsModalRef = this.modalService.show(LearningobjectiveComponent, {class: 'modal-lg'});
-//   this.bsModalRef.content.learning_objectives = learningObjective;
-// }

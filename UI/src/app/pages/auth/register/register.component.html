@@ -1,99 +1,103 @@
-<div class="app flex-row align-items-center">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
-				<div class="card mx-4">
-					<div class="card-body p-4">
-						<h1>Sign up now</h1>
-						<p class="text-muted">Create your account</p>
-						<div class="row">
-							<div class="col-sm">
-								<mat-form-field appearance="outline">
-									<mat-label>Name</mat-label>
-									<input matInput placeholder="Email" [formControl]="nameFormControl"
-									[errorStateMatcher]="matcher">
-									<mat-error *ngIf="nameFormControl.hasError('required')">
-										Name is <strong>required</strong>
-									</mat-error>
-								</mat-form-field>
-							</div>
-							<div class="col-sm">
-								<mat-form-field appearance="outline">
-									<mat-label>E-mail</mat-label>
-									<input matInput placeholder="Email" [formControl]="emailFormControl"
-									[errorStateMatcher]="matcher">
-									<mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-										Please enter a valid email address
-									</mat-error>
-									<mat-error *ngIf="emailFormControl.hasError('required')">
-										Email is <strong>required</strong>
-									</mat-error>
-								</mat-form-field>
-							</div>
-						</div>
+<section class="mat-typography">
 
-						<div class="row">
-							<div class="col-sm">
-
-								<mat-form-field appearance="outline">
-									<mat-label>Password</mat-label>
-									<input matInput type="password" placeholder="Password" [formControl]="passwordFormControl"
-									[errorStateMatcher]="matcher">
-									<mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-										Password must be at least 8 characters long.
-									</mat-error>
-									<mat-error *ngIf="passwordFormControl.hasError('required')">
-										Password is <strong>required</strong>
-									</mat-error>
-								</mat-form-field>
+	<div class="app flex-row align-items-center">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<div class="card mx-4">
+						<div class="card-body p-4">
+							<h1>Sign up now</h1>
+							<p class="text-muted">Create your account</p>
+							<div class="row">
+								<div class="col-sm">
+									<mat-form-field appearance="outline">
+										<mat-label>Name</mat-label>
+										<input matInput placeholder="Name" [formControl]="nameFormControl"
+										[errorStateMatcher]="matcher">
+										<mat-error *ngIf="nameFormControl.hasError('required')">
+											Name is required
+										</mat-error>
+									</mat-form-field>
+								</div>
+								<div class="col-sm">
+									<mat-form-field appearance="outline">
+										<mat-label>E-mail</mat-label>
+										<input matInput placeholder="E-mail" [formControl]="emailFormControl"
+										[errorStateMatcher]="matcher">
+										<mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+											Please enter a valid e-mail address
+										</mat-error>
+										<mat-error *ngIf="emailFormControl.hasError('required')">
+											E-mail is required
+										</mat-error>
+									</mat-form-field>
+								</div>
 							</div>
 
-							<div class="col-sm">
+							<div class="row">
+								<div class="col-sm">
 
-								<mat-form-field appearance="outline">
-									<mat-label>Repeat Password</mat-label>
-									<input matInput type="password" placeholder="Password" [formControl]="confirmPasswordFormControl"
-									[errorStateMatcher]="matcher">
-									<mat-error *ngIf="passwordFormControl.hasError('required')">
-										Password must be repeated.
-									</mat-error>
-								</mat-form-field>
+									<mat-form-field appearance="outline">
+										<mat-label>Password</mat-label>
+										<input matInput type="password" placeholder="Password" [formControl]="passwordFormControl"
+										[errorStateMatcher]="matcher">
+										<mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+											Password must be at least 8 characters long.
+										</mat-error>
+										<mat-error *ngIf="passwordFormControl.hasError('required')">
+											Password is required
+										</mat-error>
+									</mat-form-field>
+								</div>
+
+								<div class="col-sm">
+
+									<mat-form-field appearance="outline">
+										<mat-label>Confirm</mat-label>
+										<input matInput type="password" placeholder="Confirm" [formControl]="confirmPasswordFormControl"
+										[errorStateMatcher]="matcher">
+										<mat-error *ngIf="passwordFormControl.hasError('required')">
+											Passwords must match.
+										</mat-error>
+									</mat-form-field>
+
+								</div>
 
 							</div>
 
-						</div>
 
+							<div class="row mt-3">
+								<div class="col-sm">
+									<button mat-button type="button" color="primary" routerLink="/auth/login">
+										<i class="fa fa-external-link" aria-hidden="true"></i>
+										Sign in instead
+									</button>
+								</div>
+								<div class="col-sm">
+									<button mat-raised-button type="submit" color="primary" (click)="register()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required')">
+										<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+										<i class="" *ngIf="!loading"></i>
+										<span *ngIf="!loading"> Create your account</span>
+									</button>
+								</div>
 
-						<div class="row mt-3">
-							<div class="col-sm">
-								<button mat-button type="button" color="primary" routerLink="/auth/login">
-									<i class="fa fa-external-link" aria-hidden="true"></i>
-									Sign in instead
-								</button>
 							</div>
-							<div class="col-sm">
-								<button mat-raised-button type="submit" color="primary" (click)="register()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required')">
-									<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-									<i class="" *ngIf="!loading"></i>
-									<span *ngIf="!loading"> Create your account</span>
-								</button>
+
+
+
+							<div *ngIf="errors.length">
+								<h2>Error</h2>
+								<ul class="bg-danger">
+									<li *ngFor="let error of errors">
+										{{error}}
+									</li>
+								</ul>
 							</div>
-
-						</div>
-
-
-
-						<div *ngIf="errors.length">
-							<h2>Error</h2>
-							<ul class="bg-danger">
-								<li *ngFor="let error of errors">
-									{{error}}
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+
+</section>
