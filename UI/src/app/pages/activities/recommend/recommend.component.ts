@@ -24,16 +24,19 @@ export class RecommendComponent implements OnInit {
 
 
   dataSource                      = new MatTableDataSource([]);
-  displayedColumns                : string[] = ['technique', 'details', 'similarity', 'actions'];
+  displayedColumns                : string[] = ['technique', 'details', 'similarity', 'choose'];
 
   dataSource_past_projects        = new MatTableDataSource([]);
-  displayedColumns_projects       : string[] = ['project', 'technique', 'details', 'similarity', 'actions'];
+  displayedColumns_projects       : string[] = ['project', 'technique', 'details', 'similarity', 'choose'];
 
   dataSource_mined                = new MatTableDataSource([]);
   displayedColumns_mined          : string[] = ['rules', 'details', 'support', 'choose'];
 
-  dataSource_chosen                = new MatTableDataSource([]);
-  displayedColumns_chosen          : string[] = ['technique', 'details', 'remove'];
+  dataSource_chosen               = new MatTableDataSource([]);
+  displayedColumns_chosen         : string[] = ['technique', 'details', 'remove'];
+
+  dataSource_empty                = new MatTableDataSource([]);
+  displayedColumns_empty          : string[] = ['technique', 'details', 'similarity', 'choose'];
 
   loading         : boolean = false;
   sub             : Subscription;       // The route subscription object to handle params received in the url
@@ -42,14 +45,18 @@ export class RecommendComponent implements OnInit {
   //Recommendation Process
   project_rc        : Project = new Project();  // Project looking for recommendations
 
-  past_projects     : Array<Project> = [];      // Candidate past projects to recommend
-  techniques_rc     : Array<Technique> = [];    // Candidate techniques to recommend
+  past_projects     : Array<Project>    = [];       // Candidate past projects to recommend
+  techniques_rc     : Array<Technique>  = [];       // Candidate techniques to recommend
+  all_techniques    : Array<Technique>  = [];       // In case of no recomendations
 
   table_recs_techs                : any[][] = [];             // Table of recomendations for available techniques
   table_recs_past_projects        : any[][] = [];             // Table of recomendations for past projects
+  table_recs_empty                : any[][] = [];             // Table of recomendations in case of no available recomendations
 
   transactions    : Technique[][] = [];
   mined_itemsets  : any[][] = [];
+
+  confidence  : number = .8;
 
   constructor(
     private http: HttpClient,
@@ -81,6 +88,16 @@ export class RecommendComponent implements OnInit {
 
       this.filterData();
 
+      if (this.techniques_rc.length == 0 && this.past_projects.length == 0) {
+
+        for (let tech of response[1]) {
+          this.similarityTechniqueAll(this.project_rc, tech);
+        }
+        console.log(this.table_recs_empty);
+        setTimeout(() => this.dataSource_empty.data = this.table_recs_empty);
+
+      }
+
       for (let prj of this.past_projects) {
         this.similarityProject(this.project_rc, prj);
         this.transactions.push(prj.techniques);
@@ -94,8 +111,7 @@ export class RecommendComponent implements OnInit {
       this.dataSource_past_projects.data = this.table_recs_past_projects;
 
       this.mineItemsets();
-      setTimeout(() => this.dataSource_mined.data = this.mined_itemsets);
-      setTimeout(() => this.dataSource_mined.paginator = this.paginator);
+
 
       setTimeout(() => this.dataSource_chosen.data = this.project_rc.techniques);
 
@@ -211,6 +227,46 @@ export class RecommendComponent implements OnInit {
     });
   }
 
+  // Similarity calculation between current project and all techniques
+  similarityTechniqueAll(candidate: Project, recommender: Technique)  {
+
+    let a = 0;                    // total nr of LOs of candidate that match recommender
+    let b = 0;                    // total nr of LOs of candidate that don't match recommender
+    let c = 0;                    // total nr of LOs of recommender that don't match candidate
+
+    for (let c_lo of candidate.activity.learning_objectives) {
+      if (recommender.learning_objectives.some(lo =>
+        lo.knowledge_category === c_lo.knowledge_category
+        && lo.behaviour === c_lo.behaviour
+        && lo.subject_matter === c_lo.subject_matter)) {
+          a++;
+        }
+    }
+
+    for (let c_lo of candidate.activity.learning_objectives) {
+      if (!(recommender.learning_objectives.some(lo =>
+        lo.knowledge_category === c_lo.knowledge_category
+        && lo.behaviour === c_lo.behaviour
+        && lo.subject_matter === c_lo.subject_matter))) {
+          b++;
+        }
+    }
+
+    for (let r_lo of recommender.learning_objectives) {
+      if (!(candidate.activity.learning_objectives.some(lo =>
+        lo.knowledge_category === r_lo.knowledge_category
+        && lo.behaviour === r_lo.behaviour
+        && lo.subject_matter === r_lo.subject_matter))) {
+          c++;
+        }
+    }
+
+    this.table_recs_empty.push([[recommender], (a + (a/(a+b+c))).toFixed(2)]);
+    this.table_recs_empty.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+  }
+
 
   showTechniques(techniques: Technique[]) {
     this.dialog.open(TechniqueDetailsComponent, {
@@ -247,9 +303,10 @@ export class RecommendComponent implements OnInit {
 
 
   mineItemsets() {
-
+    
+    this.mined_itemsets = [];
     // Execute FPGrowth with a minimum support chosen. Algorithm is generic.
-    let fpgrowth: FPGrowth<Technique> = new FPGrowth<Technique>(.8);
+    let fpgrowth: FPGrowth<Technique> = new FPGrowth<Technique>(this.confidence);
 
     //Returns itemsets 'as soon as possible' through events.
     fpgrowth.on('data', (itemset: Itemset<LearningObjective>) => {
@@ -269,6 +326,10 @@ export class RecommendComponent implements OnInit {
           return b[1] - a[1];
         });
       });
+
+      setTimeout(() => this.dataSource_mined.data = this.mined_itemsets);
+      setTimeout(() => this.dataSource_mined.paginator = this.paginator);
+
   }
 
 

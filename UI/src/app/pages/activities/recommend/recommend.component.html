@@ -115,7 +115,7 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="choose">
         <th mat-header-cell *matHeaderCellDef> Choose</th>
         <td mat-cell *matCellDef="let item">
           <div class="button-row">
@@ -193,7 +193,7 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="choose">
         <th mat-header-cell *matHeaderCellDef> Choose</th>
         <td mat-cell *matCellDef="let item">
           <div class="button-row">
@@ -226,12 +226,60 @@
 
   <div class="mb-3" *ngIf="mined_itemsets.length != 0 && !loading">
       <h2 class="mat-h2">Based on similar past projects & currently available techniques</h2>
-      <h4 class="mat-h4">The following association rules were found, with 80% confidence:</h4>
+      <h4 class="mat-h4">The following association rules were found, with
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="confidence" (ngModelChange)="mineItemsets()">
+            <mat-option [value]=".9">
+              90%
+            </mat-option>
+            <mat-option [value]=".8">
+              80%
+            </mat-option>
+            <mat-option [value]=".7">
+              70%
+            </mat-option>
+            <mat-option [value]=".6">
+              60%
+            </mat-option>
+            <mat-option [value]=".5">
+              50%
+            </mat-option>
+            <mat-option [value]=".4">
+              40%
+            </mat-option>
+          </mat-select>
+        </mat-form-field> confidence:</h4>
   </div>
 
   <div class="mb-3" *ngIf="mined_itemsets && mined_itemsets.length == 0 && !loading">
       <h2 class="mat-h2">Based on similar past projects & currently available techniques</h2>
-      <h4 class="mat-h4">No association rules could be found</h4>
+      <h4 class="mat-h4">No association rules could be found for
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="confidence" (ngModelChange)="mineItemsets()">
+            <mat-option [value]=".9">
+              90%
+            </mat-option>
+            <mat-option [value]=".8">
+              80%
+            </mat-option>
+            <mat-option [value]=".7">
+              70%
+            </mat-option>
+            <mat-option [value]=".6">
+              60%
+            </mat-option>
+            <mat-option [value]=".5">
+              50%
+            </mat-option>
+            <mat-option [value]=".4">
+              40%
+            </mat-option>
+          </mat-select>
+        </mat-form-field> confidence</h4>
+  </div>
+
+  <div class="mb-3" *ngIf="mined_itemsets.length != 0 && !loading">
+
   </div>
 
   <div class="example-container" *ngIf="mined_itemsets.length != 0 && !loading">
@@ -301,10 +349,6 @@
             </td>
           </ng-container>
 
-
-
-
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns_mined"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns_mined;"></tr>
       </table>
@@ -312,6 +356,74 @@
 
 
       </div>
+
+  </div>
+
+
+
+
+  <div class="mt-5 mb-3" *ngIf="table_recs_empty && table_recs_empty.length != 0 && !loading">
+     <h2 class="mat-h2">Given that no recomendations could be made</h2>
+     <h4 class="mat-h4">The following techniques are available</h4>
+  </div>
+
+  <div class="example-container mat-elevation-z2 mb-5" *ngIf="table_recs_empty.length != 0 && !loading">
+
+    <table mat-table [dataSource]="dataSource_empty">
+
+      <ng-container matColumnDef="technique">
+        <th mat-header-cell *matHeaderCellDef > Technique </th>
+        <td mat-cell *matCellDef="let item">
+          <ng-container *ngFor="let i of item[0]">
+            {{i.name}}
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Details</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-raised-button color="primary" title="View details" (click)="showTechniques(item[0])">
+            <i class="fa fa-eye" *ngIf="!loading"></i>
+            <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="similarity">
+        <th mat-header-cell *matHeaderCellDef> Similarity Score</th>
+        <td mat-cell *matCellDef="let item"> {{item[1]}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="choose">
+        <th mat-header-cell *matHeaderCellDef> Choose</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="button-row">
+            <button mat-raised-button #add_rec *ngIf="!loading" title="Choose Recomendation"
+              [swal]="{
+                title: 'Confirm recommendation',
+                text: 'Are you sure?',
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No, cancel.',
+                cancelButtonColor: '3085d6',
+                reverseButtons: true
+              }"
+              (confirm)="addRecommendation(item[0])"
+              color="primary" [disabled]="loading">
+              <i class="fas fa-check-circle" *ngIf="!loading"></i>
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns_empty"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns_empty;"></tr>
+  </table>
 
   </div>
 
