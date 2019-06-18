@@ -8,7 +8,7 @@ const websocket  = require('../components/websocket');
 
 
 function configureMongoose(){
-  mongoose.connect(config.mongoose.uri, {useNewUrlParser: true }); // connect to our database
+  mongoose.connect(config.mongoose.uri, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false}); // connect to our database
   mongoose.Promise = global.Promise;
   let db = mongoose.connection;
 

@@ -91,11 +91,9 @@ function edit(req, res) {
     if ( projeto.project_manager.toString() != req.user._id.toString() && (projeto.teachers.indexOf(req.user._id) === -1) )  {
       return res.status(403).json({error: 'forbidden', message: 'You can\'t edit this project.'});
     } else {
-      await Projeto.findOneAndUpdate(query, req.body, {new: true});
+      await Projeto.findOneAndUpdate(query, req.body, {new: true, useFindAndModify: false});
       res.json({ message: 'Project successfully edited.'});
     }
-
-
 
   })
   .catch(utils.handleError(req, res));

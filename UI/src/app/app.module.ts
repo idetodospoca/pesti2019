@@ -37,6 +37,7 @@ import { CreateLearningobjectiveComponent } from './dialogs/create-learningobjec
 import { CreateAttributesHelpComponent } from './dialogs/create-attributes-help/create-attributes-help.component';
 import { CreateProjectHelpComponent } from './dialogs/create-project-help/create-project-help.component';
 import { TechniqueDetailsComponent } from './dialogs/technique-details/technique-details.component';
+import { CreateTechniqueHelpComponent } from './dialogs/create-technique-help/create-technique-help.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { TechniqueDetailsComponent } from './dialogs/technique-details/technique
     CreateAttributesHelpComponent,
     CreateProjectHelpComponent,
     TechniqueDetailsComponent,
+    CreateTechniqueHelpComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { TechniqueDetailsComponent } from './dialogs/technique-details/technique
     CreateLearningobjectiveComponent,
     CreateAttributesHelpComponent,
     CreateProjectHelpComponent,
-    TechniqueDetailsComponent
+    TechniqueDetailsComponent,
+    CreateTechniqueHelpComponent
   ],
   bootstrap: [AppComponent]
 })

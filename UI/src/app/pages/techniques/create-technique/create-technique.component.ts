@@ -13,6 +13,8 @@ import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learni
 import { Attributes, LearningObjective, Technique, Structure } from '../../../models/index';
 
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { CreateTechniqueHelpComponent } from 'src/app/dialogs/create-technique-help/create-technique-help.component';
 
 
 @Component({
@@ -80,7 +82,8 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private modalService: BsModalService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -88,8 +91,6 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
     this.createHandler();
 
     this.getAttributes();
-
-    //this.form.structure.modules.splice(0, 1);
 
     this.techniqueStruct = this.fb.group({
       'modules': this.fb.array([
@@ -101,6 +102,10 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroyHandler();
+  }
+
+  showHelp() {
+    this.dialog.open(CreateTechniqueHelpComponent);
   }
 
 

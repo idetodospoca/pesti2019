@@ -1,93 +1,91 @@
-<form (ngSubmit)="create()" novalidate #f="ngForm">
-  <div class="modal-header bg-primary">
-    <h4 class="modal-title pull-left">New Learning Objective</h4>
-    <button mat-raised-button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
+<section class="mat-typography">
 
-    <div class="row">
-
-      <div class="col-md-6 col-sm-12">
-        <div class="form-group">
-          <mat-form-field class="form-full-width">
-            <mat-label>Knowledge Category</mat-label>
-          <select matNativeControl #knowledge_category="ngModel" name="knowledge_category"  [(ngModel)]="form.knowledge_category" required [ngClass]="{'is-invalid': isInvalid(knowledge_category)}">
-            <option value="Factual">Factual</option>
-            <option value="Conceptual">Conceptual</option>
-            <option value="Procedural">Procedural</option>
-            <option value="Metacognitive">Metacognitive</option>
-          </select>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-sm-12">
-        <div class="form-group">
-          <!-- <label for="behaviour">Behaviour</label> -->
-          <mat-form-field class="form-full-width">
-            <mat-label>Behaviour</mat-label>
-          <select matNativeControl #behaviour="ngModel" name="behaviour"  [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
-              <option *ngFor="let item of behaviour_cat" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</option>
-          </select>
-          </mat-form-field>
-          <!-- <div class="invalid-feedback">This field is required</div> -->
-        </div>
-      </div>
+  <form (ngSubmit)="create()" novalidate #f="ngForm">
+    <div class="modal-header bg-primary">
+      <h4 class="modal-title pull-left">New Learning Objective</h4>
+      <button mat-raised-button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
 
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <div class="form-group">
-          <!-- <label for="subject_matter">Subject Matter</label> -->
-          <mat-form-field class="form-full-width">
-            <mat-label>Subject Matter</mat-label>
-          <input matInput #subject="ngModel" type="text" name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter"  required [ngClass]="{'is-invalid': isInvalid(subject)}">
+      <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group">
+            <mat-form-field class="form-full-width">
+              <mat-label>Knowledge Category</mat-label>
+            <select matNativeControl #knowledge_category="ngModel" name="knowledge_category"  [(ngModel)]="form.knowledge_category" required [ngClass]="{'is-invalid': isInvalid(knowledge_category)}">
+              <option value="Factual">Factual</option>
+              <option value="Conceptual">Conceptual</option>
+              <option value="Procedural">Procedural</option>
+              <option value="Metacognitive">Metacognitive</option>
+            </select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group">
+            <mat-form-field class="form-full-width">
+              <mat-label>Behaviour</mat-label>
+            <select matNativeControl #behaviour="ngModel" name="behaviour"  [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
+                <option *ngFor="let item of behaviour_cat" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</option>
+            </select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group">
+            <mat-form-field class="form-full-width">
+              <mat-label>Subject Matter</mat-label>
+            <input matInput #subject="ngModel" type="text" name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter"  required [ngClass]="{'is-invalid': isInvalid(subject)}">
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group">
+            <mat-form-field class="form-full-width">
+            <mat-label>Conditions</mat-label>
+            <input matInput type="text"  name="conditions"  placeholder="Conditions" [(ngModel)]="form.conditions">
           </mat-form-field>
-          <!-- <div class="invalid-feedback">This field is required</div> -->
+
+          </div>
         </div>
+
+
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group">
+            <mat-form-field class="form-full-width">
+              <mat-label>Degree</mat-label>
+
+            <input matInput type="text"  name="degree"  placeholder="Degree" [(ngModel)]="form.degree">
+          </mat-form-field>
+
+          </div>
+        </div>
+
       </div>
+
+
 
     </div>
-
-    <div class="row">
-
-      <div class="col-md-6 col-sm-12">
-        <div class="form-group">
-          <!-- <label for="conditions">Conditions</label> -->
-          <mat-form-field class="form-full-width">
-          <mat-label>Conditions</mat-label>
-          <input matInput type="text"  name="conditions"  placeholder="Conditions" [(ngModel)]="form.conditions">
-        </mat-form-field>
-
-        </div>
-      </div>
-
-
-      <div class="col-md-6 col-sm-12">
-        <div class="form-group">
-          <!-- <label for="degree">Degree</label> -->
-          <mat-form-field class="form-full-width">
-            <mat-label>Degree</mat-label>
-
-          <input matInput type="text"  name="degree"  placeholder="Degree" [(ngModel)]="form.degree">
-        </mat-form-field>
-
-        </div>
-      </div>
-
+    <div class="modal-footer">
+      <button mat-raised-button type="submit" class="btn btn-success" [disabled]="f.invalid">
+        <i class="fa fa-save"></i> Save
+      </button>
+      <button mat-raised-button type="button" class="btn btn-danger" (click)="cancel()">
+        <i class="fa fa-times-circle"></i> Close
+      </button>
     </div>
+  </form>
 
-
-
-  </div>
-  <div class="modal-footer">
-    <button mat-raised-button type="submit" class="btn btn-success" [disabled]="f.invalid">
-      <i class="fa fa-save"></i> Save
-    </button>
-    <button mat-raised-button type="button" class="btn btn-danger" (click)="cancel()">
-      <i class="fa fa-times-circle"></i> Close
-    </button>
-  </div>
-</form>
+</section>

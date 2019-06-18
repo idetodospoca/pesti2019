@@ -1,0 +1,283 @@
+{
+    "psicologo_educacional": {
+        "name": "psicologo_educacional", "email": "psicologo_educacional@learning-techniques.com", "password": "Password1_", "role": "psicologo_educacional"
+    },
+    "psicologo_escolar": {
+        "name": "psicologo_escolar", "email": "psicologo_escolar@learning-techniques.com", "password": "Password1_", "role": "psicologo_escolar"
+    },
+    "psicologo_escolar2": {
+        "name": "psicologo_escolar2", "email": "psicologo_escolar2@learning-techniques.com", "password": "Password1_", "role": "psicologo_escolar"
+    },
+    "professor": {
+        "name": "professor", "email": "professor@learning-techniques.com", "password": "Password1_", "role": "professor"
+    },
+    "professor2": {
+        "name": "professor2", "email": "professor2@learning-techniques.com", "password": "Password1_", "role": "professor"
+    },
+
+    "projeto1": {
+        "teachers": [],
+        "status": "In Development",
+        "name": "teste copia",
+        "goal": "testar3",
+        "activity": {
+            "affective_objectives": [],
+            "social_objectives": [],
+            "learning_objectives": [
+                {
+                    "knowledge_category": "Metacognitive",
+                    "behaviour": "Remember: one",
+                    "subject_matter": "Subj1",
+                    "conditions": "",
+                    "degree": ""
+                },
+                {
+                    "knowledge_category": "Procedural",
+                    "behaviour": "Create: one",
+                    "subject_matter": "Subj2",
+                    "conditions": "",
+                    "degree": ""
+                },
+                {
+                    "knowledge_category": "Factual",
+                    "behaviour": "Create: one",
+                    "subject_matter": "Subj3",
+                    "conditions": "",
+                    "degree": ""
+                }
+            ],
+            "description": "desc",
+            "subject": "sub",
+            "delivery_mode": "Delivery one",
+            "interaction": "Interaction one",
+            "scope": "Reso Scope one",
+            "age": 5,
+            "feedback_use": "None",
+            "interrelationship": "None",
+            "motivation": "High",
+            "participation": "None",
+            "performance": "High"
+        },
+        "canCopy": true
+    },
+
+
+    "invalid_project": {
+        "teachers": [],
+        "status": "In Development",
+        "name": "teste copia",
+        "goal": "testar3"
+    },
+
+
+    "tecnica1": {
+        "rules": [
+            "Regra"
+        ],
+        "delivery_mode": [
+            "Delivery three"
+        ],
+        "interaction": [
+            "Interaction two"
+        ],
+        "interrelationship": [
+            "Medium"
+        ],
+        "motivation": [
+            "Medium"
+        ],
+        "participation": [
+            "Medium"
+        ],
+        "performance": [
+            "Medium"
+        ],
+        "resolution_scope": [
+            "Reso Scope two"
+        ],
+        "feedback_use": [
+            "Low"
+        ],
+        "target_audience": [
+            5
+        ],
+        "affective_objectives": [],
+        "social_objectives": [],
+        "learning_objectives": [
+            {
+                "knowledge_category": "Factual",
+                "behaviour": "Remember: teste",
+                "subject_matter": "Subj2",
+                "conditions": "",
+                "degree": ""
+            }
+        ],
+        "name": "Test",
+        "description": "DescTes",
+        "structure": {
+            "modules": [
+                {
+                    "phases": [
+                        {
+                            "tasks": [
+                                {
+                                    "resources": null,
+                                    "type": "asdsd: asdsd",
+                                    "description": "desc",
+                                    "role": "Staff"
+                                },
+                                {
+                                    "resources": null,
+                                    "type": "Cat1: Verb1",
+                                    "description": "dec",
+                                    "role": "Staff"
+                                }
+                            ],
+                            "name": "fase1"
+                        }
+                    ],
+                    "name": "mod1"
+                },
+                {
+                    "phases": [
+                        {
+                            "tasks": [
+                                {
+                                    "resources": null,
+                                    "type": "asdsd: asdsd",
+                                    "description": "dasd",
+                                    "role": "Staff"
+                                },
+                                {
+                                    "resources": null,
+                                    "type": "Cat1: Verb1",
+                                    "description": "desc",
+                                    "role": "Staff"
+                                }
+                            ],
+                            "name": "fase1"
+                        },
+                        {
+                            "tasks": [
+                                {
+                                    "resources": null,
+                                    "type": "asdsd: asdsd",
+                                    "description": "dasd",
+                                    "role": "Staff"
+                                }
+                            ],
+                            "name": "fas"
+                        }
+                    ],
+                    "name": "mod2"
+                }
+            ]
+        },
+        "psychologist": {
+            "createdAt": "2019-06-15T14:29:04.188Z",
+            "updatedAt": "2019-06-15T14:29:04.292Z",
+            "email": "psicologo@escolar.com",
+            "name": "psicologo escolar",
+            "role": "psicologo_escolar"
+        }
+    },
+
+    "invalid_technique": {
+        "name": "Test",
+        "description": "DescTes"
+    },
+
+    "attributes": {
+        "delivery_mode": [
+            {
+                "name": "Delivery one"
+            },
+            {
+                "name": "Delivery two"
+            },
+            {
+                "name": "Delivery three"
+            }
+        ],
+        "interaction": [
+            {
+                "name": "Interaction one"
+            },
+            {
+                "name": "Interaction two"
+            },
+            {
+                "name": "Interaction three"
+            }
+        ],
+        "resolution_scope": [
+            {
+                "name": "Reso Scope one"
+            },
+            {
+                "name": "Reso Scope two"
+            },
+            {
+                "name": "Reso Scope three"
+            }
+        ],
+        "behaviour": [
+            {
+                "category": "Remember",
+                "verb": "one"
+            },
+            {
+                "category": "Understand",
+                "verb": "one"
+            },
+            {
+                "category": "Create",
+                "verb": "one"
+            }
+        ],
+        "affective_objectives": [
+            {
+                "category": "Receiving Phenomena",
+                "verb": "one"
+            },
+            {
+                "category": "Responding to Phenomena",
+                "verb": "one"
+            },
+            {
+                "category": "Organization",
+                "verb": "one"
+            }
+        ],
+        "social_objectives": [
+            {
+                "name": "Social one"
+            },
+            {
+                "name": "Social two"
+            },
+            {
+                "name": "Social three"
+            }
+        ],
+        "task_types": [
+            {
+                "category": "Cat1",
+                "verb": "Verb1"
+            }
+        ]
+    },
+    "invalid_attributes": {
+        "behaviour": [
+            {
+                "category": "Remember"
+            },
+            {
+                "category": "Understand"
+            },
+            {
+                "category": "Create"
+            }
+        ]
+    }
+}

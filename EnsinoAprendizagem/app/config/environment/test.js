@@ -1,5 +1,5 @@
 module.exports = {
     mongoose: {
-        uri: 'mongodb://pesti2019:pesti2019@ds331735.mlab.com:31735/pesti2019'
+        uri: 'mongodb://pesti2019_test:pesti2019_test@ds137857.mlab.com:37857/pesti2019_test'
     }
 };

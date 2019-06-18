@@ -13,6 +13,8 @@ import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learni
 import { Attributes, LearningObjective, Technique, Structure } from '../../../models/index';
 
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
+import { CreateTechniqueHelpComponent } from 'src/app/dialogs/create-technique-help/create-technique-help.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-edit-techniques',
@@ -76,12 +78,13 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
   so : string = "";
 
   constructor(
-    private http: HttpClient,
+    private http          : HttpClient,
     private activeRoute   : ActivatedRoute,
     private toastr        : ToastrService,
     private modalService  : BsModalService,
     private router        : Router,
-    private fb            : FormBuilder
+    private fb            : FormBuilder,
+    public dialog         : MatDialog
   ) { }
 
   ngOnInit() {
@@ -106,6 +109,10 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroyHandler();
+  }
+
+  showHelp() {
+    this.dialog.open(CreateTechniqueHelpComponent);
   }
 
 
