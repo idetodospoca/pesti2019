@@ -93,7 +93,6 @@ export class RecommendComponent implements OnInit {
         for (let tech of response[1]) {
           this.similarityTechniqueAll(this.project_rc, tech);
         }
-        console.log(this.table_recs_empty);
         setTimeout(() => this.dataSource_empty.data = this.table_recs_empty);
 
       }
@@ -303,7 +302,7 @@ export class RecommendComponent implements OnInit {
 
 
   mineItemsets() {
-    
+
     this.mined_itemsets = [];
     // Execute FPGrowth with a minimum support chosen. Algorithm is generic.
     let fpgrowth: FPGrowth<Technique> = new FPGrowth<Technique>(this.confidence);

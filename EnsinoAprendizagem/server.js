@@ -4,9 +4,13 @@ const app     = express();                            // define our app using ex
 const config  = require('./app/config/environment');
 const http    = require('http').Server(app);
 const websocket = require('./app/components/websocket');
+var secure = require('ssl-express-www');
 
 //Configure the app
 require('./app/config')(app);
+
+//Configure SSL
+app.use(secure);
 
 // Initialize the websocket component
 websocket.init(http);
