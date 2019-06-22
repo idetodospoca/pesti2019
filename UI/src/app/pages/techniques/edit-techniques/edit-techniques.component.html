@@ -10,7 +10,7 @@
       </mat-card-header>
 
     <mat-card-content>
-      <form (ngSubmit)="create()" novalidate #f="ngForm">
+      <form (ngSubmit)="f.valid && create()" novalidate #f="ngForm">
 
       <mat-vertical-stepper>
         <mat-step label="Technique info">
@@ -220,9 +220,7 @@
               You need to add at least one Learning Objective.
             </div>
             <div>
-              <button type="button" mat-button matStepperPrevious>Back</button>
-              <button type="button" mat-button matStepperNext>Next</button>
-            </div>
+                                        </div>
           </mat-step>
 
 
@@ -266,9 +264,7 @@
           </div>
 
           <div>
-            <button type="button" mat-button matStepperPrevious>Back</button>
-            <button type="button" mat-button matStepperNext>Next</button>
-          </div>
+                                  </div>
         </mat-step>
 
 
@@ -307,14 +303,12 @@
           </div>
         </div>
         <div>
-          <button type="button" mat-button matStepperPrevious>Back</button>
-          <button type="button" mat-button matStepperNext>Next</button>
-        </div>
+                            </div>
       </mat-step>
 
-      <mat-step label="Technique Structure">
+      <mat-step label="Technique Structure" [stepControl]="techniqueStruct">
 
-          <ng-form [formGroup]="techniqueStruct" (ngSubmit)="create()">
+          <ng-form [formGroup]="techniqueStruct" >
             <div formArrayName="modules" class="form-group">
               <div *ngFor="let X of techniqueStruct['controls'].modules['controls']; let imod=index"class="form-group">
                 <div formGroupName="{{imod}}" class="form-group">
@@ -328,7 +322,8 @@
                     <div class="col mt-3">
                       <mat-form-field appearance="outline" class="form-full-width">
                         <mat-label>Module Name</mat-label>
-                        <input matInput type="text" placeholder="Module Name" formControlName="name" >
+                        <input matInput type="text" placeholder="Module Name" formControlName="name" required>
+                        <mat-error>This field is required.</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -353,7 +348,8 @@
                           <div class="col mt-3">
                           <mat-form-field appearance="outline" class="form-full-width">
                             <mat-label>Phase Name</mat-label>
-                            <input matInput type="text" placeholder="Phase Name" formControlName="name" >
+                            <input matInput type="text" placeholder="Phase Name" formControlName="name" required>
+                            <mat-error>This field is required.</mat-error>
                           </mat-form-field>
                           </div>
                         </div>
@@ -377,15 +373,18 @@
                                 <div class="col mt-3">
                                 <mat-form-field appearance="outline" class="form-full-width">
                                   <mat-label>Task Type</mat-label>
-                                  <mat-select name="task_type" formControlName="type" placeholder="Task Type" >
+                                  <mat-select name="task_type" formControlName="type" placeholder="Task Type" required>
                                     <mat-option *ngFor="let item of task_types" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</mat-option>
                                   </mat-select>
+                                  <mat-error>This field is required.</mat-error>
+
                                 </mat-form-field>
                                 </div>
                                 <div class="col mt-3">
                                   <mat-form-field appearance="outline" class="form-full-width">
                                     <mat-label>Task Description</mat-label>
-                                    <input matInput type="text" placeholder="Task description" formControlName="description" >
+                                    <input matInput type="text" placeholder="Task description" formControlName="description" required>
+                                    <mat-error>This field is required.</mat-error>
                                   </mat-form-field>
                                 </div>
                               </div>
@@ -393,10 +392,11 @@
                                 <div class="col">
                                 <mat-form-field appearance="outline" class="form-full-width">
                                   <mat-label>Role</mat-label>
-                                  <mat-select name="role" formControlName="role" placeholder="Role" >
+                                  <mat-select name="role" formControlName="role" placeholder="Role" required>
                                     <mat-option value="Student">Student</mat-option>
                                     <mat-option value="Staff">Staff</mat-option>
                                   </mat-select>
+                                  <mat-error>This field is required.</mat-error>
                                 </mat-form-field>
                                 </div>
                                 <div class="col">
@@ -431,7 +431,7 @@
 
       <mat-step label="Done">
         <div class="button-container">
-          <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="f.invalid || invalidForm()">
+          <button type="submit" mat-raised-button class="btn btn-success">
             <i class="fa fa-save" *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
             Save

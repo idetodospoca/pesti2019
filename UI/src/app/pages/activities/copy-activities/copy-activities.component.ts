@@ -3,14 +3,23 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog, ErrorStateMatcher } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 
-import { Project, Attributes } from '../../../models';
+import { Project, Attributes, User } from '../../../models';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
+import { FormControl, NgForm, FormGroupDirective, Validators } from '@angular/forms';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-copy-activities',
@@ -56,13 +65,18 @@ export class CopyActivitiesComponent implements OnInit {
       affective_objectives  : [],
       social_objectives     : []
     },
+    teachers: [],
     canCopy: true
   };
 
   ao : string = "";
   so : string = "";
 
+  emailFormControl = new FormControl('', [
+    Validators.email
+  ]);
 
+  matcher = new MyErrorStateMatcher();
 
   constructor(
     private http: HttpClient,
@@ -92,15 +106,24 @@ export class CopyActivitiesComponent implements OnInit {
   }
 
   create() {
+    if (this.form.activity.age < 5 ) {
+      this.toastr.error('Age needs to be at least 5.', 'Error');
+    }
 
-    this.http.post<Project>(`projects`, this.form).subscribe(
-      response => {
-        this.toastr.success('Project successfully copied.', 'Success');
-      },
-      err => this.handleError(err)
-    );
+    if (this.form.activity.learning_objectives.length < 1 ) {
+      this.toastr.error('At least one learning objective must be defined.', 'Error');
+    }
 
-    this.router.navigate(['/']);
+    if (this.form.activity.age > 4 && this.form.activity.learning_objectives.length > 0) {
+      this.http.post<Project>(`projects`, this.form).subscribe(
+        response => {
+          this.toastr.success('Project successfully added.', 'Success');
+          this.router.navigate(['/projects']);
+        },
+        err => this.handleError(err)
+      );
+
+    }
 
   }
 
@@ -108,6 +131,29 @@ export class CopyActivitiesComponent implements OnInit {
     this.dialog.open(CreateProjectHelpComponent);
   }
 
+
+  invite (email: string) {
+    this.loading = true;
+    if (this.form.teachers.filter(t => t.email === email).length > 0) {
+      this.toastr.error('This option has already been added.', 'Error');
+    } else {
+      this.http.get<User>(`users/${email}`).subscribe(
+       response => {
+         this.form.teachers.push(response);
+         this.loading = false;
+         this.toastr.success('New collaborator added.', 'Success');
+       },
+       err => {
+         this.toastr.error(err.error.message, 'Error');
+         this.loading = false;
+       }
+     );
+    }
+  }
+
+  deleteTeacher(number: number) {
+    this.form.teachers.splice(number, 1);
+  }
 
 
   getAttributes() {
@@ -242,6 +288,7 @@ export class CopyActivitiesComponent implements OnInit {
     .subscribe(data => {
       this.sanitize(data);
       this.form = data;
+      this.form.teachers = [];
       this.loading = false;
     }, err => this.handleError(err));
   }
@@ -269,7 +316,6 @@ export class CopyActivitiesComponent implements OnInit {
     delete data.__v;
     delete data.techniques;
     delete data.status;
-    delete data.teachers;
     return data;
   }
 

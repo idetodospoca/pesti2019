@@ -10,21 +10,22 @@
       </mat-card-header>
 
     <mat-card-content>
-      <form (ngSubmit)="create()" novalidate #f="ngForm">
-
-      <mat-vertical-stepper>
-        <mat-step label="Technique info">
+      <form (ngSubmit)="f.valid && create()" novalidate #f="ngForm">
+      <mat-vertical-stepper [linear]="true">
+        <mat-step [stepControl]="name.invalid" label="Technique info">
           <div class="form-group row">
             <div class="col">
               <mat-form-field appearance="outline" class="form-full-width" >
                 <mat-label>Technique Name</mat-label>
                 <input matInput #name="ngModel" type="text" name="name" placeholder="Technique Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+                <mat-error *ngIf="name.invalid">This field is required.</mat-error>
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field appearance="outline" class="form-full-width">
                 <mat-label>Technique Description</mat-label>
                 <input matInput #description="ngModel" type="text" name="description" placeholder="Technique Description" [(ngModel)]="form.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+                <mat-error *ngIf="description.invalid">This field is required.</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -34,6 +35,7 @@
                 <mat-form-field appearance="outline" class="form-full-width">
                   <mat-label>Rules</mat-label>
                   <input matInput #rules="ngModel" type="text"  name="rules" placeholder="Rules" [(ngModel)]="rule" required [ngClass]="{'is-invalid': isInvalid(rules)}">
+                  <mat-error *ngIf="rules.invalid">This field is required.</mat-error>
                 </mat-form-field>
                 <div class="button-container">
                   <button type="button" mat-raised-button class="btn btn-success"  title="Add new rule" (click)="addField(rules)" [disabled]="loading || rule == ''">
@@ -215,13 +217,10 @@
               </table>
             </div>
 
-            <div *ngIf="form.learning_objectives.length == 0" class="form-group p-4 alert alert-info" role="alert">
+            <div *ngIf="form.learning_objectives.length == 0" class="form-group p-4 alert alert-danger" role="alert">
               You need to add at least one Learning Objective.
             </div>
-            <div>
-              <button type="button" mat-button matStepperPrevious>Back</button>
-              <button type="button" mat-button matStepperNext>Next</button>
-            </div>
+
           </mat-step>
 
 
@@ -263,11 +262,6 @@
             </div>
 
           </div>
-
-          <div>
-            <button type="button" mat-button matStepperPrevious>Back</button>
-            <button type="button" mat-button matStepperNext>Next</button>
-          </div>
         </mat-step>
 
 
@@ -305,15 +299,12 @@
             </table>
           </div>
         </div>
-        <div>
-          <button type="button" mat-button matStepperPrevious>Back</button>
-          <button type="button" mat-button matStepperNext>Next</button>
-        </div>
+
       </mat-step>
 
-      <mat-step label="Technique Structure">
+      <mat-step label="Technique Structure" [stepControl]="techniqueStruct">
 
-          <ng-form [formGroup]="techniqueStruct" (ngSubmit)="create()">
+          <ng-form [formGroup]="techniqueStruct" >
             <div formArrayName="modules" class="form-group">
               <div *ngFor="let X of techniqueStruct['controls'].modules['controls']; let imod=index"class="form-group">
                 <div formGroupName="{{imod}}" class="form-group">
@@ -328,6 +319,7 @@
                       <mat-form-field appearance="outline" class="form-full-width">
                         <mat-label>Module Name</mat-label>
                         <input matInput type="text" placeholder="Module Name" formControlName="name" required>
+                        <mat-error>This field is required.</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -353,6 +345,7 @@
                           <mat-form-field appearance="outline" class="form-full-width">
                             <mat-label>Phase Name</mat-label>
                             <input matInput type="text" placeholder="Phase Name" formControlName="name" required>
+                            <mat-error>This field is required.</mat-error>
                           </mat-form-field>
                           </div>
                         </div>
@@ -379,12 +372,15 @@
                                   <mat-select name="task_type" formControlName="type" placeholder="Task Type" required>
                                     <mat-option *ngFor="let item of task_types" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</mat-option>
                                   </mat-select>
+                                  <mat-error>This field is required.</mat-error>
+
                                 </mat-form-field>
                                 </div>
                                 <div class="col mt-3">
                                   <mat-form-field appearance="outline" class="form-full-width">
                                     <mat-label>Task Description</mat-label>
                                     <input matInput type="text" placeholder="Task description" formControlName="description" required>
+                                    <mat-error>This field is required.</mat-error>
                                   </mat-form-field>
                                 </div>
                               </div>
@@ -396,6 +392,7 @@
                                     <mat-option value="Student">Student</mat-option>
                                     <mat-option value="Staff">Staff</mat-option>
                                   </mat-select>
+                                  <mat-error>This field is required.</mat-error>
                                 </mat-form-field>
                                 </div>
                                 <div class="col">
@@ -430,7 +427,7 @@
 
       <mat-step label="Done">
         <div class="button-container">
-          <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="f.invalid || invalidForm()">
+          <button type="submit" mat-raised-button class="btn btn-success">
             <i class="fa fa-save" *ngIf="!loading"></i>
             <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
             Save
@@ -444,5 +441,5 @@
 
     </mat-card>
   </div>
-  
+
 </section>

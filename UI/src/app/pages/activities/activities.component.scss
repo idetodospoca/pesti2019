@@ -1,11 +1,13 @@
 table {
   width: 100%;
 }
+.example-container {
+  overflow-x: auto;
 
+}
 .button-row button {
   margin-right: 8px;
 }
-
 
 th.mat-sort-header-sorted {
   color: black;

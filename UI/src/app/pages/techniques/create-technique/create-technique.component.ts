@@ -64,14 +64,7 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
 
   rule            : string = "";
-  delivery        : string = "";
-  interact        : string = "";
-  interrelation   : string = "";
-  motiv           : string = "";
-  particip        : string = "";
-  perform         : string = "";
-  scope           : string = "";
-  feedback        : string = "";
+
   target          : number = 5;
 
   ao : string = "";
@@ -106,73 +99,6 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
   showHelp() {
     this.dialog.open(CreateTechniqueHelpComponent);
-  }
-
-
-
-
-  delivery_mode(event) {
-    if(event.checked) {
-      this.form.delivery_mode.push(event.source.value)
-    } else {
-      this.form.delivery_mode = this.form.delivery_mode.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  interaction(event) {
-    if(event.checked) {
-      this.form.interaction.push(event.source.value)
-    } else {
-      this.form.interaction = this.form.interaction.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  interrelationship(event) {
-    if(event.checked) {
-      this.form.interrelationship.push(event.source.value)
-    } else {
-      this.form.interrelationship = this.form.interrelationship.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  motivation(event) {
-    if(event.checked) {
-      this.form.motivation.push(event.source.value)
-    } else {
-      this.form.motivation = this.form.motivation.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  participation(event) {
-    if(event.checked) {
-      this.form.participation.push(event.source.value)
-    } else {
-      this.form.participation = this.form.participation.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  performance(event) {
-    if(event.checked) {
-      this.form.performance.push(event.source.value)
-    } else {
-      this.form.performance = this.form.performance.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  resolution_scope(event) {
-    if(event.checked) {
-      this.form.resolution_scope.push(event.source.value)
-    } else {
-      this.form.resolution_scope = this.form.resolution_scope.filter(item => item.valueOf() !== event.source.value);
-    }
-  }
-
-  feedback_use(event) {
-    if(event.checked) {
-      this.form.feedback_use.push(event.source.value)
-    } else {
-      this.form.feedback_use = this.form.feedback_use.filter(item => item.valueOf() !== event.source.value);
-    }
   }
 
 
@@ -243,15 +169,18 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
 
   create() {
 
-    this.form.structure = Object.assign({}, this.techniqueStruct.value);
-
-    this.http.post<Technique>(`techniques`, this.form).subscribe(
-      response => {
-        this.toastr.success('Technique successfully created.', 'Success');
-        this.router.navigate(['/']);
-      },
-      err => this.handleError(err)
-    );
+    if ((<FormArray>this.techniqueStruct.controls['modules']).length == 0) {
+      this.toastr.error('At least one module must be defined.', 'Error');
+    } else {
+      this.form.structure = Object.assign({}, this.techniqueStruct.value);
+      this.http.post<Technique>(`techniques`, this.form).subscribe(
+        response => {
+          this.toastr.success('Technique successfully created.', 'Success');
+          this.router.navigate(['/techniques']);
+        },
+        err => this.handleError(err)
+      );
+    }
 
   }
 
@@ -406,17 +335,4 @@ export class CreateTechniqueComponent implements OnInit, OnDestroy {
     this.toastr.error(err.error.message, 'Error');
   }
 
-  invalidForm(): boolean {
-    if (this.form.rules.length == 0 || this.form.delivery_mode.length == 0 || this.form.interaction.length == 0 ||
-      this.form.interrelationship.length == 0 || this.form.motivation.length == 0 || this.form.participation.length == 0
-      || this.form.performance.length == 0 || this.form.resolution_scope.length == 0 || this.form.feedback_use.length == 0
-      || this.form.target_audience.length == 0 || this.form.learning_objectives.length == 0)
-      {
-        return true;
-      }
-
-    }
-
-
-
-  }
+}

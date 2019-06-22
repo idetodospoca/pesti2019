@@ -183,15 +183,18 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
 
   create() {
 
-    this.form.structure = Object.assign({}, this.techniqueStruct.value);
-
-    this.http.put<Technique>(`techniques/${this.id}`, this.form).subscribe(
-      response => {
-        this.toastr.success('Technique successfully edited.', 'Success');
-        this.router.navigate(['/']);
-      },
-      err => this.handleError(err)
-    );
+    if ((<FormArray>this.techniqueStruct.controls['modules']).length == 0) {
+      this.toastr.error('At least one module must be defined.', 'Error');
+    } else {
+      this.form.structure = Object.assign({}, this.techniqueStruct.value);
+      this.http.put<Technique>(`techniques/${this.id}`, this.form).subscribe(
+        response => {
+          this.toastr.success('Technique successfully edited.', 'Success');
+          this.router.navigate(['/techniques']);
+        },
+        err => this.handleError(err)
+      );
+    }
 
   }
 
@@ -395,15 +398,6 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
     this.toastr.error(err.error.message, 'Error');
   }
 
-  invalidForm(): boolean {
-    if (this.form.rules.length == 0 || this.form.delivery_mode.length == 0 || this.form.interaction.length == 0 ||
-      this.form.interrelationship.length == 0 || this.form.motivation.length == 0 || this.form.participation.length == 0
-      || this.form.performance.length == 0 || this.form.resolution_scope.length == 0 || this.form.feedback_use.length == 0
-      || this.form.target_audience.length == 0 || this.form.learning_objectives.length == 0)
-      {
-        return true;
-      }
-  }
 
   private sanitize(data) {
     delete data._id;

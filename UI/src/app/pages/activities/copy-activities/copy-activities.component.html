@@ -10,195 +10,184 @@
     </mat-card-header>
 
     <mat-card-content>
-      <form (ngSubmit)="create()"  #f="ngForm">
-        <mat-vertical-stepper>
-          <mat-step label="Project info">
-            <div class="form-group row">
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width" >
-                  <mat-label>Project Name</mat-label>
-                  <input matInput #name="ngModel" type="text" name="name"  placeholder="Project Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
-                </mat-form-field>
+      <form (ngSubmit)="f.valid && create()" novalidate #f="ngForm">
+        <mat-vertical-stepper [linear]="true">
+          <mat-step label="Project info" [stepControl]="f1.control">
+            <ng-form novalidate #f1="ngForm">
+              <div class="form-group row">
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width" >
+                    <mat-label>Project Name</mat-label>
+                    <input matInput #name="ngModel" type="text" name="name"  placeholder="Project Name" [(ngModel)]="form.name"  required [ngClass]="{'is-invalid': isInvalid(name)}">
+                    <mat-error *ngIf="name.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Project Goal</mat-label>
+                    <input matInput #goal="ngModel" type="text"  name="goal" placeholder="Main goal of the project" [(ngModel)]="form.goal" required [ngClass]="{'is-invalid': isInvalid(goal)}">
+                    <mat-error *ngIf="goal.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
               </div>
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Project Goal</mat-label>
-                  <input matInput #goal="ngModel" type="text"  name="goal" placeholder="Main goal of the project" [(ngModel)]="form.goal" required [ngClass]="{'is-invalid': isInvalid(goal)}">
-                </mat-form-field>
-              </div>
-            </div>
 
-            <div class="form-group row">
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Project Description</mat-label>
-                  <input matInput #description="ngModel" type="text"  name="description" placeholder="Project Description" [(ngModel)]="form.activity.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
-                </mat-form-field>
+              <div class="form-group row">
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Project Description</mat-label>
+                    <input matInput #description="ngModel" type="text"  name="description" placeholder="Project Description" [(ngModel)]="form.activity.description" required [ngClass]="{'is-invalid': isInvalid(description)}">
+                    <mat-error *ngIf="description.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Project's Subject</mat-label>
+                    <input matInput #subject="ngModel" type="text"  name="subject" placeholder="Project's subject" [(ngModel)]="form.activity.subject" required [ngClass]="{'is-invalid': isInvalid(subject)}">
+                    <mat-error *ngIf="subject.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
               </div>
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Project's Subject</mat-label>
-                  <input matInput #subject="ngModel" type="text"  name="subject" placeholder="Project's subject" [(ngModel)]="form.activity.subject" required [ngClass]="{'is-invalid': isInvalid(subject)}">
-                </mat-form-field>
-              </div>
-            </div>
+            </ng-form>
 
-            <div>
-              <button type="button" mat-button matStepperNext>Next</button>
-            </div>
+          </mat-step>
+          <mat-step label="Target audience info" [stepControl]="f2.control">
+            <ng-form novalidate #f2="ngForm">
+              <div class="form-group row">
+                <div class="col">
+                  <mat-form-field appearance="outline"  class="form-full-width">
+                    <mat-label>Delivery Mode</mat-label>
+                    <mat-select #delivery_mode="ngModel"  name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
+                      <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="delivery_mode.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Interaction</mat-label>
+                    <mat-select #interaction="ngModel"  name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
+                      <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="interaction.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <div class="form-group row">
+
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Resolution Scope</mat-label>
+                    <mat-select #resolution_scope="ngModel"  name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
+                      <mat-option  *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="resolution_scope.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Feedback Use</mat-label>
+                    <mat-select #feedback_use="ngModel"  name="feedback_use" [(ngModel)]="form.activity.feedback_use" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
+                      <mat-option value="High">High</mat-option>
+                      <mat-option value="Medium">Medium</mat-option>
+                      <mat-option value="Low">Low</mat-option>
+                      <mat-option value="None">None</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="feedback_use.invalid">This field is required.</mat-error>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+
+              <div class="form-group row">
+                <div class="col">
+                  <mat-form-field appearance="outline" class="form-full-width">
+                    <mat-label>Age</mat-label>
+                    <input matInput #age="ngModel" type="number" name="age" min="5" [(ngModel)]="form.activity.age" required [ngClass]="{'is-invalid': isInvalid(age)}">
+                    <mat-error *ngIf="age.invalid">Minimum required age is 5.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+
+                </div>
+              </div>
+            </ng-form>
+
+
+
           </mat-step>
 
-          <mat-step label="Target audience info">
 
+        <mat-step label="Educator's Perception" [stepControl]="f3.control">
+          <ng-form novalidate #f3="ngForm">
             <div class="form-group row">
-
-
-              <div class="col">
-                <mat-form-field appearance="outline"  class="form-full-width">
-                  <mat-label>Delivery Mode</mat-label>
-                  <mat-select #delivery_mode="ngModel"  name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
-                    <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
               <div class="col">
                 <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Interaction</mat-label>
-                  <mat-select #interaction="ngModel"  name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
-                    <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
-            </div>
-
-
-
-            <div class="form-group row">
-
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Resolution Scope</mat-label>
-                  <mat-select #resolution_scope="ngModel"  name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
-                    <mat-option  *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
-              <div class="col">
-                <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Feedback Use</mat-label>
-                  <mat-select #feedback_use="ngModel"  name="feedback_use" [(ngModel)]="form.activity.feedback_use" required [ngClass]="{'is-invalid': isInvalid(feedback_use)}">
-
+                  <mat-label>Interrelationship</mat-label>
+                  <mat-select #interrelationship="ngModel"  name="interrelationship" [(ngModel)]="form.activity.interrelationship" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
                     <mat-option value="High">High</mat-option>
                     <mat-option value="Medium">Medium</mat-option>
                     <mat-option value="Low">Low</mat-option>
                     <mat-option value="None">None</mat-option>
-
                   </mat-select>
+                  <mat-error *ngIf="interrelationship.invalid">This field is required.</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col">
+                <mat-form-field appearance="outline" class="form-full-width">
+                  <mat-label>Motivation</mat-label>
+                  <mat-select #motivation="ngModel"  name="motivation" [(ngModel)]="form.activity.motivation" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium</mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="motivation.invalid">This field is required.</mat-error>
                 </mat-form-field>
               </div>
 
             </div>
-
 
             <div class="form-group row">
               <div class="col">
                 <mat-form-field appearance="outline" class="form-full-width">
-                  <mat-label>Age</mat-label>
-                  <input matInput #age="ngModel" type="number"  name="age" min="5" value="5" [(ngModel)]="form.activity.age" required [ngClass]="{'is-invalid': isInvalid(age)}">
+                  <mat-label>Participation</mat-label>
+                  <mat-select #participation="ngModel"  name="participation" [(ngModel)]="form.activity.participation" required [ngClass]="{'is-invalid': isInvalid(participation)}">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium</mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="participation.invalid">This field is required.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col">
-
+                <mat-form-field appearance="outline" class="form-full-width">
+                  <mat-label>Performance</mat-label>
+                  <mat-select #performance="ngModel"  name="performance" [(ngModel)]="form.activity.performance" required [ngClass]="{'is-invalid': isInvalid(performance)}">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium</mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="performance.invalid">This field is required.</mat-error>
+                </mat-form-field>
               </div>
             </div>
-            <div>
-              <button type="button" mat-button matStepperPrevious>Back</button>
-              <button type="button" mat-button matStepperNext>Next</button>
-            </div>
+          </ng-form>
 
-          </mat-step>
 
-          <!-- <div class="row p-4">
-          <p><strong>EDUCATOR'S PERCEPTION</strong></p>
-        </div> -->
-        <mat-step label="Educator's Perception">
 
-          <div class="form-group row">
-            <div class="col">
-              <mat-form-field appearance="outline" class="form-full-width">
-                <mat-label>Interrelationship</mat-label>
-                <mat-select #interrelationship="ngModel"  name="interrelationship" [(ngModel)]="form.activity.interrelationship" required [ngClass]="{'is-invalid': isInvalid(interrelationship)}">
-
-                  <mat-option value="High">High</mat-option>
-                  <mat-option value="Medium">Medium</mat-option>
-                  <mat-option value="Low">Low</mat-option>
-                  <mat-option value="None">None</mat-option>
-
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="col">
-              <mat-form-field appearance="outline" class="form-full-width">
-                <mat-label>Motivation</mat-label>
-                <mat-select #motivation="ngModel"  name="motivation" [(ngModel)]="form.activity.motivation" required [ngClass]="{'is-invalid': isInvalid(motivation)}">
-
-                  <mat-option value="High">High</mat-option>
-                  <mat-option value="Medium">Medium</mat-option>
-                  <mat-option value="Low">Low</mat-option>
-                  <mat-option value="None">None</mat-option>
-
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-          </div>
-
-          <div class="form-group row">
-            <div class="col">
-              <mat-form-field appearance="outline" class="form-full-width">
-                <mat-label>Participation</mat-label>
-
-                <mat-select #participation="ngModel"  name="participation" [(ngModel)]="form.activity.participation" required [ngClass]="{'is-invalid': isInvalid(participation)}">
-                  <mat-option value="High">High</mat-option>
-                  <mat-option value="Medium">Medium</mat-option>
-                  <mat-option value="Low">Low</mat-option>
-                  <mat-option value="None">None</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline" class="form-full-width">
-                <mat-label>Performance</mat-label>
-
-                <mat-select #performance="ngModel"  name="performance" [(ngModel)]="form.activity.performance" required [ngClass]="{'is-invalid': isInvalid(performance)}">
-
-                  <mat-option value="High">High</mat-option>
-                  <mat-option value="Medium">Medium</mat-option>
-                  <mat-option value="Low">Low</mat-option>
-                  <mat-option value="None">None</mat-option>
-
-                </mat-select>
-              </mat-form-field>
-
-            </div>
-
-          </div>
-          <div>
-            <button type="button" mat-button matStepperPrevious>Back</button>
-            <button type="button" mat-button matStepperNext>Next</button>
-          </div>
         </mat-step>
 
 
-        <!-- <div class="row p-4">
-        <p><strong>LEARNING OBJECTIVES</strong></p>
-      </div> -->
+
       <mat-step label="Learning Objectives">
-        <!-- <div class="form-group row p-4"> -->
         <div class="button-container">
           <button mat-raised-button type="button" class="btn btn-success"  (click)="addLearningObjective()" [disabled]="loading">
             <i class="fa fa-plus " *ngIf="!loading"></i>
@@ -206,7 +195,6 @@
             Add Learning Objective
           </button>
         </div>
-        <!-- </div> -->
 
         <div class="form-group p-4">
           <table *ngIf="form.activity.learning_objectives.length != 0" class="table table-borderless table-hover table-responsive">
@@ -243,27 +231,17 @@
           </table>
         </div>
 
-        <div *ngIf="form.activity.learning_objectives.length == 0" class="form-group p-4 alert alert-info" role="alert">
+        <div *ngIf="form.activity.learning_objectives.length == 0" class="form-group p-4 alert alert-danger" role="alert">
           You need to add at least one Learning Objective.
         </div>
         <div>
-          <button type="button" mat-button matStepperPrevious>Back</button>
-          <button type="button" mat-button matStepperNext>Next</button>
+
         </div>
       </mat-step>
 
 
-      <!-- <div class="row p-4">
-      <p><strong>AFFECTIVE OBJECTIVES</strong></p>
-    </div> -->
+
     <mat-step label="Affective Objectives" optional>
-      <div class="button-container">
-        <button type="button" mat-raised-button class="btn btn-success"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
-          <i class="fa fa-plus " *ngIf="!loading"></i>
-          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-          Add Affective Objective
-        </button>
-      </div>
       <div class="form-group">
         <div class="col">
           <mat-form-field appearance="outline" class="form-full-width">
@@ -273,6 +251,13 @@
             </mat-select>
           </mat-form-field>
         </div>
+      </div>
+      <div class="button-container">
+        <button type="button" mat-raised-button class="btn btn-success"  (click)="addAffectiveObjective()" [disabled]="loading || ao == ''">
+          <i class="fa fa-plus " *ngIf="!loading"></i>
+          <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+          Add Affective Objective
+        </button>
       </div>
 
       <div class="form-group">
@@ -294,23 +279,14 @@
       </div>
 
       <div>
-        <button type="button" mat-button matStepperPrevious>Back</button>
-        <button type="button" mat-button matStepperNext>Next</button>
+
+
       </div>
     </mat-step>
 
 
-    <!-- <div class="row p-4">
-    <p><strong>SOCIAL OBJECTIVES</strong></p>
-  </div> -->
+
   <mat-step label="Social Objectives" optional>
-    <div class="button-container">
-      <button type="button" mat-raised-button class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
-        <i class="fa fa-plus" *ngIf="!loading"></i>
-        <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-        Add Social Objective
-      </button>
-    </div>
     <div class="form-group">
       <div class="col">
         <mat-form-field appearance="outline" class="form-full-width">
@@ -320,6 +296,13 @@
           </mat-select>
         </mat-form-field>
       </div>
+    </div>
+    <div class="button-container">
+      <button type="button" mat-raised-button class="btn btn-success"  (click)="addSocialObjective()" [disabled]="loading || so == ''">
+        <i class="fa fa-plus" *ngIf="!loading"></i>
+        <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+        Add Social Objective
+      </button>
     </div>
     <div class="form-group">
       <div class="col">
@@ -337,8 +320,8 @@
       </div>
     </div>
     <div>
-      <button type="button" mat-button matStepperPrevious>Back</button>
-      <button type="button" mat-button matStepperNext>Next</button>
+
+
     </div>
   </mat-step>
 
@@ -351,15 +334,48 @@
       </mat-radio-group>
     </div>
 
+    <div class="container mt-5" >
+      <mat-form-field appearance="outline" class="form-full-width">
+        <mat-label>Invite a user to collaborate on the project</mat-label>
+        <input matInput placeholder="User's Email" [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher">
+        <mat-error *ngIf="emailFormControl.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="container mt-2">
+      <button type="button" mat-raised-button class="btn" color="primary" [disabled]="emailFormControl.value == '' || emailFormControl.hasError('email')" (click)="invite(emailFormControl.value)">Invite</button>
+    </div>
+    <div class="container mt-4">
+      <mat-label>Currently Invited Users</mat-label>
+
+          <table *ngIf="form.teachers && form.teachers.length != 0" class="table table-borderless table-hover table-responsive">
+            <tr *ngFor="let t of form.teachers; let number = index">
+              <td>{{t.name}}</td>
+              <td>{{t.email}}</td>
+              <td>
+                <button type="button" name="Remove Collaborator" mat-raised-button class="btn btn-danger float-right" (click)="deleteTeacher(number)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+          </table>
+
+
+    </div>
+
 
     <div class="mt-3">
-      <button type="button" mat-button matStepperPrevious>Back</button>
-      <button type="button" mat-button matStepperNext>Next</button>
+
+
     </div>
   </mat-step>
   <mat-step label="Done">
     <mat-card-actions align="start">
-      <button type="submit" mat-raised-button class="btn btn-success"  [disabled]="f.invalid || form.activity.learning_objectives.length == 0">
+      <button type="submit" mat-raised-button class="btn btn-success">
         <i class="fa fa-save" *ngIf="!loading"></i>
         <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
         Save

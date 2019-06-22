@@ -15,12 +15,13 @@
           <div class="form-group">
             <mat-form-field class="form-full-width">
               <mat-label>Knowledge Category</mat-label>
-            <select matNativeControl #knowledge_category="ngModel" name="knowledge_category"  [(ngModel)]="form.knowledge_category" required [ngClass]="{'is-invalid': isInvalid(knowledge_category)}">
+            <select matNativeControl  [(ngModel)]="form.knowledge_category" [formControl]="kcValidator" [errorStateMatcher]="matcher" required>
               <option value="Factual">Factual</option>
               <option value="Conceptual">Conceptual</option>
               <option value="Procedural">Procedural</option>
               <option value="Metacognitive">Metacognitive</option>
             </select>
+            <mat-error *ngIf="kcValidator.invalid">This field is required.</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -29,9 +30,10 @@
           <div class="form-group">
             <mat-form-field class="form-full-width">
               <mat-label>Behaviour</mat-label>
-            <select matNativeControl #behaviour="ngModel" name="behaviour"  [(ngModel)]="form.behaviour" required [ngClass]="{'is-invalid': isInvalid(behaviour)}">
+            <select matNativeControl  [(ngModel)]="form.behaviour" [formControl]="bhValidator" [errorStateMatcher]="matcher" required>
                 <option *ngFor="let item of behaviour_cat" [value]="item.category + ':' + ' ' + item.verb">{{item.category}}: {{item.verb}}</option>
             </select>
+            <mat-error *ngIf="bhValidator.invalid">This field is required.</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -42,7 +44,8 @@
           <div class="form-group">
             <mat-form-field class="form-full-width">
               <mat-label>Subject Matter</mat-label>
-            <input matInput #subject="ngModel" type="text" name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter"  required [ngClass]="{'is-invalid': isInvalid(subject)}">
+            <input matInput  name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter" [formControl]="smValidator" [errorStateMatcher]="matcher" required>
+            <mat-error *ngIf="smValidator.invalid">This field is required.</mat-error>
             </mat-form-field>
           </div>
         </div>

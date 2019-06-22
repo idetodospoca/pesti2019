@@ -76,6 +76,12 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   emailFormControl = new FormControl('', [
     Validators.email
   ]);
+
+  ageFormControl = new FormControl('', [
+    Validators.required,
+    Validators.min(5)
+  ]);
+
   matcher = new MyErrorStateMatcher();
 
 
@@ -102,16 +108,24 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   }
 
   create() {
+    if (this.form.activity.age < 5 ) {
+      this.toastr.error('Age needs to be at least 5.', 'Error');
+    }
 
-    this.http.post<Project>(`projects`, this.form).subscribe(
-      response => {
-        this.toastr.success('Project successfully added.', 'Success');
-      },
-      err => this.handleError(err)
-    );
+    if (this.form.activity.learning_objectives.length < 1 ) {
+      this.toastr.error('At least one learning objective must be defined.', 'Error');
+    }
 
-    this.router.navigate(['/']);
+    if (this.form.activity.age > 4 && this.form.activity.learning_objectives.length > 0) {
+      this.http.post<Project>(`projects`, this.form).subscribe(
+        response => {
+          this.toastr.success('Project successfully added.', 'Success');
+          this.router.navigate(['/projects']);
+        },
+        err => this.handleError(err)
+      );
 
+    }
 
   }
 
@@ -266,6 +280,12 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   isInvalid(field: any): boolean {
     return field.invalid && (field.dirty || field.touched);
+  }
+
+  minValue(field: any): boolean {
+    if (field.value < 5) {
+      return field.invalid && (field.dirty || field.touched);
+    }
   }
 
   private transformModalData(data: any) {

@@ -117,17 +117,26 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
     this.destroyHandler();
   }
 
+
   create() {
+    if (this.form.activity.age < 5 ) {
+      this.toastr.error('Age needs to be at least 5.', 'Error');
+    }
 
-    this.http.put<Project>(`projects/${this.id}`, this.form).subscribe(
-      response => {
-        this.toastr.success('Project successfully edited.', 'Success');
-      },
-      err => this.handleError(err)
-    );
+    if (this.form.activity.learning_objectives.length < 1 ) {
+      this.toastr.error('At least one learning objective must be defined.', 'Error');
+    }
 
-    this.router.navigate(['/']);
+    if (this.form.activity.age > 4 && this.form.activity.learning_objectives.length > 0) {
+      this.http.put<Project>(`projects/${this.id}`, this.form).subscribe(
+        response => {
+          this.toastr.success('Project successfully edited.', 'Success');
+          this.router.navigate(['/projects']);
+        },
+        err => this.handleError(err)
+      );
 
+    }
 
   }
 
