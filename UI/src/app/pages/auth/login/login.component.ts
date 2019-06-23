@@ -39,17 +39,23 @@ export class LoginComponent {
     { }
 
     login() {
-      this.loading = true;
-      this.http.post('auth/login', {email: this.emailFormControl.value, password: this.passwordFormControl.value}).subscribe(
-        (res: any) => {
-          this.authService.setToken(res.token);
-          this.router.navigate(['/']);
-          this.loading = false;
-        },
-        err => {
-          this.toastr.error(err.error.message, 'An error ocurred.');
-          this.loading = false;
-        }
-      );
+
+      this.emailFormControl.markAsTouched();
+      this.passwordFormControl.markAsTouched();
+      if (this.emailFormControl.valid && this.passwordFormControl.valid) {
+        this.loading = true;
+        this.http.post('auth/login', {email: this.emailFormControl.value, password: this.passwordFormControl.value}).subscribe(
+          (res: any) => {
+            this.authService.setToken(res.token);
+            this.router.navigate(['/']);
+            this.loading = false;
+          },
+          err => {
+            this.toastr.error(err.error.message, 'An error ocurred.');
+            this.loading = false;
+          }
+        );
+      }
+
     }
   }

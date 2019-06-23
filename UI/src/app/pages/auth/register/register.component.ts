@@ -56,34 +56,36 @@ export class RegisterComponent {
     { }
 
     register() {
-      this.loading = true;
-      this.errors = [];
+      this.emailFormControl.markAsTouched();
+      this.nameFormControl.markAsTouched();
+      this.passwordFormControl.markAsTouched();
+      this.confirmPasswordFormControl.markAsTouched();
 
-      if (this.passwordFormControl.value != this.confirmPasswordFormControl.value) {
-        this.toastr.error('The passwords must match.');
-        this.loading = false;
-        return;
-      }
+      if (this.emailFormControl.valid && this.nameFormControl.valid && this.passwordFormControl.valid && this.confirmPasswordFormControl.valid) {
+        this.loading = true;
+        this.errors = [];
 
-      this.http.post('auth/register', { email: this.emailFormControl.value, name: this.nameFormControl.value, password: this.passwordFormControl.value, role: 'professor' }).subscribe(
-        (res: any) => {
-          this.authService.setToken(res.token);
-          this.toastr.success('Account created Successfully.');
-          this.router.navigate(['/']);
+        if (this.passwordFormControl.value != this.confirmPasswordFormControl.value) {
+          this.toastr.error('The passwords must match.');
           this.loading = false;
-        },
-        err => {
-          for (let error of err.error.data) {
-            this.toastr.error(error.message);
-          }
-          this.loading = false;
+          return;
         }
-      );
+
+        this.http.post('auth/register', { email: this.emailFormControl.value, name: this.nameFormControl.value, password: this.passwordFormControl.value, role: 'professor' }).subscribe(
+          (res: any) => {
+            this.authService.setToken(res.token);
+            this.toastr.success('Account created Successfully.');
+            this.router.navigate(['/']);
+            this.loading = false;
+          },
+          err => {
+            for (let error of err.error.data) {
+              this.toastr.error(error.message);
+            }
+            this.loading = false;
+          }
+        );
+      }
     }
-
-
-
-
-
 
   }

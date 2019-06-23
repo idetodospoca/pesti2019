@@ -51,6 +51,17 @@ describe('Users', function() {
                 });
             });
         });
+
+        it('should ensure unique e-mails', function(done){
+            chai.request(server)
+            .post('/api/auth/register')
+            .send(user)
+            .end(function(err, res){
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                res.body.should.have.property('message').eql('The e-mail you entered is already in use.');
+            });
+        });
     });
 
     /*

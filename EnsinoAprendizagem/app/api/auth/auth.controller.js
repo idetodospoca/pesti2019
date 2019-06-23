@@ -31,23 +31,33 @@ function register(req, res){
   user.name     = req.body.name;
   user.password = req.body.password;
   user.role     = req.body.role;
-  user.save()
-  .then(user => {
-    // create a token
-    let token = authService.signToken(user);
 
-    let data = {
-      _id            : user._id,
-      email          : user.email,
-      name           : user.name,
-      role           : user.role,
-      token          : token.token,
-      expirationDate : token.expirationDate
-    };
-
-    res.status(201).json(data);
+  User.findOne({
+    email : req.body.email
   })
-  .catch(utils.handleError(req, res));
+  .then(user => {
+    if (user) {
+      return res.status(200).json({message: 'The e-mail you entered is already in use.'});
+    } else {
+      user.save()
+      .then(user => {
+        // create a token
+        let token = authService.signToken(user);
+
+        let data = {
+          _id            : user._id,
+          email          : user.email,
+          name           : user.name,
+          role           : user.role,
+          token          : token.token,
+          expirationDate : token.expirationDate
+        };
+
+        res.status(201).json(data);
+      })
+      .catch(utils.handleError(req, res));
+    }
+  })
 }
 
 module.exports = {

@@ -33,7 +33,7 @@
                 </mat-form-field>
                 <div class="row">
                   <div class="col-6">
-                    <button mat-raised-button type="submit" color="primary" class="btn px-4" (click)="login()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required') || passwordFormControl.hasError('required')">
+                    <button mat-raised-button type="submit" color="primary" class="btn px-4" (click)="login()" [disabled]="loading">
                       <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
                       <span *ngIf="!loading">Sign in</span>
                     </button>

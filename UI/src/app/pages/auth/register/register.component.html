@@ -74,7 +74,7 @@
 									</button>
 								</div>
 								<div class="col-sm">
-									<button mat-raised-button type="submit" color="primary" (click)="register()" [disabled]="loading || emailFormControl.hasError('email') || emailFormControl.hasError('required')">
+									<button mat-raised-button type="submit" color="primary" (click)="register()" [disabled]="loading">
 										<i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
 										<i class="" *ngIf="!loading"></i>
 										<span *ngIf="!loading"> Create your account</span>
