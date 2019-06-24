@@ -35,8 +35,8 @@ export class LoginComponent {
     private authService: AuthService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router)
-    { }
+    private router: Router
+  ) {}
 
     login() {
 
@@ -51,6 +51,9 @@ export class LoginComponent {
             this.loading = false;
           },
           err => {
+            if (err['error'].error == "not-verified") {
+              this.router.navigate([`/auth/confirm/${this.emailFormControl.value}/notverified`]);
+            }
             this.toastr.error(err.error.message, 'An error ocurred.');
             this.loading = false;
           }

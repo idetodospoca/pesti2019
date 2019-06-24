@@ -83,9 +83,9 @@ export class RegisterComponent {
             }
 
             if (response.status == 201) {
-              this.authService.setToken(response.body['token']);
-              this.toastr.success('Account created Successfully.');
-              this.router.navigate(['/']);
+              //this.authService.setToken(response.body['token']);
+              this.toastr.success(response.body['msg']);
+              //this.router.navigate(['/']);
             }
             this.loading = false;
           },

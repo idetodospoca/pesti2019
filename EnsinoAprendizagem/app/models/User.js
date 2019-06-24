@@ -29,10 +29,15 @@ var UserSchema   = new Schema({
     },
   },
 
-  role: {
+  role : {
     type     : String,
     required : true,
     enum     : ['admin', 'professor', 'psicologo_escolar', 'psicologo_educacional']
+  },
+
+  verified : {
+    type    : Boolean,
+    default : false 
   }
 });
 

@@ -17,6 +17,13 @@ let all = {
 
     jwt: {
         secret   : "fSk35bzq6KutR0dQVKTL"
+    },
+
+    mail: {
+      host     : 'smtp.gmail.com',
+      port     : 587,
+      username : 'learningteachingtechniques@gmail.com',
+      password : 'Learningtechniques$'
     }
 
 };

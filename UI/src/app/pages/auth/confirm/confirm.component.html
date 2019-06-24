@@ -1,0 +1,15 @@
+<div class="app flex-row align-items-center" *ngIf="!loading && !verified">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="clearfix">
+          <h4 class="pt-3">Your account isn't verified yet. Check your e-mail for a confirmation link.</h4>
+          <p class="text-muted">If you didn't receive one or the link experied, you can request a new one by clicking below.</p>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="button" name="button" (click)="resend()">Request new e-mail</button>
+    </div>
+  </div>
+</div>
