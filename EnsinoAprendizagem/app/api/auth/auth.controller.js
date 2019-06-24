@@ -58,7 +58,7 @@ function register(req, res){
 
         Your account has been created, follow the link to activate it and start using the app\n
 
-        \nhttps:\/\/learningtechniques.herokuapp.com/api/auth/confirm\/${user.email}\/${token.token}
+        \nhttps:\/\/learningtechniques.herokuapp.com/auth/confirm\/${user.email}\/${token.token}
         `
       });
       return res.status(201).json({message: "Your account has been created. We sent you an e-mail so you can verify it."});
@@ -124,7 +124,7 @@ function resend(req, res) {
 
       Per your request, the follwoing link will activate your account and allow you to use the app\n
 
-      \nhttps:\/\/learningtechniques.herokuapp.com/api/auth/confirm\/${user.email}\/${token.token}
+      \nhttps:\/\/learningtechniques.herokuapp.com/auth/confirm\/${user.email}\/${token.token}
       `
     });
     return res.status(201).json({message: "We sent you an e-mail so you can validate your account."});

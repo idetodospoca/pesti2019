@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
@@ -13,9 +11,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
-
-
-
 
 @Component({
   templateUrl: 'register.component.html'
@@ -49,11 +44,9 @@ export class RegisterComponent {
   loading               : boolean = false;
 
   constructor(
-    private authService: AuthService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router)
-    { }
+  ) {}
 
     register() {
       this.emailFormControl.markAsTouched();
@@ -79,13 +72,15 @@ export class RegisterComponent {
         .subscribe(
           response => {
             if (response.status == 200) {
-              this.toastr.error(response.body['msg'], 'Error');
+              this.toastr.error(response.body['message'], 'Error');
             }
 
             if (response.status == 201) {
-              //this.authService.setToken(response.body['token']);
-              this.toastr.success(response.body['msg']);
-              //this.router.navigate(['/']);
+              this.toastr.success(response.body['message']);
+              this.emailFormControl.reset();
+              this.nameFormControl.reset();
+              this.passwordFormControl.reset();
+              this.confirmPasswordFormControl.reset();
             }
             this.loading = false;
           },
