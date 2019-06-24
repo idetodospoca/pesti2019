@@ -26,39 +26,38 @@ function login(req, res){
 }
 
 function register(req, res){
-  let user      = new User();
-  user.email    = req.body.email;
-  user.name     = req.body.name;
-  user.password = req.body.password;
-  user.role     = req.body.role;
 
   User.findOne({
-    email : req.body.email
-  })
-  .then(user => {
-    if (user) {
-      return res.status(200).json({message: 'The e-mail you entered is already in use.'});
-    } else {
-      user.save()
-      .then(user => {
-        // create a token
-        let token = authService.signToken(user);
+    email: req.body.email
+  }).then( user => {
+    if (user) return res.status(200).send({ msg: 'The e-mail address you have entered is already in use.' });
+    user = new User({ name: req.body.name, email: req.body.email, password: req.body.password, role: req.body.role });
+    user.save()
+    .then(user => {
+      let token = authService.signToken(user);
 
-        let data = {
-          _id            : user._id,
-          email          : user.email,
-          name           : user.name,
-          role           : user.role,
-          token          : token.token,
-          expirationDate : token.expirationDate
-        };
+      let data = {
+        _id            : user._id,
+        email          : user.email,
+        name           : user.name,
+        role           : user.role,
+        token          : token.token,
+        expirationDate : token.expirationDate
+      };
+      return res.status(201).json(data);
+    })
+    .catch(utils.handleError(req, res));
 
-        res.status(201).json(data);
-      })
-      .catch(utils.handleError(req, res));
-    }
   })
+  .catch(utils.handleError);
+
 }
+
+
+
+
+
+
 
 module.exports = {
   login: login,

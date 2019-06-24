@@ -71,11 +71,22 @@ export class RegisterComponent {
           return;
         }
 
-        this.http.post('auth/register', { email: this.emailFormControl.value, name: this.nameFormControl.value, password: this.passwordFormControl.value, role: 'professor' }).subscribe(
-          (res: any) => {
-            this.authService.setToken(res.token);
-            this.toastr.success('Account created Successfully.');
-            this.router.navigate(['/']);
+        this.http.post('auth/register', {
+          email: this.emailFormControl.value,
+          name: this.nameFormControl.value,
+          password: this.passwordFormControl.value,
+          role: 'professor' }, {observe: 'response'})
+        .subscribe(
+          response => {
+            if (response.status == 200) {
+              this.toastr.error(response.body['msg'], 'Error');
+            }
+
+            if (response.status == 201) {
+              this.authService.setToken(response.body['token']);
+              this.toastr.success('Account created Successfully.');
+              this.router.navigate(['/']);
+            }
             this.loading = false;
           },
           err => {
