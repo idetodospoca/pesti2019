@@ -134,30 +134,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     this.dialog.open(CreateProjectHelpComponent);
   }
 
-  invite (email: string) {
-    this.loading = true;
-    if (this.form.teachers.filter(t => t.email === email).length > 0) {
-      this.toastr.error('This option has already been added.', 'Error');
-    } else {
-      this.http.get<User>(`users/${email}`).subscribe(
-       response => {
-         this.form.teachers.push(response);
-         this.loading = false;
-         this.toastr.success('New collaborator added.', 'Success');
-       },
-       err => {
-         this.toastr.error(err.error.message, 'Error');
-         this.loading = false;
-       }
-     );
-    }
-  }
-
-  deleteTeacher(number: number) {
-    this.form.teachers.splice(number, 1);
-  }
-
-
 
   getAttributes() {
     this.loading = true;
