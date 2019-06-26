@@ -57,7 +57,7 @@
                   <mat-form-field appearance="outline"  class="form-full-width">
                     <mat-label>Delivery Mode</mat-label>
                     <mat-select #delivery_mode="ngModel"  name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
-                      <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
+                      <mat-option *ngFor="let item of delivery_modes" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="delivery_mode.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -67,7 +67,7 @@
                   <mat-form-field appearance="outline" class="form-full-width">
                     <mat-label>Interaction</mat-label>
                     <mat-select #interaction="ngModel"  name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
-                      <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
+                      <mat-option  *ngFor="let item of interactions" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="interaction.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -81,7 +81,7 @@
                   <mat-form-field appearance="outline" class="form-full-width">
                     <mat-label>Resolution Scope</mat-label>
                     <mat-select #resolution_scope="ngModel"  name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
-                      <mat-option  *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
+                      <mat-option  *ngFor="let item of reso_scopes" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="resolution_scope.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -283,8 +283,6 @@
 
       </div>
     </mat-step>
-
-
 
   <mat-step label="Social Objectives" optional>
     <div class="form-group">

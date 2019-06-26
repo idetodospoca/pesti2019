@@ -91,8 +91,8 @@
               <div class="col">
                 <mat-label><h4>Delivery Mode</h4></mat-label>
                 <mat-selection-list name="dm "#dm [(ngModel)]="form.delivery_mode">
-                  <mat-list-option [value]="delivery" *ngFor="let delivery of delivery_modes">
-                    {{delivery}}
+                  <mat-list-option [value]="delivery.name" *ngFor="let delivery of delivery_modes">
+                    {{delivery.name}}
                   </mat-list-option>
                 </mat-selection-list>
               </div>
@@ -100,8 +100,8 @@
               <div class="col">
                 <mat-label><h4>Resolution Scope</h4></mat-label>
                 <mat-selection-list name="rs "#rs [(ngModel)]="form.resolution_scope">
-                  <mat-list-option [value]="reso" *ngFor="let reso of reso_scopes">
-                    {{reso}}
+                  <mat-list-option [value]="reso.name" *ngFor="let reso of reso_scopes">
+                    {{reso.name}}
                   </mat-list-option>
                 </mat-selection-list>
               </div>
@@ -111,8 +111,8 @@
               <div class="col">
                 <mat-label><h4>Interaction</h4></mat-label>
                 <mat-selection-list name="inte" #inte [(ngModel)]="form.interaction">
-                  <mat-list-option [value]="int" *ngFor="let int of interactions">
-                    {{int}}
+                  <mat-list-option [value]="int.name" *ngFor="let int of interactions">
+                    {{int.name}}
                   </mat-list-option>
                 </mat-selection-list>
               </div>

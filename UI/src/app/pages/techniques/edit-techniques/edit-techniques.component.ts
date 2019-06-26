@@ -10,11 +10,13 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
 
-import { Attributes, LearningObjective, Technique, Structure } from '../../../models/index';
+import { DeliveryMode, ResolutionScope, Interaction, SocialObjective, Behaviour, AffectiveObjective, Technique, TaskType } from '../../../models';
 
-import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { CreateTechniqueHelpComponent } from 'src/app/dialogs/create-technique-help/create-technique-help.component';
 import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-edit-techniques',
@@ -30,15 +32,15 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
   sub             : Subscription;       // The route subscription object to handle params received in the url
   id              : string;             // Id received in the url
 
-  delivery_modes    : Array<any> = [];
-  interactions      : Array<any> = [];
-  reso_scopes       : Array<any> = [];
-  social_obvj       : Array<any> = [];
-  behaviour_cat     : Array<any> = [];
-  affective         : Array<any> = [];
-  social            : Array<any> = [];
-  task_types        : Array<any> = [];
-  assess            : Array<any> = ["High", "Medium", "Low", "None"];
+  delivery_modes    : Array<DeliveryMode> = [];
+  interactions      : Array<Interaction> = [];
+  reso_scopes       : Array<ResolutionScope> = [];
+  social_obvj       : Array<SocialObjective> = [];
+  behaviour_cat     : Array<Behaviour> = [];
+  affective         : Array<AffectiveObjective> = [];
+  social            : Array<SocialObjective> = [];
+  task_types        : Array<TaskType> = [];
+  assess            : Array<String> = ["High", "Medium", "Low", "None"];
 
   form  : Partial<Technique> = {
     name                  : "",
@@ -99,11 +101,10 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
       ])
     });
 
-    this.sub = this.activeRoute.params.subscribe(params => {
+    setTimeout(() => this.sub = this.activeRoute.params.subscribe(params => {
       this.id = params['id'];
       this.populateForm();
-    });
-
+    }));
 
   }
 
@@ -185,58 +186,106 @@ export class EditTechniquesComponent implements OnInit, OnDestroy {
 
     if ((<FormArray>this.techniqueStruct.controls['modules']).length == 0) {
       this.toastr.error('At least one module must be defined.', 'Error');
-    } else {
-      this.form.structure = Object.assign({}, this.techniqueStruct.value);
-      this.http.put<Technique>(`techniques/${this.id}`, this.form).subscribe(
-        response => {
-          this.toastr.success('Technique successfully edited.', 'Success');
-          this.router.navigate(['/techniques']);
-        },
-        err => this.handleError(err)
-      );
+      return;
     }
+
+    if (this.form.rules.length == 0) {
+      this.toastr.error('At least one rule must be defined.', 'Error');
+      return;
+    }
+
+    if (this.form.target_audience.length == 0) {
+      this.toastr.error('At least one target audience must be defined.', 'Error');
+      return;
+    }
+
+    if (this.form.delivery_mode.length == 0) {
+      this.toastr.error('At least one delivery mode must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.resolution_scope.length == 0) {
+      this.toastr.error('At least one resolution scope must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.interaction.length == 0) {
+      this.toastr.error('At least one interaction must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.feedback_use.length == 0) {
+      this.toastr.error('At least one feedback use must be defined.', 'Error');
+      return;
+    }
+
+    if (this.form.interaction.length == 0) {
+      this.toastr.error('At least one interaction must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.interrelationship.length == 0) {
+      this.toastr.error('At least one interrelationship must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.motivation.length == 0) {
+      this.toastr.error('At least one motivation must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.participation.length == 0) {
+      this.toastr.error('At least one participation must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.performance.length == 0) {
+      this.toastr.error('At least one performance must be chosen.', 'Error');
+      return;
+    }
+
+    if (this.form.learning_objectives.length == 0) {
+      this.toastr.error('At least one learning objective must be defined.', 'Error');
+      return;
+    }
+
+    
+    this.form.structure = Object.assign({}, this.techniqueStruct.value);
+    this.http.put<Technique>(`techniques/${this.id}`, this.form).subscribe(
+      response => {
+        this.toastr.success('Technique successfully edited.', 'Success');
+        this.router.navigate(['/techniques']);
+      },
+      err => this.handleError(err)
+    );
+
 
   }
 
 
   getAttributes() {
-    this.loading = true;
-    this.http.get<Attributes[]>('attributes')
-    .subscribe(
-      response => {
-        this.delivery_modes = response.map(response => response['delivery_mode'].map(res => res.name));
-        this.delivery_modes = [].concat.apply([], this.delivery_modes);
-
-        this.interactions   = response.map(response => response['interaction'].map(res => res.name));
-        this.interactions   = [].concat.apply([], this.interactions);
-
-        this.reso_scopes    = response.map(response => response['resolution_scope'].map(res => res.name));
-        this.reso_scopes    = [].concat.apply([], this.reso_scopes);
-
-        this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
-        this.social_obvj    = [].concat.apply([], this.social_obvj);
-
-        this.behaviour_cat = response.map(response => response['behaviour']);
-        this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
-
-        this.affective = response.map(response => response['affective_objectives']);
-        this.affective = ([].concat.apply([], this.affective)).sort();
-
-        this.social = response.map(response => response['social_objectives']);
-        this.social = ([].concat.apply([], this.social)).sort();
-
-        this.task_types = response.map(response => response['task_types']);
-        this.task_types = ([].concat.apply([], this.task_types)).sort();
+      this.loading = true;
+      Observable.forkJoin(
+        this.http.get<DeliveryMode[]>('attributes/deliverymode'),
+        this.http.get<ResolutionScope[]>('attributes/resolutionscope'),
+        this.http.get<Interaction[]>('attributes/interaction'),
+        this.http.get<Behaviour[]>('attributes/behaviour'),
+        this.http.get<AffectiveObjective[]>('attributes/affective'),
+        this.http.get<SocialObjective[]>('attributes/social'),
+        this.http.get<TaskType[]>('attributes/task')
+      )
+      .subscribe(response => {
+        this.delivery_modes = response[0];
+        this.reso_scopes    = response[1];
+        this.interactions   = response[2];
+        this.behaviour_cat  = response[3];
+        this.affective      = response[4];
+        this.social         = response[5];
+        this.task_types     = response[6];
 
         this.loading = false;
-
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.loading = false;
-      }
-    );
-  }
+      }, err => this.handleError(err));
+    }
 
 
   addField(field: any) {

@@ -29,7 +29,7 @@
           <div class="example-form">
             <mat-form-field appearance="outline" class="form-full-width">
               <mat-label>Delivery Mode</mat-label>
-              <input matInput type="text" name="delivery" placeholder="Delivery Mode" #delivery="ngModel" [(ngModel)]="delivery_mode" >
+              <input matInput type="text" name="delivery" placeholder="Delivery Mode" [(ngModel)]="delivery_mode" >
             </mat-form-field>
 
             <div class="button-container">
@@ -40,10 +40,10 @@
               </button>
             </div>
 
-            <table *ngIf="form.delivery_mode.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="delivery_modes.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.delivery_mode; let number = index">
-                <td>{{dm.name}}</td>
+              <tr *ngFor="let item of delivery_modes; let number = index">
+                <td>{{item.name}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteDM(number)">
                     <i class="fa fa-trash"></i>
@@ -79,10 +79,10 @@
               </button>
             </div>
 
-            <table *ngIf="form.interaction.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="interactions.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.interaction; let number = index">
-                <td>{{dm.name}}</td>
+              <tr *ngFor="let item of interactions; let number = index">
+                <td>{{item.name}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteINT(number)">
                     <i class="fa fa-trash"></i>
@@ -116,10 +116,10 @@
                 Add
               </button>
             </div>
-            <table *ngIf="form.resolution_scope.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="reso_scopes.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.resolution_scope; let number = index">
-                <td>{{dm.name}}</td>
+              <tr *ngFor="let item of reso_scopes; let number = index">
+                <td>{{item.name}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteRS(number)">
                     <i class="fa fa-trash"></i>
@@ -145,7 +145,7 @@
 
             <mat-form-field appearance="outline" class="form-full-width">
               <mat-label>Social Objective</mat-label>
-              <input matInput type="text" name="social_objectives" placeholder="Social Objective" #social="ngModel" [(ngModel)]="social_objectives" >
+              <input matInput type="text" name="social_objectives" placeholder="Social Objective"  [(ngModel)]="social_objectives" >
             </mat-form-field>
 
             <div class="button-container">
@@ -156,10 +156,10 @@
               </button>
             </div>
 
-            <table *ngIf="form.social_objectives.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="social.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.social_objectives; let number = index">
-                <td>{{dm.name}}</td>
+              <tr *ngFor="let item of social; let number = index">
+                <td>{{item.name}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteSO(number)">
                     <i class="fa fa-trash"></i>
@@ -201,7 +201,7 @@
               <div class="col">
                 <mat-form-field appearance="outline" class="form-full-width">
                   <mat-label>Verb</mat-label>
-                  <input matInput type="text" placeholder="Verb" #affective="ngModel" name="affective_verb"  [(ngModel)]="affective_verb">
+                  <input matInput type="text" placeholder="Verb" name="affective_verb"  [(ngModel)]="affective_verb">
                 </mat-form-field>
               </div>
             </div>
@@ -214,10 +214,10 @@
               </button>
             </div>
 
-            <table *ngIf="form.affective_objectives.length != 0" class="table table-borderless table-hover table-responsive">
-              <tr *ngFor="let dm of form.affective_objectives; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
+            <table *ngIf="affective.length != 0" class="table table-borderless table-hover table-responsive">
+              <tr *ngFor="let item of affective; let number = index">
+                <td>{{item.category}}</td>
+                <td>{{item.verb}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteAO(number)">
                     <i class="fa fa-trash"></i>
@@ -245,7 +245,7 @@
                 <div class="col">
                   <mat-form-field appearance="outline" class="form-full-width">
                     <mat-label>Category</mat-label>
-                    <mat-select #behaviour_cat="ngModel"  placeholder="Category" name="behaviour_cat" [(ngModel)]="behaviour_category">
+                    <mat-select #behaviour_cate="ngModel"  placeholder="Category" name="behaviour_cate" [(ngModel)]="behaviour_category">
                       <mat-option value="Remember">Remember</mat-option>
                       <mat-option value="Understand">Understand</mat-option>
                       <mat-option value="Apply">Apply</mat-option>
@@ -269,11 +269,11 @@
                 Add
               </button>
             </div>
-            <table *ngIf="form.behaviour.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="behaviour_cat.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.behaviour; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
+              <tr *ngFor="let item of behaviour_cat; let number = index">
+                <td>{{item.category}}</td>
+                <td>{{item.verb}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteBH(number)">
                     <i class="fa fa-trash"></i>
@@ -322,11 +322,11 @@
                 </button>
               </div>
 
-            <table *ngIf="form.task_types.length != 0" class="table table-borderless table-hover table-responsive">
+            <table *ngIf="task_types.length != 0" class="table table-borderless table-hover table-responsive">
 
-              <tr *ngFor="let dm of form.task_types; let number = index">
-                <td>{{dm.category}}</td>
-                <td>{{dm.verb}}</td>
+              <tr *ngFor="let item of task_types; let number = index">
+                <td>{{item.category}}</td>
+                <td>{{item.verb}}</td>
                 <td>
                   <button type="button" mat-raised-button class="btn btn-danger float-right" (click)="deleteTT(number)">
                     <i class="fa fa-trash"></i>
@@ -341,7 +341,7 @@
       </mat-accordion>
 
       <div class="button-container">
-        <button type="submit" mat-raised-button class="btn btn-success" [disabled]="loading || (form.delivery_mode.length == [] && form.interaction.length == [] && form.resolution_scope.length == [] && form.social_objectives.length == [] && form.behaviour.length == [] && form.affective_objectives.length == [] && form.task_types.length == [])">
+        <button type="submit" mat-raised-button class="btn btn-success" [disabled]="loading">
           <i class="fa fa-save" *ngIf="!loading"></i>
           <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
           Save

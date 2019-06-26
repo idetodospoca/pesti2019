@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -6,12 +6,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatDialog, ErrorStateMatcher } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 
-import { Project, Attributes, User } from '../../../models';
+import { Project, DeliveryMode, ResolutionScope, Interaction, SocialObjective, Behaviour, AffectiveObjective } from '../../../models';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
 import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learningobjective/create-learningobjective.component';
 import { FormControl, NgForm, FormGroupDirective, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -36,13 +38,12 @@ export class CopyActivitiesComponent implements OnInit {
   id              : string;             // Id received in the url
 
 
-  delivery_modes    : Array<any> = [];
-  interactions      : Array<any> = [];
-  reso_scopes       : Array<any> = [];
-  social_obvj       : Array<any> = [];
-  behaviour_cat     : Array<any> = [];
-  affective         : Array<any> = [];
-  social            : Array<any> = [];
+  delivery_modes    : Array<DeliveryMode> = [];
+  interactions      : Array<Interaction> = [];
+  reso_scopes       : Array<ResolutionScope> = [];
+  behaviour_cat     : Array<Behaviour> = [];
+  affective         : Array<AffectiveObjective> = [];
+  social            : Array<SocialObjective> = [];
 
 
 
@@ -131,66 +132,26 @@ export class CopyActivitiesComponent implements OnInit {
     this.dialog.open(CreateProjectHelpComponent);
   }
 
-
-  invite (email: string) {
-    this.loading = true;
-    if (this.form.teachers.filter(t => t.email === email).length > 0) {
-      this.toastr.error('This option has already been added.', 'Error');
-    } else {
-      this.http.get<User>(`users/${email}`).subscribe(
-       response => {
-         this.form.teachers.push(response);
-         this.loading = false;
-         this.toastr.success('New collaborator added.', 'Success');
-       },
-       err => {
-         this.toastr.error(err.error.message, 'Error');
-         this.loading = false;
-       }
-     );
-    }
-  }
-
-  deleteTeacher(number: number) {
-    this.form.teachers.splice(number, 1);
-  }
-
-
   getAttributes() {
     this.loading = true;
-    this.http.get<Attributes[]>('attributes')
-    .subscribe(
-      response => {
+    Observable.forkJoin(
+      this.http.get<DeliveryMode[]>('attributes/deliverymode'),
+      this.http.get<ResolutionScope[]>('attributes/resolutionscope'),
+      this.http.get<Interaction[]>('attributes/interaction'),
+      this.http.get<Behaviour[]>('attributes/behaviour'),
+      this.http.get<AffectiveObjective[]>('attributes/affective'),
+      this.http.get<SocialObjective[]>('attributes/social'),
+    )
+    .subscribe(response => {
+      this.delivery_modes = response[0];
+      this.reso_scopes    = response[1];
+      this.interactions   = response[2];
+      this.behaviour_cat  = response[3];
+      this.affective      = response[4];
+      this.social         = response[5];
 
-        this.delivery_modes = response.map(response => response['delivery_mode'].map(res => res.name));
-        this.delivery_modes = [].concat.apply([], this.delivery_modes);
-
-        this.interactions   = response.map(response => response['interaction'].map(res => res.name));
-        this.interactions   = [].concat.apply([], this.interactions);
-
-        this.reso_scopes    = response.map(response => response['resolution_scope'].map(res => res.name));
-        this.reso_scopes    = [].concat.apply([], this.reso_scopes);
-
-        this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
-        this.social_obvj    = [].concat.apply([], this.social_obvj);
-
-        this.behaviour_cat = response.map(response => response['behaviour']);
-        this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
-
-        this.affective = response.map(response => response['affective_objectives']);
-        this.affective = ([].concat.apply([], this.affective)).sort();
-
-        this.social = response.map(response => response['social_objectives']);
-        this.social = ([].concat.apply([], this.social)).sort();
-
-        this.loading = false;
-
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.loading = false;
-      }
-    );
+      this.loading = false;
+    }, err => this.handleError(err));
   }
 
   addLearningObjective() {

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 
-import { Project, Attributes, User } from '../../../models';
+import { Project, DeliveryMode, ResolutionScope, Interaction, SocialObjective, Behaviour, AffectiveObjective } from '../../../models';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateProjectHelpComponent } from '../../../dialogs/create-project-help/create-project-help.component';
@@ -14,6 +14,8 @@ import { CreateLearningobjectiveComponent } from '../../../dialogs/create-learni
 
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -37,13 +39,12 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   bsModalRef      : BsModalRef;
   modalSub        : Subscription;
 
-  delivery_modes    : Array<any> = [];
-  interactions      : Array<any> = [];
-  reso_scopes       : Array<any> = [];
-  social_obvj       : Array<any> = [];
-  behaviour_cat     : Array<any> = [];
-  affective         : Array<any> = [];
-  social            : Array<any> = [];
+  delivery_modes    : Array<DeliveryMode> = [];
+  interactions      : Array<Interaction> = [];
+  reso_scopes       : Array<ResolutionScope> = [];
+  behaviour_cat     : Array<Behaviour> = [];
+  affective         : Array<AffectiveObjective> = [];
+  social            : Array<SocialObjective> = [];
 
 
 
@@ -124,7 +125,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
         },
         err => this.handleError(err)
       );
-
     }
 
   }
@@ -137,44 +137,27 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   getAttributes() {
     this.loading = true;
-    this.http.get<Attributes[]>('attributes')
-    .subscribe(
-      response => {
+    Observable.forkJoin(
+      this.http.get<DeliveryMode[]>('attributes/deliverymode'),
+      this.http.get<ResolutionScope[]>('attributes/resolutionscope'),
+      this.http.get<Interaction[]>('attributes/interaction'),
+      this.http.get<Behaviour[]>('attributes/behaviour'),
+      this.http.get<AffectiveObjective[]>('attributes/affective'),
+      this.http.get<SocialObjective[]>('attributes/social'),
+    )
+    .subscribe(response => {
+      this.delivery_modes = response[0];
+      this.reso_scopes    = response[1];
+      this.interactions   = response[2];
+      this.behaviour_cat  = response[3];
+      this.affective      = response[4];
+      this.social         = response[5];
 
-        this.delivery_modes = response.map(response => response['delivery_mode'].map(res => res.name));
-        this.delivery_modes = [].concat.apply([], this.delivery_modes);
-
-        this.interactions   = response.map(response => response['interaction'].map(res => res.name));
-        this.interactions   = [].concat.apply([], this.interactions);
-
-        this.reso_scopes    = response.map(response => response['resolution_scope'].map(res => res.name));
-        this.reso_scopes    = [].concat.apply([], this.reso_scopes);
-
-        this.social_obvj    = response.map(response => response['social_objectives'].map(res => res.name));
-        this.social_obvj    = [].concat.apply([], this.social_obvj);
-
-        this.behaviour_cat = response.map(response => response['behaviour']);
-        this.behaviour_cat = ([].concat.apply([], this.behaviour_cat)).sort();
-
-        this.affective = response.map(response => response['affective_objectives']);
-        this.affective = ([].concat.apply([], this.affective)).sort();
-
-        this.social = response.map(response => response['social_objectives']);
-        this.social = ([].concat.apply([], this.social)).sort();
-
-
-        this.loading = false;
-
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.loading = false;
-      }
-    );
+      this.loading = false;
+    }, err => this.handleError(err));
   }
 
   addLearningObjective() {
-
     this.bsModalRef = this.setupModal();
   }
 
@@ -187,7 +170,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
     let p = this.form.activity.learning_objectives[number];
     // Launch the modal
     this.bsModalRef = this.setupModal();
-
 
     // Update the fields in the modal
     for (let property of Object.keys(p)){
@@ -211,7 +193,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
   }
 
 
-
   addSocialObjective() {
     if  (this.form.activity.social_objectives.includes(this.so)) {
       this.toastr.error('This option has already been added.', 'Error');
@@ -219,7 +200,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
       this.form.activity.social_objectives.push(this.so);
       this.so = "";
     }
-
   }
 
   deleteSO(number: number) {
@@ -256,12 +236,6 @@ export class CreateActivitiesComponent implements OnInit, OnDestroy {
 
   isInvalid(field: any): boolean {
     return field.invalid && (field.dirty || field.touched);
-  }
-
-  minValue(field: any): boolean {
-    if (field.value < 5) {
-      return field.invalid && (field.dirty || field.touched);
-    }
   }
 
   private transformModalData(data: any) {

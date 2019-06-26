@@ -57,7 +57,7 @@
                   <mat-form-field appearance="outline"  class="form-full-width">
                     <mat-label>Delivery Mode</mat-label>
                     <mat-select #delivery_mode="ngModel"  name="delivery_mode" [(ngModel)]="form.activity.delivery_mode" required [ngClass]="{'is-invalid': isInvalid(delivery_mode)}">
-                      <mat-option *ngFor="let item of delivery_modes" [value]="item">{{item}}</mat-option>
+                      <mat-option *ngFor="let item of delivery_modes" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="delivery_mode.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -67,7 +67,7 @@
                   <mat-form-field appearance="outline" class="form-full-width">
                     <mat-label>Interaction</mat-label>
                     <mat-select #interaction="ngModel"  name="interaction" [(ngModel)]="form.activity.interaction" required [ngClass]="{'is-invalid': isInvalid(interaction)}">
-                      <mat-option  *ngFor="let item of interactions" [value]="item">{{item}}</mat-option>
+                      <mat-option  *ngFor="let item of interactions" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="interaction.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -81,7 +81,7 @@
                   <mat-form-field appearance="outline" class="form-full-width">
                     <mat-label>Resolution Scope</mat-label>
                     <mat-select #resolution_scope="ngModel"  name="resolution_scope" [(ngModel)]="form.activity.scope" required [ngClass]="{'is-invalid': isInvalid(resolution_scope)}">
-                      <mat-option  *ngFor="let item of reso_scopes" [value]="item">{{item}}</mat-option>
+                      <mat-option  *ngFor="let item of reso_scopes" [value]="item.name">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="resolution_scope.invalid">This field is required.</mat-error>
                   </mat-form-field>
@@ -334,44 +334,6 @@
       </mat-radio-group>
     </div>
 
-    <div class="container mt-5" >
-      <mat-form-field appearance="outline" class="form-full-width">
-        <mat-label>Invite a user to collaborate on the project</mat-label>
-        <input matInput placeholder="User's Email" [formControl]="emailFormControl"
-        [errorStateMatcher]="matcher">
-        <mat-error *ngIf="emailFormControl.hasError('email')">
-          Please enter a valid email address
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="container mt-2">
-      <button type="button" mat-raised-button class="btn" color="primary" [disabled]="emailFormControl.value == '' || emailFormControl.hasError('email')" (click)="invite(emailFormControl.value)">Invite</button>
-    </div>
-    <div class="container mt-4">
-      <mat-label>Currently Invited Users</mat-label>
-
-          <table *ngIf="form.teachers && form.teachers.length != 0" class="table table-borderless table-hover table-responsive">
-            <tr *ngFor="let t of form.teachers; let number = index">
-              <td>{{t.name}}</td>
-              <td>{{t.email}}</td>
-              <td>
-                <button type="button" name="Remove Collaborator" mat-raised-button class="btn btn-danger float-right" (click)="deleteTeacher(number)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-
-          </table>
-
-
-    </div>
-
-
-    <div class="mt-3">
-
-
-    </div>
   </mat-step>
   <mat-step label="Done">
     <mat-card-actions align="start">

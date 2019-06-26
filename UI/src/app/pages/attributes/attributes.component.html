@@ -4,70 +4,141 @@
 
     <mat-tab label="Delivery Mode">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.delivery_mode">
-            <mat-list-item>{{i.name}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of delivery_modes">
+            <mat-list-item>{{item.name}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteDM(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Interaction">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.interaction">
-            <mat-list-item>{{i.name}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of interactions">
+            <mat-list-item>{{item.name}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteINT(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Resolution Scope">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.resolution_scope">
-            <mat-list-item>{{i.name}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of reso_scopes">
+            <mat-list-item>{{item.name}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteRS(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
+
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Social Objectives">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.social_objectives">
-            <mat-list-item>{{i.name}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of social">
+            <mat-list-item>{{item.name}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteSO(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Affective Objectives">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.affective_objectives">
-            <mat-list-item>{{i.category}} : {{i.verb}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of affective">
+            <mat-list-item>{{item.category}} : {{item.verb}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteAF(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Behaviour">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.behaviour">
-            <mat-list-item>{{i.category}} : {{i.verb}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of behaviour_cat">
+            <mat-list-item>{{item.category}} : {{item.verb}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteBH(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Task Types">
       <mat-list>
-        <ng-container *ngFor="let item of attributes">
-          <ng-container *ngFor="let i of item.task_types">
-            <mat-list-item>{{i.category}} : {{i.verb}}</mat-list-item>
-          </ng-container>
+        <ng-container *ngFor="let item of task_types">
+            <mat-list-item>{{item.category}} : {{item.verb}}
+              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true }"
+                (confirm)="deleteTT(item._id)"
+                color="primary" [disabled]="loading">
+                <i class="fa fa-trash " *ngIf="!loading"></i>
+                <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
+              </button></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
