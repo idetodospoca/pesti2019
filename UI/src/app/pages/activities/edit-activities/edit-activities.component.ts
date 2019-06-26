@@ -154,6 +154,8 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
          this.http.post(`projects/${this.id}/invite/${email}`, {}).subscribe(
            response => {
              this.toastr.success('Invite sent.', 'Success');
+             this.populateForm();
+             this.loading = false;
            },
            err => {
              this.toastr.error(err.error.message, 'Error');
