@@ -106,11 +106,10 @@ export class EditActivitiesComponent implements OnInit, OnDestroy {
 
     this.getAttributes();
 
-    this.sub = this.activeRoute.params.subscribe(params => {
+    setTimeout(() => this.sub = this.activeRoute.params.subscribe(params => {
       this.id = params['id'];
       this.populateForm();
-    });
-
+    }));
 
   }
 

@@ -44,7 +44,16 @@
           <div class="form-group">
             <mat-form-field class="form-full-width">
               <mat-label>Subject Matter</mat-label>
-            <input matInput  name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter" [formControl]="smValidator" [errorStateMatcher]="matcher" required>
+            <select matNativeControl  name="subject"  placeholder="Subject Matter" [(ngModel)]="form.subject_matter" [formControl]="smValidator" [errorStateMatcher]="matcher" required>
+              <option value="Languages">Languages</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Natural Sciences">Natural Sciences</option>
+              <option value="History">History</option>
+              <option value="Law">Law</option>
+              <option value="Geometry">Geometry</option>
+              <option value="Technological education">Technological education</option>
+              <option value="Music education">Music education</option>
+            </select>
             <mat-error *ngIf="smValidator.invalid">This field is required.</mat-error>
             </mat-form-field>
           </div>

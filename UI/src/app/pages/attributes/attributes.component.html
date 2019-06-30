@@ -6,7 +6,7 @@
       <mat-list>
         <ng-container *ngFor="let item of delivery_modes">
             <mat-list-item>{{item.name}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -17,7 +17,8 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button>
+              <mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
@@ -26,7 +27,7 @@
       <mat-list>
         <ng-container *ngFor="let item of interactions">
             <mat-list-item>{{item.name}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -37,7 +38,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
@@ -46,7 +47,7 @@
       <mat-list>
         <ng-container *ngFor="let item of reso_scopes">
             <mat-list-item>{{item.name}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -57,7 +58,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
 
       </mat-list>
@@ -67,7 +68,7 @@
       <mat-list>
         <ng-container *ngFor="let item of social">
             <mat-list-item>{{item.name}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -78,7 +79,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
@@ -87,7 +88,7 @@
       <mat-list>
         <ng-container *ngFor="let item of affective">
             <mat-list-item>{{item.category}} : {{item.verb}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -98,7 +99,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
@@ -107,7 +108,7 @@
       <mat-list>
         <ng-container *ngFor="let item of behaviour_cat">
             <mat-list-item>{{item.category}} : {{item.verb}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -118,7 +119,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>
@@ -127,7 +128,7 @@
       <mat-list>
         <ng-container *ngFor="let item of task_types">
             <mat-list-item>{{item.category}} : {{item.verb}}
-              <button class="ml-5"mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
+              <button class="ml-auto" mat-raised-button title="Delete Attribute" [swal]="{ title: 'Are you sure?',
                 text: 'You won\'t be able to revert this!',
                 type: 'warning',
                 showCancelButton: true,
@@ -138,7 +139,7 @@
                 color="primary" [disabled]="loading">
                 <i class="fa fa-trash " *ngIf="!loading"></i>
                 <i class="fa fa-spinner fa-spin " *ngIf="loading"></i>
-              </button></mat-list-item>
+              </button><mat-divider></mat-divider></mat-list-item>
         </ng-container>
       </mat-list>
     </mat-tab>

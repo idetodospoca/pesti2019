@@ -94,10 +94,10 @@ export class CopyActivitiesComponent implements OnInit {
 
     this.getAttributes();
 
-    this.sub = this.activeRoute.params.subscribe(params => {
+    setTimeout(() => this.sub = this.activeRoute.params.subscribe(params => {
       this.id = params['id'];
       this.populateForm();
-    });
+    }));
 
   }
 
