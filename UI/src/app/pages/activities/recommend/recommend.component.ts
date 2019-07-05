@@ -183,7 +183,7 @@ export class RecommendComponent implements OnInit {
         }
     }
 
-    this.table_recs_past_projects.push([candidate, recommender.techniques, (a + (a/(a+b+c))).toFixed(2)]);
+    this.table_recs_past_projects.push([recommender, recommender.techniques, (a + (a/(a+b+c))).toFixed(2)]);
   }
 
   // Similarity calculation between current project and a matching technique
@@ -276,7 +276,7 @@ export class RecommendComponent implements OnInit {
   addRecommendation (techniques: Technique[]) {
     for (let technique of techniques) {
       if (this.project_rc.techniques.filter(tech => tech._id === technique._id).length > 0) {
-        this.toastr.error('has already been added.', technique.name);
+        this.toastr.info('has already been added.', technique.name);
       } else {
         this.project_rc.techniques.push(technique);
         setTimeout(() => this.dataSource_chosen.data = this.project_rc.techniques);
