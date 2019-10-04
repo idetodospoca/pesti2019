@@ -319,7 +319,9 @@ export class RecommendComponent implements OnInit {
       .then( (itemsets: Itemset<Technique>[]) => {
         // Returns an array representing the frequent itemsets.
         for (let item of itemsets) {
-          this.mined_itemsets.push([item.items, item.support]);
+          if (item.items.length > 1) {
+            this.mined_itemsets.push([item.items, item.support]);
+          }
         }
         this.mined_itemsets.sort(function(a, b) {
           return b[1] - a[1];
